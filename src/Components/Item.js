@@ -16,7 +16,7 @@ function Item(props){
       <div className="d-flex flex-row">
         <IconButton name='clear' onClick={()=>props.onRemove(props._id)}/>
       </div>
-        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#mymodal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id)}>
+        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#mymodal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id).bind(this)}>
           <img src={props.image} style={divImgStyle} className="rounded-circle mx-2"/>
           <div className="mx-3 d-flex flex-row align-items-center hidden-sm-down">
             <i className="material-icons mr-2">{props.icon1}</i>

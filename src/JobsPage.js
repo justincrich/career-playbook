@@ -59,7 +59,8 @@ const mapStateToProps= state =>(
       jobs:state.jobs,
       index:state.index,
       _id:state._id,
-      job:state.job
+      job:state.job,
+      modalCall:state.modalCall
     }
 );
 

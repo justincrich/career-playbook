@@ -6,17 +6,26 @@ const initialState = {
     {
         _id:1,
         title:"Engineer",
-        company:"Google"
+        companyName:"Google",
+        companyID:123,
+        url:"google.com",
+        notes:"aaa"
       },
       {
         _id:2,
         title:"Engineer",
-        company:"Facebook"
+        companyName:"Facebook",
+        companyID:234,
+        url:"facebook.com",
+        notes:"bbb"
       },
       {
         _id:3,
         title:"Engineer",
-        company:"Snapchat"
+        companyName:"Snapchat",
+        companyID:143,
+        url:"snapchat.com",
+        notes:"ccc"
       }
   ],
   index:-1,
@@ -39,7 +48,6 @@ export default function JobReducer(state=initialState,action){
             job = arr[i];
           }
         }
-        console.log("IN ROUTER",job);
       return{
 				...state,
 				index: action.index,
@@ -52,7 +60,14 @@ export default function JobReducer(state=initialState,action){
       initialState.jobs.push({_id:action._id,tile:action.title,company:action.company});
       return {
         ...state,
-        job: {_id:action._id,tile:action.title,company:action.company},
+        job: {
+          _id:action._id,
+          tile:action.title,
+          companyName:action.companyName,
+          companyID:action.companyID,
+          url:action.url,
+          notes:action.notes
+        },
         currendID:action._id
       };
     }
@@ -61,7 +76,7 @@ export default function JobReducer(state=initialState,action){
         for(var i = 0; i<state.jobs.length;i++){
           if(state.jobs[i]._id===action._id){
             state.jobs = [...state.jobs.slice(0,i),...state.jobs.slice(i+1)];
-            console.log("DELETE"+initialState);
+
           }
         }
       return {

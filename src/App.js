@@ -15,7 +15,7 @@ import MyModal from './Components/MyModal';
 import JobView from './Components/ModalViews/JobView';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {getJob, createJob} from './Actions/jobs';
+import {getJob, createJob, deleteJob} from './Actions/jobs';
 
 class App extends Component{
 
@@ -38,10 +38,11 @@ class App extends Component{
 
 
   render(){
-    const {dispatch, jobs, index,job,_id,modalCall}=this.props;
+    const {dispatch, jobs, index,_id,job,modalCall}=this.props;
+    console.log(jobs, index,_id,job,modalCall);
     const selectJob = bindActionCreators(getJob,dispatch);
     const createJOB = bindActionCreators(createJob,dispatch);
-    console.log("REQUESTED JOB",jobs);
+    const deleteJOB = bindActionCreators(deleteJob,dispatch);
     return(
       <div>
 
@@ -94,6 +95,7 @@ class App extends Component{
                 show={this.state.showModal}
                 modaltitle="Job Detail"
                 modalCall={modalCall}
+                data={job}
               />
 
       </div>

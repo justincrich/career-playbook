@@ -15,7 +15,7 @@ const ItemGroup = (props) => {
                   _id={job._id}
                   text1={job.title}
                   icon1={props.icon1}
-                  text2={job.company}
+                  text2={job.companyName}
                   icon2={props.icon2}
                   image={job.image}
                   index={index}

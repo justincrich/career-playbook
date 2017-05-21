@@ -10,25 +10,26 @@ class JobView extends Component{
   }
 
 
-  render(){           
+  render(){
+
     return(
       <div>
         <form>
           <div className="form-group">
             <label for="jobTitleInputLabel">Job Title</label>
             {this.props.editmode?
-              <input type="text" className="form-control" value={this.props.title} id="jobTitleInput" placeholder=""/>
+              <input type="text" className="form-control" value={this.props.data.title} id="jobTitleInput" placeholder=""/>
               :
-              <div>{this.props.title}</div>
+              <div></div>
             }
 
           </div>
           <div className="form-group">
             <label for="companyNameInputLabel">Company Name</label>
             {this.props.editmode?
-              <input type="text" value={this.props.company} className="form-control" id="companyNameInput" placeholder=""/>
+              <input type="text" value={this.props.data.companyName} className="form-control" id="companyNameInput" placeholder=""/>
               :
-              <div>{this.props.company}</div>
+              <div></div>
             }
           </div>
 
@@ -36,7 +37,7 @@ class JobView extends Component{
             {this.props.editmode?
               <div className="form-group">
                 <label for="urlInputLabel">Link To Job Listing</label>
-                <input type="text" className="form-control" id="urlInputLabel" value={this.props.url} placeholder=""/>
+                <input type="text" className="form-control" id="urlInputLabel" value={this.props.data.url} placeholder=""/>
               </div>
               :
               <div></div>
@@ -45,9 +46,9 @@ class JobView extends Component{
           <div className="form-group">
             <label for="notesInputLabel">Notes</label>
             {this.props.editmode?
-              <textarea className="form-control" id="notesInputLabel" value={this.props.notes} rows="3"></textarea>
+              <textarea className="form-control" id="notesInputLabel" value={this.props.data.notes} rows="3"></textarea>
               :
-              <div>{this.props.notes}</div>
+              <div></div>
             }
           </div>
         </form>

@@ -13,13 +13,16 @@ class MyModal extends Component{
   }
 
   OnEdit(){
-    this.setState({editmode:true});
-    console.log(this.state.editmode);
+    if(this.state.editmode){
+      this.setState({editmode:false});
+    }else{
+      this.setState({editmode:true});
+    }
   }
 
 
   render(){
-
+    console.log(this.state.editmode);
     return(
       <div id="mymodal" className="modal fade bd-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -32,11 +35,14 @@ class MyModal extends Component{
             </button>
           </div>
           <div className="modal-body">
-            {this.props.modalCall === 'jobs/GET_JOB' ?
-              <JobView data={this.props.data} editmode={this.state.editmode}/>
-              :
-              <div></div>
-            }
+
+
+              {this.props.modalCall === 'jobs/GET_JOB' ?
+                <JobView data={this.props.data} editmode={this.state.editmode}/>
+                :
+                <div></div>
+              }
+
 
           </div>
           <div className="modal-footer">
@@ -45,7 +51,12 @@ class MyModal extends Component{
             :
             <button type="button" className="btn btn-secondary"  onClick={this.OnEdit}>Edit</button>
             }
+            {this.state.editmode?
+            <button type="button" className="btn btn-secondary" onClick={this.OnEdit}>Cancel</button>
+            :
             <button type="button" className="btn btn-secondary">Close</button>
+            }
+
           </div>
         </div>
       </div>

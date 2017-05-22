@@ -1,5 +1,5 @@
-import  {GET_JOB, CREATE_JOB,DELETE_JOB} from '../ActionTypes/jobs';
-import axios from 'axios';
+import * as JobsActionTypes from '../ActionTypes/jobs-actiontypes';
+
 
 const initialState = {
   jobs:[
@@ -36,10 +36,10 @@ const initialState = {
 
 
 
-export default function JobReducer(state=initialState,action){
+export default function JobsReducer(state=initialState,action){
 
   switch(action.type){
-    case GET_JOB:{
+    case JobsActionTypes.GET_JOB:{
       var job = null;
         var arr = initialState.jobs;
 
@@ -53,10 +53,10 @@ export default function JobReducer(state=initialState,action){
 				index: action.index,
         currentID:action._id,
         job:job,
-        modalCall:GET_JOB
+        modalCall:JobsActionTypes.GET_JOB
 			};
     }
-    case CREATE_JOB:{
+    case JobsActionTypes.CREATE_JOB:{
       initialState.jobs.push({_id:action._id,tile:action.title,company:action.company});
       return {
         ...state,
@@ -71,7 +71,7 @@ export default function JobReducer(state=initialState,action){
         currendID:action._id
       };
     }
-    case DELETE_JOB:{
+    case JobsActionTypes.DELETE_JOB:{
         var id = action._id;
         for(var i = 0; i<state.jobs.length;i++){
           if(state.jobs[i]._id===action._id){

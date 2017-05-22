@@ -1,38 +1,24 @@
-import React , {Component} from 'react';
+import React, {Component} from 'react';
+import Main from './Components/Pages/Main';
+import Desktop from './Components/Pages/Desktop';
+import Header from './Components/Views/Header';
+import {connect} from 'react-redux';
 import {
   BrowserRouter,
   Route,
   Switch,
   NavLink
 } from 'react-router-dom';
- import Header from './Header';
-import Home from './Home';
- import Network from './Network';
-import JobsPage from './JobsPage';
-import Companies from './Companies';
-import NotFound from './NotFound';
-import MyModal from './Components/MyModal';
-import JobView from './Components/ModalViews/JobView';
-import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {getJob, createJob, deleteJob} from './Actions/jobs';
+import * as JobActions from './Actions/jobs';
+import MyModal from './Components/Views/MyModal';
 
 class App extends Component{
-
 
   constructor(props){
     super(props);
     this.state ={
-      showModal: false
     };
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  toggleModal(id){
-    console.log(id);
-    this.setState(prevState=>({
-      showModal:!prevState.showModal
-    }));
   }
 
 
@@ -40,65 +26,25 @@ class App extends Component{
   render(){
     const {dispatch, jobs, index,_id,job,modalCall}=this.props;
     console.log(jobs, index,_id,job,modalCall);
-    const selectJob = bindActionCreators(getJob,dispatch);
-    const createJOB = bindActionCreators(createJob,dispatch);
-    const deleteJOB = bindActionCreators(deleteJob,dispatch);
+    const selectJob = bindActionCreators(JobActions.getJob,dispatch);
+    const createJOB = bindActionCreators(JobActions.createJob,dispatch);
+    const deleteJOB = bindActionCreators(JobActions.deleteJob,dispatch);
     return(
-      <div>
 
+        <div>
+
+          <BrowserRouter>
+            <div>
               <Header/>
+              <Switch>
+                <Route exact path="/" component={Main}/>
+                <Route path="/Desktop" component={Desktop}/>
+              </Switch>
+            </div>
 
-              {/*Modal*/}
-
-
-
-                // Routers
-              <div  className="App container">
-
-                <BrowserRouter>
-                <div className="card">
-                  <div className="card-header">
-                    <ul className="nav nav-tabs card-header-tabs">
-                      <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/">Activity</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/network">Network</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/jobs">Jobs</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link" to="/companies">Companies</NavLink>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="card-block">
-
-
-                        <Switch>
-                          <Route exact path="/" component={Home} />
-                          <Route  path="/network" component={Network} />
-                          <Route  path="/jobs" jobs={this.state.jobs} render={()=><JobsPage selectJob= {selectJob} />}  />
-                          <Route  path="/companies" component={Companies} />
-                          <Route component={NotFound} />
-                        </Switch>
-
-
-                  </div>
-                </div>
-                </BrowserRouter>
-
-              </div>
-              <JobView />
-              <MyModal
-                show={this.state.showModal}
-                modaltitle="Job Detail"
-                modalCall={modalCall}
-                data={job}
-              />
-
-      </div>
+          </BrowserRouter>
+          <MyModal/>
+        </div>
 
     );
   }

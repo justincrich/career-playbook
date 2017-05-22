@@ -1,20 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import JobReducer from './Reducers/jobs';
 import App from './App';
-import './index.css';
+import store from './Store/store';
 
-const store = createStore(
-  JobReducer,
-  window.devToolsExtension && window.devToolsExtension()
-);
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App/>
   </Provider>,
   document.getElementById('root')
 );

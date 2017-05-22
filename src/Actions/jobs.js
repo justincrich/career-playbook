@@ -1,17 +1,17 @@
-import {GET_JOB, CREATE_JOB,DELETE_JOB} from '../ActionTypes/jobs';
+import * as ActionTypes from '../ActionTypes/jobs-actiontypes';
 
 
 
 export const getJob = (_id) =>{
   return{
-    type:GET_JOB,
+    type:ActionTypes.GET_JOB,
     _id
   };
 };
 
 export const createJob = (_id,title,companyName,companyID,url,notes) =>{
   return{
-    type:CREATE_JOB,
+    type:ActionTypes.CREATE_JOB,
     _id,
     title,
     companyName,
@@ -24,7 +24,7 @@ export const createJob = (_id,title,companyName,companyID,url,notes) =>{
 
 export const deleteJob = (_id) =>{
   return{
-    type:DELETE_JOB,
+    type:ActionTypes.DELETE_JOB,
     _id
   };
 };

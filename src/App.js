@@ -12,7 +12,6 @@ import {
 import { bindActionCreators } from 'redux';
 import * as JobActions from './Actions/jobs';
 
-import MyModal from './Components/Views/MyModal';
 
 class App extends Component{
 
@@ -45,6 +44,7 @@ class App extends Component{
             </div>
 
           </BrowserRouter>
+
         </div>
 
 

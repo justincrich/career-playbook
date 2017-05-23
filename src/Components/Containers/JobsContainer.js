@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import ItemGroup from '../Views/ItemGroup';
+import JobsGroup from '../Views/JobsGroup';
 import {Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../Actions/jobs';
-import MyModal from '../Views/MyModal';
+import JobModal from '../Views/JobModal';
 import JobModalView from '../ModalViews/JobModalView';
 
 class JobsContainer extends Component{
@@ -13,17 +13,21 @@ class JobsContainer extends Component{
     this.state={
       jobs:[],
       selected:0,
-      editmode1:false
+      editmode:false
     }
-
+    this.selectJob.bind(this);
 
   }
 
   selectJob(id){
-    this.setState({id});
-    console.log("JOB SELECTED",id);
-
+    this.setState({
+      selected:id
+    });
+    this.setState(prevState => ({
+      editmode: !prevState.editmode
+    }));
     //this.props.OpenModal(id);
+    console.log(this.state.editmode);
   }
 
   removeJob(){
@@ -52,13 +56,12 @@ class JobsContainer extends Component{
 
       <div>
         <div className="">
-          <ItemGroup jobs={jobs} icon1="business_center" icon2="business"
+          <JobsGroup jobs={jobs} icon1="business_center" icon2="business"
             selectJob={(id)=>this.selectJob(id)}
             onRemove={deleteJOB}/>
-            <MyModal headerTitle="Job" toggle={this.toggle} save={this.save}>
-              <JobModalView editMode={this.state.editmode}/>
-            </MyModal>
+
         </div>
+        {this.state.editmode && <JobModal/>}
       </div>
 
 

@@ -10,7 +10,7 @@ const divImgStyle = {
 
 var id= "";
 
-function Item(props){
+function Job(props){
   return(
     <li id={props._id} className="list-group-item d-flex flex-row align-items-center">
       <div className="d-flex flex-row">
@@ -38,4 +38,4 @@ function Item(props){
 //Styles
 
 
-export default Radium(Item);
+export default Radium(Job);

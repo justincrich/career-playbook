@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import Item from './Item';
+import Job from './Job';
+import JobModal from './JobModal';
 
 
 
-const ItemGroup = (props) => {
+const JobsGroup = (props) => {
 
   return(
 
@@ -12,7 +13,7 @@ const ItemGroup = (props) => {
           {
             props.jobs.map((job,index)=>{
               return(
-                <Item
+                <Job
                   key={job._id}
                   _id={job._id}
                   text1={job.title}
@@ -29,6 +30,7 @@ const ItemGroup = (props) => {
 
 
         </ul>
+
       </div>
 
   );
@@ -37,4 +39,4 @@ const ItemGroup = (props) => {
 
 
 
-export default ItemGroup;
+export default JobsGroup;

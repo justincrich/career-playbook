@@ -5,19 +5,22 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../Actions/jobs';
 import MyModal from '../Views/MyModal';
-
+import JobModalView from '../ModalViews/JobModalView';
 
 class JobsContainer extends Component{
   constructor(props){
     super(props);
     this.state={
-      jobs:[]
+      jobs:[],
+      selected:0,
+      editmode1:false
     }
 
 
   }
 
   selectJob(id){
+    this.setState({id});
     console.log("JOB SELECTED",id);
 
     //this.props.OpenModal(id);
@@ -26,6 +29,17 @@ class JobsContainer extends Component{
   removeJob(){
     //this.state.history.push(`jobs/${teacherTopic}/${teacherName}`);
     //console.log(this.state.history);
+  }
+
+  toggle(){
+    // this.setState(prevState => ({
+    //   editmode1: !prevState.editmode1
+    // }));
+    console.log("toggle");
+  }
+  save(){
+    console.log("save");
+
   }
 
   render(){
@@ -41,8 +55,9 @@ class JobsContainer extends Component{
           <ItemGroup jobs={jobs} icon1="business_center" icon2="business"
             selectJob={(id)=>this.selectJob(id)}
             onRemove={deleteJOB}/>
-
-            <MyModal/>
+            <MyModal headerTitle="Job" toggle={this.toggle} save={this.save}>
+              <JobModalView editMode={this.state.editmode}/>
+            </MyModal>
         </div>
       </div>
 

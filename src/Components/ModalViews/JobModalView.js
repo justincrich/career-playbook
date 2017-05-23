@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 
 
-class JobView extends Component{
+class JobModalView extends Component{
   constructor(props){
     super(props);
-    this.state={
-      editmode:false,
-    };
+
   }
 
 
@@ -57,4 +55,4 @@ class JobView extends Component{
   }
 }
 
-export default JobView;
+export default JobModalView;

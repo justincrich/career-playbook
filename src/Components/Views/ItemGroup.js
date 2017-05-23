@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Item from './Item';
 
+
+
 const ItemGroup = (props) => {
 
   return(
@@ -25,8 +27,8 @@ const ItemGroup = (props) => {
               );
           })}
 
-        </ul>
 
+        </ul>
       </div>
 
   );

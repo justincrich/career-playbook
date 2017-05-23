@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Route, NavLink, Redirect } from 'react-router';
 import {connect} from 'react-redux';
 import JobsContainer from '../Containers/JobsContainer';
-
+import MyModal from '../Views/MyModal';
 
 const Desktop =({match})=>(
       <div className="container">
@@ -18,10 +18,12 @@ const Desktop =({match})=>(
             {/* Routes */}
             <Route exact path={match.path}
                  render={ () => <Redirect to={`${match.path}/jobs`} /> } />
-            <Route path={`${match.path}/jobs`}
-                render={ () => <JobsContainer /> } />
+            {/* <Route path={`${match.path}/jobs`}
+                render={ () => <JobsContainer /> } /> */}
+                <Route path={`${match.path}/jobs`} component={JobsContainer}/>
           </div>
         </div>
+
       </div>
     );
 

@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as JobActions from './Actions/jobs';
+
 import MyModal from './Components/Views/MyModal';
 
 class App extends Component{
@@ -40,11 +41,13 @@ class App extends Component{
                 <Route exact path="/" component={Main}/>
                 <Route path="/Desktop" component={Desktop}/>
               </Switch>
+
             </div>
 
           </BrowserRouter>
-          <MyModal/>
         </div>
+
+
 
     );
   }

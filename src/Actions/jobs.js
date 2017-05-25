@@ -1,7 +1,6 @@
 import * as ActionTypes from '../ActionTypes/jobs-actiontypes';
 
 
-
 export const getJob = (_id) =>{
   return{
     type:ActionTypes.GET_JOB,

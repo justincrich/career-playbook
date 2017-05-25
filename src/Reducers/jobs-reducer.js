@@ -30,7 +30,14 @@ const initialState = {
   ],
   index:-1,
   _id:-1,
-  job:{}
+  job:{
+    _id:-1,
+    title:"blank",
+    companyName:"blank",
+    companyID:-1,
+    url:"blank",
+    notes:"blank"
+  }
 
 };
 
@@ -40,8 +47,8 @@ export default function JobsReducer(state=initialState,action){
 
   switch(action.type){
     case JobsActionTypes.GET_JOB:{
-      var job = null;
-        var arr = initialState.jobs;
+      var job = state.job;
+        var arr = state.jobs;
 
         for(var i = 0; i<arr.length;i++){
           if(arr[i]._id===action._id){
@@ -57,7 +64,7 @@ export default function JobsReducer(state=initialState,action){
 			};
     }
     case JobsActionTypes.CREATE_JOB:{
-      initialState.jobs.push({_id:action._id,tile:action.title,company:action.company});
+      state.jobs.push({_id:action._id,tile:action.title,company:action.company});
       return {
         ...state,
         job: {

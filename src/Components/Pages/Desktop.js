@@ -5,7 +5,7 @@ import JobsContainer from '../Containers/JobsContainer';
 
 
 const Desktop =({match})=>(
-      <div className="container">
+      <div className="container App">
         <div className="card my-5">
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">

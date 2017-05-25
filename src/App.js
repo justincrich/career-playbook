@@ -25,13 +25,12 @@ class App extends Component{
 
   render(){
     const {dispatch, jobs, index,_id,job,modalCall}=this.props;
-    console.log(jobs, index,_id,job,modalCall);
     const selectJob = bindActionCreators(JobActions.getJob,dispatch);
     const createJOB = bindActionCreators(JobActions.createJob,dispatch);
     const deleteJOB = bindActionCreators(JobActions.deleteJob,dispatch);
     return(
 
-        <div>
+        <div >
 
           <BrowserRouter>
             <div>

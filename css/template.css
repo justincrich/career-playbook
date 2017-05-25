@@ -1,0 +1,56 @@
+.jModal{
+  position: fixed;
+  top: 50%;
+	left: 50%;
+	width: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 1000;
+}
+
+.modal-enter {
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  -webkit-transform: scale(0.7);
+	-moz-transform: scale(0.7);
+	-ms-transform: scale(0.7);
+	transform: scale(0.7) translateX(-50%) translateY(-50%);
+	opacity: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+}
+
+/* end enter state */
+.modal-enter.modal-enter-active {
+  -webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	transform: scale(1) translateX(-50%) translateY(-50%);
+	opacity: 1;
+}
+
+/* start leave state */
+.modal-leave {
+  -webkit-transform: scale(1);
+ -moz-transform: scale(1);
+ -ms-transform: scale(1);
+ transform: scale(1);
+ opacity: 1;
+}
+
+/* end leave state */
+.modal-leave.modal-leave-active {
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  transform: scale(0.7);
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+}

@@ -14,6 +14,32 @@
     }
 }
 
+
+/*Transition for the bodal background*/
+.modalBackground-enter {
+  opacity: 0;
+
+}
+
+/* end enter state */
+.modalBackground-enter.modalBackground-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+/* start leave state */
+.modalBackground-leave {
+  opacity: 1;
+}
+
+/* end leave state */
+.modalBackground-leave.modalBackground-leave-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+
+/*Transition for the modal window*/
 .modal-enter {
   transform: translateY(-100%);
 

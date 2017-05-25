@@ -48,11 +48,12 @@ class JobsContainer extends Component{
     });
   }
 
-  save(job){
-    console.log("save");
+  save(job, updateJob){
+    console.log("Saving job in container",job);
     this.setState({
       viewdetails:false
     });
+    updateJob(job._id,job)
   }
 
   render(){
@@ -61,7 +62,9 @@ class JobsContainer extends Component{
     const selectJOB = bindActionCreators(Actions.getJob,dispatch);
     const createJOB = bindActionCreators(Actions.createJob,dispatch);
     const deleteJOB = bindActionCreators(Actions.deleteJob,dispatch);
+    const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
     const sendJOB = ()=>job;
+
     return(
 
       <div>
@@ -71,7 +74,7 @@ class JobsContainer extends Component{
             onRemove={deleteJOB}/>
 
         </div>
-         <JobModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB} save={(job)=>{this.save(job)}} close={()=>this.closeModal()}/>
+         <JobModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB} save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
 
       </div>
 

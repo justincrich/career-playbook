@@ -34,18 +34,28 @@ class JobModal extends Component{
     this.state={
       editmode:false,
       value:'',
+      _id:-1,
       title:"",
+      companyID:"-1",
       companyName:"",
       url:"",
-      notes:""
+      notes:"",
 
     }
-
     this.onEdit.bind(this);
-    console.log("GET JOB",props.getJob());
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps){
+
+    this.setState({
+      value:'VALUE',
+      _id:nextProps.job._id,
+      title:nextProps.job.title,
+      companyID:nextProps.job.companyID,
+      companyName:nextProps.job.companyName,
+      url:nextProps.job.url,
+      notes:nextProps.job.notes,
+    });
 
   }
 
@@ -59,7 +69,15 @@ onSave(){
   this.setState({
     editmode:false
   });
-  this.props.save();
+  // console.log("SAVING IN MODAL",this.state.job)
+  this.props.save({
+    _id:this.state._id,
+    title:this.state.title,
+    companyID:this.state.companyID,
+    companyName:this.state.companyName,
+    url:this.state.url,
+    notes:this.state.notes
+  });
 }
 
 handleInput(event,type){
@@ -69,7 +87,7 @@ handleInput(event,type){
       this.setState({title: event.target.value});
       break;
     case "companyName":
-      this.setState({company: event.target.value});
+      this.setState({companyName: event.target.value});
       break;
     case "url":
       this.setState({url: event.target.value});
@@ -82,17 +100,22 @@ handleInput(event,type){
 }
 
   render(){
+
     var key = 1;
-
-
-
-
     return(
       <div>
+        <CSSTransitionGroup
+          transitionName="modalBackground"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+
+          >
         {this.props.viewdetails &&
           <div style={styles.jmodalbackdrop} onClick={()=>this.props.close()} />
 
         }
+      </CSSTransitionGroup>
+
         <CSSTransitionGroup
           transitionName="modal"
           transitionEnterTimeout={500}
@@ -147,14 +170,14 @@ handleInput(event,type){
                   </div>
                   <div className="card-footer d-flex justify-content-end" style={styles.modalHeaderFooter}>
                     {this.state.editmode?
-                      <button type="button" className="btn btn-primary mr-3">Save</button>
+                      <button type="button" className="btn btn-primary mr-3" onClick={()=>this.onSave()}>Save</button>
                     :
                     <button type="button" className="btn btn-secondary mr-3"  onClick={()=>this.onEdit()}>Edit</button>
                     }
                     {this.state.editmode?
                     <button type="button" className="btn btn-secondary" onClick={()=>this.onEdit()}>Cancel</button>
                     :
-                    <button type="button" className="btn btn-secondary">Close</button>
+                    <button type="button" className="btn btn-secondary" onClick={()=>this.props.close()}>Close</button>
                     }
                   </div>
                 </div>

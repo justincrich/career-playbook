@@ -78,6 +78,17 @@ export default function JobsReducer(state=initialState,action){
         currendID:action._id
       };
     }
+    case JobsActionTypes.UPDATE_JOB:{
+
+        for(var i = 0; i<state.jobs.length;i++){
+          if(state.jobs[i]._id===action.job._id){
+            state.jobs = [...state.jobs.slice(0,i),action.job,...state.jobs.slice(i+1)];
+          }
+        }
+      return {
+        ...state
+      }
+    }
     case JobsActionTypes.DELETE_JOB:{
         var id = action._id;
         for(var i = 0; i<state.jobs.length;i++){

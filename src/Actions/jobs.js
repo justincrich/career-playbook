@@ -29,9 +29,9 @@ export const deleteJob = (_id) =>{
   };
 };
 
-export const findJob = (query)=>{
+export const searchJob = (query)=>{
   return{
-    type:ActionTypes.FIND_JOB,
+    type:ActionTypes.SEARCH_JOB,
     query
   };
 }

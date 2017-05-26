@@ -26,7 +26,7 @@ class JobsContainer extends Component{
   }
 
   selectJob(id,jobFunc){
-    // console.log("JOB",this.job);
+
     jobFunc(id);
     this.setState({
       selected:id
@@ -43,18 +43,18 @@ class JobsContainer extends Component{
   }
 
   addJob(){
-    console.log("ADD JOB");
+
   }
 
   closeModal(){
-    console.log("CLOSE TEST");
+
     this.setState({
       viewdetails:false
     });
   }
 
   save(job, updateJob){
-    console.log("Saving job in container",job);
+
     this.setState({
       viewdetails:false
     });
@@ -74,7 +74,7 @@ class JobsContainer extends Component{
     const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
     const searchJOB = bindActionCreators(Actions.searchJob,dispatch);
     const sendJOB = ()=>job;
-    console.log(jobs, searchResults, index,job,_id);
+
     return(
 
       <div>

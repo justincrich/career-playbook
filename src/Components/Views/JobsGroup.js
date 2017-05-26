@@ -36,7 +36,7 @@ class JobsGroup extends Component{
   }
 
   closeModal(){
-    console.log("CLOSE TEST");
+
     this.setState({
       addModal:false,
     });

@@ -79,7 +79,7 @@ class JobsGroup extends Component{
                   </div>
 
                 <div className="ml-3">
-                  <button type="button" style={styles.addButton} className="btn btn-secondary py-2" ><i className="material-icons">add</i></button>
+                  <button type="button" style={styles.addButton} className="btn btn-secondary py-2" onClick={()=>this.openModal()}><i className="material-icons">add</i></button>
                 </div>
               </div>
                 {this.state.query.length === 0 ?

@@ -122,7 +122,7 @@ handleInput(event,type){
           transitionLeaveTimeout={500}
 
           >
-            {this.props.viewdetails &&
+            {this.props.viewdetails & !this.props.job.isFetching &&
                 <div key={key} className="card jModal" >
                   <div className="card-header " style={styles.modalHeaderFooter}>
                     <h5>Job</h5>

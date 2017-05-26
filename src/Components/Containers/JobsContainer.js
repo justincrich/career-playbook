@@ -25,11 +25,11 @@ class JobsContainer extends Component{
 
   }
 
-  selectJob(id,jobFunc){
+  selectJob(id,jobFunc,job){
 
-    jobFunc(id);
+    jobFunc("591b891e92f23a26c95fd036");
     this.setState({
-      selected:id
+      selected:"591b891e92f23a26c95fd036"
     });
     this.setState(prevState => ({
       viewdetails: !prevState.viewdetails
@@ -67,20 +67,22 @@ class JobsContainer extends Component{
 
   render(){
     // Redux Setup
-    const {dispatch, jobs, searchResults, index,job,_id}=this.props;
-    const selectJOB = bindActionCreators(Actions.getJob,dispatch);
+    const {dispatch, jobs, searchResults,job}=this.props;
+    const requestJob = bindActionCreators(Actions.fetchJob,dispatch);
     const createJOB = bindActionCreators(Actions.createJob,dispatch);
     const deleteJOB = bindActionCreators(Actions.deleteJob,dispatch);
     const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
     const searchJOB = bindActionCreators(Actions.searchJob,dispatch);
     const sendJOB = ()=>job;
 
+
+
     return(
 
       <div>
         <div className="">
-          <JobsGroup jobs={jobs} icon1="business_center" icon2="business"
-            selectJob={(id)=>{this.selectJob(id, selectJOB.bind(this),job)}}
+          <JobsGroup jobs={jobs.values} icon1="business_center" icon2="business"
+            selectJob={(id)=>{this.selectJob(id, requestJob.bind(this),job)}}
             onRemove={deleteJOB}
             addJob={createJOB}
             onSearch={searchJOB}
@@ -88,7 +90,7 @@ class JobsContainer extends Component{
           />
 
         </div>
-         <JobDetailModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB}
+         <JobDetailModal job={job.item} viewdetails={this.state.viewdetails} getJob={sendJOB}
            save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
 
       </div>
@@ -102,8 +104,6 @@ const mapStateToProps= state =>(
     {
       jobs:state.jobs,
       searchResults: state.searchResults,
-      index:state.index,
-      _id:state._id,
       job:state.job,
     }
 );

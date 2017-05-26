@@ -1,45 +1,38 @@
 import * as JobsActionTypes from '../ActionTypes/jobs-actiontypes';
+import { combineReducers } from 'redux';
 import Fuse from 'fuse.js';
 
 const initialState = {
-  jobs:[
-    {
-        _id:1,
-        title:"Engineer",
-        companyName:"Google",
-        companyID:123,
-        url:"google.com",
-        notes:"aaa"
-      },
+  jobs:{
+    isFetching:false,
+    reqestID:-1,
+    lastUpdated:-1,
+    values:[
       {
-        _id:2,
-        title:"Engineer",
-        companyName:"Facebook",
-        companyID:234,
-        url:"facebook.com",
-        notes:"bbb"
-      },
-      {
-        _id:3,
-        title:"Engineer",
-        companyName:"Snapchat",
-        companyID:143,
-        url:"snapchat.com",
-        notes:"ccc"
-      }
-  ],
+          _id:1,
+          title:"Engineer",
+          companyName:"Google",
+          companyID:123,
+          url:"google.com",
+          notes:"aaa"
+        }
+    ]
+  },
   searchResults:[
 
   ],
-  index:-1,
-  _id:-1,
   job:{
-    _id:-1,
-    title:"blank",
-    companyName:"blank",
-    companyID:-1,
-    url:"blank",
-    notes:"blank"
+      isFetching:false,
+      reqestID:-1,
+      lastUpdated:-1,
+      item:{
+        _id:-1,
+        title:"blank",
+        companyName:"blank",
+        companyID:-1,
+        url:"blank",
+        notes:"blank"
+      }
   }
 
 };
@@ -47,28 +40,54 @@ const initialState = {
 
 
 
-export default function JobsReducer(state=initialState,action){
+function JobsReducer(state=initialState,action){
 
   switch(action.type){
-    case JobsActionTypes.GET_JOB:{
-      var job = state.job;
-        var arr = state.jobs;
-
-        for(var i = 0; i<arr.length;i++){
-          if(arr[i]._id===action._id){
-            job = arr[i];
-          }
+    case JobsActionTypes.REQUEST_JOB:{
+      var reqJob={
+        isFetching:action.isFetching,
+        reqestID:action._id,
+        lastUpdated:state.job.lastUpdated,
+        item:state.job.item
+      }
+        return {
+          ...state,job:reqJob
         }
-      return{
-				...state,
-				index: action.index,
-        currentID:action._id,
-        job:job,
-        modalCall:JobsActionTypes.GET_JOB
-			};
+    }
+    case JobsActionTypes.RECEIVE_JOB_SUCCESS:{
+      console.log("RECEIVE JOB: ",action);
+      var receiveJob={
+        isFetching:action.isFetching,
+        reqestID:action._id,
+        lastUpdated:action.receivedAt,
+        item:action.job
+      }
+        return {
+          ...state,job:receiveJob
+        }
+    }
+    case JobsActionTypes.REQUEST_ALL_JOBS:{
+      var reqAllJobs={
+        isFetching:action.isFetching,
+        lastUpdated:state.jobs.lastUpdated,
+        item:state.jobs.values
+      }
+        return {
+          ...state,jobs:reqAllJobs
+        }
+    }
+    case JobsActionTypes.RECEIVE_ALL_JOBS_SUCCESS:{
+      console.log("RECEIVE JOB: ",action);
+      var receiveJob={
+        isFetching:action.isFetching,
+        lastUpdated:action.receivedAt,
+        item:action.jobs
+      }
+        return {
+          ...state,job:receiveJob
+        }
     }
     case JobsActionTypes.SEARCH_JOB:{
-
       var options={
         shouldSort: true,
         threshold: 0.6,
@@ -125,18 +144,30 @@ export default function JobsReducer(state=initialState,action){
 
 }
 
-
-
-// getAllJobs(){
-//
-//   axios.get('http://localhost:3030/jobs/')
-//   .then(response => {
-//     this.setState({
-//       jobs: response.data,
-//     });
-//
-//   })
-//   .catch(error => {
-//     //console.log('Error fetching and parsing data', error);
-//   });
+// //Handles all actions to the Jobs API
+// function ServicesJobsReducer (state = initialState,action){
+//   switch(action.type){
+//     case JobsActionTypes.REQUEST_JOB:
+//       return Object.assign({},state,{job:{
+//           isFetching:action.isFetching,
+//           reqestID:action._id
+//         }
+//       }
+//     );
+//     case JobsActionTypes.RECEIVE_JOB:
+//       return Object.assign({},state,{job:{
+//         isFetching:action.isFetching,
+//         item:action.job,
+//         lastUpdated:action.receivedAt
+//       }});
+//     default:
+//       return state
+//   }
 // }
+
+// const JobsReducer = combineReducers({
+//   FrontendJobsReducer,
+//   ServicesJobsReducer
+// });
+
+export default JobsReducer;

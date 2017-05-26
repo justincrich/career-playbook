@@ -28,6 +28,9 @@ const initialState = {
         notes:"ccc"
       }
   ],
+  searchResults:[
+
+  ],
   index:-1,
   _id:-1,
   job:{
@@ -65,7 +68,7 @@ export default function JobsReducer(state=initialState,action){
 			};
     }
     case JobsActionTypes.SEARCH_JOB:{
-
+      console.log("Result length",state.searchResults.length);
       var options={
         shouldSort: true,
         threshold: 0.6,
@@ -82,6 +85,7 @@ export default function JobsReducer(state=initialState,action){
       var fuse = new Fuse(state.jobs,options);
 
       console.log("SEARCH QUERY: ",action.query," Results ", fuse.search(action.query));
+      state.searchResults=fuse.search(action.query);
       return{
         ...state
       };

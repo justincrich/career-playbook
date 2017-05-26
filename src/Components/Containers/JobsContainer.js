@@ -61,15 +61,20 @@ class JobsContainer extends Component{
     updateJob(job._id,job)
   }
 
+  search(query, searchJob){
+
+  }
+
   render(){
     // Redux Setup
-    const {dispatch, jobs, index,job,_id}=this.props;
+    const {dispatch, jobs, searchResults, index,job,_id}=this.props;
     const selectJOB = bindActionCreators(Actions.getJob,dispatch);
     const createJOB = bindActionCreators(Actions.createJob,dispatch);
     const deleteJOB = bindActionCreators(Actions.deleteJob,dispatch);
     const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
+    const searchJOB = bindActionCreators(Actions.searchJob,dispatch);
     const sendJOB = ()=>job;
-
+    console.log(jobs, searchResults, index,job,_id);
     return(
 
       <div>
@@ -77,7 +82,10 @@ class JobsContainer extends Component{
           <JobsGroup jobs={jobs} icon1="business_center" icon2="business"
             selectJob={(id)=>{this.selectJob(id, selectJOB.bind(this),job)}}
             onRemove={deleteJOB}
-            addJob={createJOB}/>
+            addJob={createJOB}
+            onSearch={searchJOB}
+            searchresults={searchResults}
+          />
 
         </div>
          <JobDetailModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB}
@@ -93,6 +101,7 @@ class JobsContainer extends Component{
 const mapStateToProps= state =>(
     {
       jobs:state.jobs,
+      searchResults: state.searchResults,
       index:state.index,
       _id:state._id,
       job:state.job,

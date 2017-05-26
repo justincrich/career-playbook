@@ -23,8 +23,10 @@ class JobsGroup extends Component{
     super(props);
     this.state={
       addModal:false,
+      query:""
     };
     this.closeModal.bind(this);
+    this.handleInput.bind(this);
   }
 
   openModal(){
@@ -40,8 +42,8 @@ class JobsGroup extends Component{
     });
   }
 
-  render(){
-    let jobs = this.props.jobs.map((job,index)=>(
+  listJobs(arr){
+    return arr.map((job,index)=>(
         <Job
           key={job._id}
           _id={job._id}
@@ -55,19 +57,36 @@ class JobsGroup extends Component{
           onRemove={this.props.onRemove}
         />
       ));
+  }
+
+  handleInput(event){
+    this.setState({query:event.target.value});
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    if(this.state.query!==nextState.query){
+      this.props.onSearch(nextState.query);
+    }
+  }
+
+  render(){
       return(
             <div className="container ">
               <div className="d-flex flex-row align-center w-100 mb-2">
                   <div className="input-group">
-                    <span className="input-group-addon" id="job-search"><i className="material-icons">search</i></span>
-                    <input type="search" className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
+                    <span className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
+                    <input type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
                   </div>
 
                 <div className="ml-3">
-                  <button type="button" style={styles.addButton} className="btn btn-secondary py-2" onClick={()=>this.openModal()}><i className="material-icons">add</i></button>
+                  <button type="button" style={styles.addButton} className="btn btn-secondary py-2" ><i className="material-icons">add</i></button>
                 </div>
               </div>
-                {jobs}
+                {this.state.query.length === 0 ?
+                  this.listJobs(this.props.jobs)
+                  :
+                  this.listJobs(this.props.searchresults)
+                }
                 <JobCreateModal  save={this.props.addJob} modalState={this.state.addModal} close={()=>this.closeModal()}/>
           </div>
 

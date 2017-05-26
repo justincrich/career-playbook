@@ -1,5 +1,5 @@
 import * as JobsActionTypes from '../ActionTypes/jobs-actiontypes';
-
+import Fuse from 'fuse.js';
 
 const initialState = {
   jobs:[
@@ -43,6 +43,7 @@ const initialState = {
 
 
 
+
 export default function JobsReducer(state=initialState,action){
 
   switch(action.type){
@@ -63,19 +64,32 @@ export default function JobsReducer(state=initialState,action){
         modalCall:JobsActionTypes.GET_JOB
 			};
     }
+    case JobsActionTypes.SEARCH_JOB:{
+
+      var options={
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys:[
+          "title",
+          "companyName"
+        ]
+      };
+
+      var fuse = new Fuse(state.jobs,options);
+
+      console.log("SEARCH QUERY: ",action.query," Results ", fuse.search(action.query));
+      return{
+        ...state
+      };
+    }
     case JobsActionTypes.CREATE_JOB:{
-      state.jobs.push({_id:action._id,tile:action.title,company:action.company});
+      state.jobs.push(action.job);
       return {
-        ...state,
-        job: {
-          _id:action._id,
-          tile:action.title,
-          companyName:action.companyName,
-          companyID:action.companyID,
-          url:action.url,
-          notes:action.notes
-        },
-        currendID:action._id
+        ...state
       };
     }
     case JobsActionTypes.UPDATE_JOB:{

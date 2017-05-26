@@ -8,15 +8,10 @@ export const getJob = (_id) =>{
   };
 };
 
-export const createJob = (_id,title,companyName,companyID,url,notes) =>{
+export const createJob = (job) =>{
   return{
     type:ActionTypes.CREATE_JOB,
-    _id,
-    title,
-    companyName,
-    companyID,
-    url,
-    notes
+    job
   };
 };
 
@@ -33,3 +28,10 @@ export const deleteJob = (_id) =>{
     _id
   };
 };
+
+export const findJob = (query)=>{
+  return{
+    type:ActionTypes.FIND_JOB,
+    query
+  };
+}

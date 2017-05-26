@@ -1,30 +1,31 @@
 import React, {Component} from 'react';
-import { Link, BrowserRouter, Route, Switch } from 'react-router';
+import { Route, NavLink, Redirect } from 'react-router';
+import {connect} from 'react-redux';
+import JobsContainer from '../Containers/JobsContainer';
 
 
 
 
-class Main extends Component{
-  constructor(props){
-    super(props);
-    this.state ={
-    };
-  }
-
-
-
-  render(){
-    return(
-      <div>
-        <h1>Main</h1>
-        <h1>Main</h1>
-        <h1>Main</h1>
-        <h1>Main</h1>
-
+const Main =({match})=>(
+  <div className="container App">
+    <div className="card my-5">
+      <div className="card-header">
+        <ul className="nav nav-tabs card-header-tabs">
+          <li className="nav-item">
+            <a className="nav-link" href="#">Jobs</a>
+          </li>
+        </ul>
       </div>
+      <div className="card-block">
+        {/* Routes */}
+        <Route exact path={match.path}
+             render={ () => <Redirect to={`${match.path}/jobs`} /> } />
+        <Route path={`${match.path}/jobs`}
+            render={ () => <JobsContainer /> } />
+            {/* <Route path={`${match.path}/jobs`} component={JobsContainer}/> */}
+      </div>
+    </div>
 
-    );
-  }
-
-}
+  </div>
+);
 export default Main;

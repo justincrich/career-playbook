@@ -6,6 +6,7 @@ import Radium from 'radium';
 const divStyle = {
   background:'transparent',
   padding:'0 0 0 0',
+  display:'inline-block',
   ':focus': {
       background:'transparent',
       boxShadow:"none",
@@ -13,7 +14,7 @@ const divStyle = {
     ':hover': {
         background:'transparent',
         boxShadow:"none",
-        color:"#F7F7F7",
+        color:"#E6E6E6",
       },
 };
 

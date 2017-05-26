@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../Actions/jobs';
-import JobModal from '../Views/JobModal';
+import JobDetailModal from '../ModalViews/JobDetailModal';
 import JobModalView from '../ModalViews/JobModalView';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
@@ -21,6 +21,7 @@ class JobsContainer extends Component{
     this.selectJob.bind(this);
     this.save.bind(this);
     this.closeModal.bind(this);
+    this.addJob.bind(this);
 
   }
 
@@ -39,6 +40,10 @@ class JobsContainer extends Component{
   removeJob(){
     //this.state.history.push(`jobs/${teacherTopic}/${teacherName}`);
     //console.log(this.state.history);
+  }
+
+  addJob(){
+    console.log("ADD JOB");
   }
 
   closeModal(){
@@ -71,10 +76,12 @@ class JobsContainer extends Component{
         <div className="">
           <JobsGroup jobs={jobs} icon1="business_center" icon2="business"
             selectJob={(id)=>{this.selectJob(id, selectJOB.bind(this),job)}}
-            onRemove={deleteJOB}/>
+            onRemove={deleteJOB}
+            addJob={createJOB}/>
 
         </div>
-         <JobModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB} save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
+         <JobDetailModal job={job} viewdetails={this.state.viewdetails} getJob={sendJOB}
+           save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
 
       </div>
 

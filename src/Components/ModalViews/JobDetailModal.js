@@ -36,7 +36,7 @@ class JobModal extends Component{
       value:'',
       _id:-1,
       title:"",
-      companyID:"-1",
+      companyID:-1,
       companyName:"",
       url:"",
       notes:"",

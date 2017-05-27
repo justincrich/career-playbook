@@ -46,7 +46,7 @@ class JobModal extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-
+    console.log(nextProps);
     this.setState({
       value:'VALUE',
       _id:nextProps.job._id,

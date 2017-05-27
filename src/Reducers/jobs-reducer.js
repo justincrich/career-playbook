@@ -156,17 +156,41 @@ function JobsReducer(state=initialState,action){
         ...state
       }
     }
-    case JobsActionTypes.DELETE_JOB:{
-        var id = action._id;
-        for(var i = 0; i<state.allJobs.length;i++){
-          if(state.allJobs[i]._id===action._id){
-            state.allJobs = [...state.allJobs.slice(0,i),...state.allJobs.slice(i+1)];
-
-          }
+    // CREATE JOB
+    case JobsActionTypes.REQUEST_DELETE_JOB:{
+      var reqJob={
+        isFetching:action.isFetching,
+        reqestID:action._id,
+        lastUpdated:0,
+        item:{}
+      }
+        return {
+          ...state,job:reqJob
         }
+    }
+    case JobsActionTypes.RECEIVE_DELETE_JOB_SUCCESS:{
+      console.log("DELETE SUCCESS!");
+      var receiveJob={
+        isFetching:action.isFetching,
+        reqestID:state.job.requestID,
+        lastUpdated:action.receivedAt,
+      }
+      // var arr = state.allJobs.records;
+      // for(var i = 0; i<arr.length;i++){
+      //   if(arr[i]._id===action.job._id){
+      //     arr = [arr.slice(0,i),arr.slice(i+1)];
+      //
+      //   }
+      // }
+
       return {
-        ...state,
-      };
+        ...state,job:receiveJob,allJobs:{
+          isFetching:false,
+          reqestID:-1,
+          lastUpdated:action.receivedAt,
+          records:action.jobsRemaining
+        }
+      }
     }
     default:
       return state;
@@ -174,31 +198,5 @@ function JobsReducer(state=initialState,action){
 
 
 }
-
-// //Handles all actions to the Jobs API
-// function ServicesJobsReducer (state = initialState,action){
-//   switch(action.type){
-//     case JobsActionTypes.REQUEST_JOB:
-//       return Object.assign({},state,{job:{
-//           isFetching:action.isFetching,
-//           reqestID:action._id
-//         }
-//       }
-//     );
-//     case JobsActionTypes.RECEIVE_JOB:
-//       return Object.assign({},state,{job:{
-//         isFetching:action.isFetching,
-//         item:action.job,
-//         lastUpdated:action.receivedAt
-//       }});
-//     default:
-//       return state
-//   }
-// }
-
-// const JobsReducer = combineReducers({
-//   FrontendJobsReducer,
-//   ServicesJobsReducer
-// });
 
 export default JobsReducer;

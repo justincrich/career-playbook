@@ -11,7 +11,7 @@ const divImgStyle = {
 var id= "";
 
 function Job(props){
-
+  console.log("JOB PROPS", props._id);
   return(
     <li id={props._id} className="list-group-item d-flex flex-row align-items-center">
       <div className="d-flex flex-row">

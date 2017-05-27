@@ -28,10 +28,7 @@ class JobsContainer extends Component{
 
   selectJob(id,jobFunc,job){
 
-    jobFunc("591b891e92f23a26c95fd036");
-    this.setState({
-      selected:"591b891e92f23a26c95fd036"
-    });
+    jobFunc(id);
     this.setState(prevState => ({
       viewdetails: !prevState.viewdetails
     }));
@@ -72,7 +69,7 @@ class JobsContainer extends Component{
     const requestJob = bindActionCreators(Actions.fetchJob,dispatch);
     const requestAllJobs = bindActionCreators(Actions.requestAllJobs,dispatch);
     const createJOB = bindActionCreators(Actions.fetchCreateJob,dispatch);
-    const deleteJOB = bindActionCreators(Actions.deleteJob,dispatch);
+    const deleteJOB = bindActionCreators(Actions.fetchDeleteJob,dispatch);
     const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
     const searchJOB = bindActionCreators(Actions.searchJob,dispatch);
     const sendJOB = ()=>job;
@@ -92,7 +89,7 @@ class JobsContainer extends Component{
           />
 
         </div>
-         <JobDetailModal job={job.item} viewdetails={this.state.viewdetails} getJob={sendJOB}
+         <JobDetailModal job={job.item} viewdetails={this.state.viewdetails}
            save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
 
       </div>

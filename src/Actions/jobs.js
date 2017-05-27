@@ -132,7 +132,6 @@ export function fetchCreateJob(job){
       })
 
     }
-    console.log("BEFORE CALL",job);
     var req = new Request(url,init);
 
     return fetch(req)
@@ -155,11 +154,11 @@ export const requestDeleteJob=(_id)=>{
   };
 }
 
-export const receiveDeleteJob=(job)=>{
+export const receiveDeleteJob=(jobsRemaining)=>{
   return{
     type:ActionTypes.RECEIVE_DELETE_JOB_SUCCESS,
     isFetching:false,
-    job: job,
+    jobsRemaining: jobsRemaining,
     receivedAt:Date.now()
   };
 }
@@ -173,7 +172,7 @@ export function fetchDeleteJob(_id){
     dispatch(requestDeleteJob(_id));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS.concat(_id);
     var init = {
       method:'DELETE',
       mode:'cors',
@@ -190,6 +189,7 @@ export function fetchDeleteJob(_id){
       .then(response=>response.json())
       .then(json=>
         dispatch(receiveDeleteJob(json))
+        // console.log("RESPONSE DELETE",json)
       ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
 
   }

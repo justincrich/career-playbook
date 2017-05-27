@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 
 //GET ALL JOBS
 export const requestAllJobs=()=>{
+
   return{
     type: ActionTypes.REQUEST_ALL_JOBS,
     isFetching:true
@@ -14,7 +15,7 @@ export const receiveAllJobs=(json)=>{
   return{
     type:ActionTypes.RECEIVE_ALL_JOBS_SUCCESS,
     isFetching:false,
-    jobs: json,
+    allJobs: json,
     receivedAt:Date.now()
   };
 }

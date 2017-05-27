@@ -3,11 +3,11 @@ import { combineReducers } from 'redux';
 import Fuse from 'fuse.js';
 
 const initialState = {
-  jobs:{
+  allJobs:{
     isFetching:false,
     reqestID:-1,
     lastUpdated:-1,
-    values:[
+    records:[
       {
           _id:1,
           title:"Engineer",
@@ -55,7 +55,7 @@ function JobsReducer(state=initialState,action){
         }
     }
     case JobsActionTypes.RECEIVE_JOB_SUCCESS:{
-      console.log("RECEIVE JOB: ",action);
+
       var receiveJob={
         isFetching:action.isFetching,
         reqestID:action._id,
@@ -69,22 +69,23 @@ function JobsReducer(state=initialState,action){
     case JobsActionTypes.REQUEST_ALL_JOBS:{
       var reqAllJobs={
         isFetching:action.isFetching,
-        lastUpdated:state.jobs.lastUpdated,
-        item:state.jobs.values
+        lastUpdated:state.allJobs.lastUpdated,
+        records:state.allJobs.records
       }
         return {
-          ...state,jobs:reqAllJobs
+          ...state,allJobs:reqAllJobs
         }
     }
     case JobsActionTypes.RECEIVE_ALL_JOBS_SUCCESS:{
-      console.log("RECEIVE JOB: ",action);
-      var receiveJob={
+
+      var resAllJobs={
         isFetching:action.isFetching,
         lastUpdated:action.receivedAt,
-        item:action.jobs
+        records:action.allJobs,
+        receivedAt:action.receivedAt
       }
         return {
-          ...state,job:receiveJob
+          ...state,allJobs:resAllJobs
         }
     }
     case JobsActionTypes.SEARCH_JOB:{
@@ -101,7 +102,7 @@ function JobsReducer(state=initialState,action){
         ]
       };
 
-      var fuse = new Fuse(state.jobs,options);
+      var fuse = new Fuse(state.allJobs,options);
 
       state.searchResults=fuse.search(action.query);
       return{
@@ -109,16 +110,16 @@ function JobsReducer(state=initialState,action){
       };
     }
     case JobsActionTypes.CREATE_JOB:{
-      state.jobs.push(action.job);
+      state.allJobs.push(action.job);
       return {
         ...state
       };
     }
     case JobsActionTypes.UPDATE_JOB:{
 
-        for(var i = 0; i<state.jobs.length;i++){
-          if(state.jobs[i]._id===action.job._id){
-            state.jobs = [...state.jobs.slice(0,i),action.job,...state.jobs.slice(i+1)];
+        for(var i = 0; i<state.allJobs.length;i++){
+          if(state.allJobs[i]._id===action.job._id){
+            state.allJobs = [...state.allJobs.slice(0,i),action.job,...state.allJobs.slice(i+1)];
           }
         }
       return {
@@ -127,9 +128,9 @@ function JobsReducer(state=initialState,action){
     }
     case JobsActionTypes.DELETE_JOB:{
         var id = action._id;
-        for(var i = 0; i<state.jobs.length;i++){
-          if(state.jobs[i]._id===action._id){
-            state.jobs = [...state.jobs.slice(0,i),...state.jobs.slice(i+1)];
+        for(var i = 0; i<state.allJobs.length;i++){
+          if(state.allJobs[i]._id===action._id){
+            state.allJobs = [...state.allJobs.slice(0,i),...state.allJobs.slice(i+1)];
 
           }
         }

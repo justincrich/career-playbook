@@ -71,7 +71,7 @@ class JobsContainer extends Component{
     const {dispatch, allJobs, searchResults,job}=this.props;
     const requestJob = bindActionCreators(Actions.fetchJob,dispatch);
     const requestAllJobs = bindActionCreators(Actions.requestAllJobs,dispatch);
-    const createJOB = bindActionCreators(Actions.createJob,dispatch);
+    const createJOB = bindActionCreators(Actions.fetchCreateJob,dispatch);
     const deleteJOB = bindActionCreators(Actions.deleteJob,dispatch);
     const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
     const searchJOB = bindActionCreators(Actions.searchJob,dispatch);

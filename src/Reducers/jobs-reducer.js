@@ -8,14 +8,14 @@ const initialState = {
     reqestID:-1,
     lastUpdated:-1,
     records:[
-      {
-          _id:1,
-          title:"Engineer",
-          companyName:"Google",
-          companyID:123,
-          url:"google.com",
-          notes:"aaa"
-        }
+      // {
+      //     _id:1,
+      //     title:"Engineer",
+      //     companyName:"Google",
+      //     companyID:123,
+      //     url:"google.com",
+      //     notes:"aaa"
+      // }
     ]
   },
   searchResults:[
@@ -26,12 +26,12 @@ const initialState = {
       reqestID:-1,
       lastUpdated:-1,
       item:{
-        _id:-1,
-        title:"blank",
-        companyName:"blank",
-        companyID:-1,
-        url:"blank",
-        notes:"blank"
+        // _id:-1,
+        // title:"blank",
+        // companyName:"blank",
+        // companyID:-1,
+        // url:"blank",
+        // notes:"blank"
       }
   }
 
@@ -43,6 +43,7 @@ const initialState = {
 function JobsReducer(state=initialState,action){
 
   switch(action.type){
+    // REQUEST ONE JOB
     case JobsActionTypes.REQUEST_JOB:{
       var reqJob={
         isFetching:action.isFetching,
@@ -66,6 +67,7 @@ function JobsReducer(state=initialState,action){
           ...state,job:receiveJob
         }
     }
+    // GET ALL JOBS
     case JobsActionTypes.REQUEST_ALL_JOBS:{
       var reqAllJobs={
         isFetching:action.isFetching,
@@ -88,6 +90,7 @@ function JobsReducer(state=initialState,action){
           ...state,allJobs:resAllJobs
         }
     }
+    // SEARCH CURRENT LIST OF JOBS
     case JobsActionTypes.SEARCH_JOB:{
       var options={
         shouldSort: true,
@@ -102,18 +105,45 @@ function JobsReducer(state=initialState,action){
         ]
       };
 
-      var fuse = new Fuse(state.allJobs,options);
+      var fuse = new Fuse(state.allJobs.records,options);
 
       state.searchResults=fuse.search(action.query);
       return{
         ...state
       };
     }
-    case JobsActionTypes.CREATE_JOB:{
-      state.allJobs.push(action.job);
+    // CREATE JOB
+    case JobsActionTypes.REQUEST_CREATE_JOB:{
+      var reqJob={
+        isFetching:action.isFetching,
+        reqestID:0,
+        lastUpdated:0,
+        item:action.job
+      }
+        return {
+          ...state,job:reqJob
+        }
+    }
+    case JobsActionTypes.RECEIVE_CREATE_JOB_SUCCESS:{
+
+      var receiveJob={
+        isFetching:action.isFetching,
+        reqestID:action.job._id,
+        lastUpdated:action.receivedAt,
+        item:action.job
+      }
+      var arr = state.allJobs.records;
+      console.log("ALL JOBS",arr);
+      arr.push(action.job);
+
       return {
-        ...state
-      };
+        ...state,job:receiveJob,allJobs:{
+          isFetching:false,
+          reqestID:-1,
+          lastUpdated:action.receivedAt,
+          records:arr
+        }
+      }
     }
     case JobsActionTypes.UPDATE_JOB:{
 

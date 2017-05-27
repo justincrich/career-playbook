@@ -43,7 +43,6 @@ export function fetchAllJobs(){
 }
 
 //GET ONE JOB
-
 export const requestJob=(_id)=>{
   return{
     type: ActionTypes.REQUEST_JOB,
@@ -94,12 +93,107 @@ export function fetchJob(_id){
 
 
 //CREATE JOB
-export const createJob = (job) =>{
+
+export const requestCreateJob=(job)=>{
   return{
-    type:ActionTypes.CREATE_JOB,
-    job
+    type: ActionTypes.REQUEST_CREATE_JOB,
+    isFetching:true,
+    job:job
   };
-};
+}
+
+export const receiveCreateJob=(job)=>{
+  return{
+    type:ActionTypes.RECEIVE_CREATE_JOB_SUCCESS,
+    isFetching:false,
+    job: job,
+    receivedAt:Date.now()
+  };
+}
+
+
+//Thunk action handlers
+export function fetchCreateJob(job){
+  console.log("CREATE JOB",job);
+  return function(dispatch){
+
+    //Update state to inform app we're processing
+    dispatch(requestCreateJob(job));
+    //Get job
+    var useSSL = 'https:' === document.location.protocol;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS;
+    var init = {
+      method:'POST',
+      mode:'cors',
+      body:JSON.stringify(job),
+      headers: new Headers({
+        'Content-Type':'application/json; charset=utf-8',
+        'Data-Type':'json'
+      })
+
+    }
+    console.log("BEFORE CALL",job);
+    var req = new Request(url,init);
+
+    return fetch(req)
+      .then(response=>response.json())
+      .then(json=>
+        dispatch(receiveCreateJob(json))
+      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+
+  }
+}
+
+
+
+//DELETE JOB
+export const requestDeleteJob=(_id)=>{
+  return{
+    type: ActionTypes.REQUEST_DELETE_JOB,
+    isFetching:true,
+    _id:_id
+  };
+}
+
+export const receiveDeleteJob=(job)=>{
+  return{
+    type:ActionTypes.RECEIVE_DELETE_JOB_SUCCESS,
+    isFetching:false,
+    job: job,
+    receivedAt:Date.now()
+  };
+}
+
+
+//Thunk action handlers
+export function fetchDeleteJob(_id){
+  return function(dispatch){
+
+    //Update state to inform app we're processing
+    dispatch(requestDeleteJob(_id));
+    //Get job
+    var useSSL = 'https:' === document.location.protocol;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS;
+    var init = {
+      method:'DELETE',
+      mode:'cors',
+      // body:JSON.stringify(job),
+      headers: new Headers({
+        'Content-Type':'application/json; charset=utf-8',
+        'Data-Type':'json'
+      })
+
+    }
+    var req = new Request(url,init);
+
+    return fetch(req)
+      .then(response=>response.json())
+      .then(json=>
+        dispatch(receiveDeleteJob(json))
+      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+
+  }
+}
 
 export const updateJob = (_id,job) =>{
   return{

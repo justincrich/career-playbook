@@ -4,6 +4,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import IconButton from './IconButton';
 import JobCreateModal from '../ModalViews/JobAddModal';
 import reactCSS from 'reactcss';
+import defaultIMG from './company.jpg';
 
 //CSS
 import '../../../css/template.css';
@@ -43,6 +44,7 @@ class JobsGroup extends Component{
   }
 
   listJobs(arr){
+    var defaultIMG = "company.jpg";
     return arr.map((job,index)=>(
         <Job
           key={job._id}
@@ -51,7 +53,9 @@ class JobsGroup extends Component{
           icon1={this.props.icon1}
           text2={job.companyName}
           icon2={this.props.icon2}
-          image={job.image}
+          image={
+                job.image
+            }
           index={index}
           onClick={(id)=>this.props.selectJob(id)}
           onRemove={this.props.onRemove}

@@ -11,13 +11,19 @@ const divImgStyle = {
 var id= "";
 
 function Job(props){
+
   return(
     <li id={props._id} className="list-group-item d-flex flex-row align-items-center">
       <div className="d-flex flex-row">
         <IconButton name='clear' onClick={()=>props.onRemove(props._id)}/>
       </div>
         <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id)}>
-          <img src={props.image} style={divImgStyle} className="rounded-circle mx-2"/>
+          <img src={
+              props.image===undefined ?
+                require('./company.jpg') //use alternative image when none avaliable
+              :
+                require(props.image)
+            } style={divImgStyle} className="rounded-circle mx-2"/>
           <div className="mx-3 d-flex flex-row align-items-center hidden-sm-down">
             <i className="material-icons mr-2">{props.icon1}</i>
             {props.text1}

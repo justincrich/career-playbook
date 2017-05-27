@@ -41,7 +41,6 @@ class JobModal extends Component{
 onSave(){
   // console.log("SAVING IN MODAL",this.state.job)
   this.props.save({
-    _id:this.state._id,
     title:this.state.title,
     companyID:this.state.companyID,
     companyName:this.state.companyName,

@@ -194,20 +194,56 @@ export function fetchDeleteJob(_id){
 
   }
 }
-
-export const updateJob = (_id,job) =>{
+// UPDATE JOB FUNCTION
+export const requestUpdateJob=(job)=>{
   return{
-    type:ActionTypes.UPDATE_JOB,
-    job
+    type: ActionTypes.REQUEST_UPDATE_JOB,
+    isFetching:true,
+    job:job
   };
-};
+}
 
-export const deleteJob = (_id) =>{
+export const receiveUpdateJob=(job)=>{
   return{
-    type:ActionTypes.DELETE_JOB,
-    _id
+    type:ActionTypes.RECEIVE_UPDATE_JOB_SUCCESS,
+    isFetching:false,
+    job: job,
+    receivedAt:Date.now()
   };
-};
+}
+
+
+//Thunk action handlers
+export function fetchUpdateJob(job){
+  return function(dispatch){
+
+    //Update state to inform app we're processing
+    dispatch(requestUpdateJob(job));
+    //Get job
+    var useSSL = 'https:' === document.location.protocol;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS.concat(job._id);
+    var init = {
+      method:'PUT',
+      mode:'cors',
+      body:JSON.stringify(job),
+      headers: new Headers({
+        'Content-Type':'application/json; charset=utf-8',
+        'Data-Type':'json'
+      })
+
+    }
+    var req = new Request(url,init);
+
+    return fetch(req)
+      .then(response=>response.json())
+      .then(json=>
+        dispatch(receiveUpdateJob(json))
+      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+
+  }
+}
+
+
 
 export const searchJob = (query)=>{
   return{

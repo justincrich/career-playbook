@@ -20,7 +20,7 @@ class JobsContainer extends Component{
     }
     this.props.dispatch(Actions.fetchAllJobs());
     this.selectJob.bind(this);
-    this.save.bind(this);
+    this.saveUpdate.bind(this);
     this.closeModal.bind(this);
     this.addJob.bind(this);
 
@@ -51,12 +51,12 @@ class JobsContainer extends Component{
     });
   }
 
-  save(job, updateJob){
+  saveUpdate(job, updateJob){
 
     this.setState({
       viewdetails:false
     });
-    updateJob(job._id,job)
+    updateJob(job);
   }
 
   search(query, searchJob){
@@ -70,7 +70,7 @@ class JobsContainer extends Component{
     const requestAllJobs = bindActionCreators(Actions.requestAllJobs,dispatch);
     const createJOB = bindActionCreators(Actions.fetchCreateJob,dispatch);
     const deleteJOB = bindActionCreators(Actions.fetchDeleteJob,dispatch);
-    const updateJOB = bindActionCreators(Actions.updateJob,dispatch);
+    const updateJOB = bindActionCreators(Actions.fetchUpdateJob,dispatch);
     const searchJOB = bindActionCreators(Actions.searchJob,dispatch);
     const sendJOB = ()=>job;
 
@@ -90,7 +90,7 @@ class JobsContainer extends Component{
 
         </div>
          <JobDetailModal job={job.item} viewdetails={this.state.viewdetails}
-           save={(job)=>{this.save(job,updateJOB)}} close={()=>this.closeModal()}/>
+           save={(job)=>{this.saveUpdate(job,updateJOB.bind(this))}} close={()=>this.closeModal()}/>
 
       </div>
 

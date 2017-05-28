@@ -39,7 +39,7 @@ class JobModal extends Component{
       companyID:-1,
       companyName:"",
       url:"",
-      notes:"",
+      note:"",
 
     }
     this.onEdit.bind(this);
@@ -53,7 +53,7 @@ class JobModal extends Component{
       companyID:nextProps.job.companyID,
       companyName:nextProps.job.companyName,
       url:nextProps.job.url,
-      notes:nextProps.job.notes,
+      note:nextProps.job.note,
     });
 
   }
@@ -75,7 +75,7 @@ onSave(){
     companyID:this.state.companyID,
     companyName:this.state.companyName,
     url:this.state.url,
-    notes:this.state.notes
+    note:this.state.note
   });
 }
 
@@ -91,8 +91,8 @@ handleInput(event,type){
     case "url":
       this.setState({url: event.target.value});
       break;
-    case "notes":
-      this.setState({notes: event.target.value});
+    case "note":
+      this.setState({note: event.target.value});
       break;
     default:
   }
@@ -133,18 +133,18 @@ handleInput(event,type){
                           <label htmlFor="jobTitleInputLabel">Job Title</label>
                           {this.state.editmode?
                             <input type="text" className="form-control"
-                              defaultValue={this.props.job.title} id="jobTitleInput" placeholder="" onChange={(event)=>this.handleInput(event,"title")}/>
+                              defaultValue={this.state.title} id="jobTitleInput" placeholder="" onChange={(event)=>this.handleInput(event,"title")}/>
                             :
-                            <div>{this.props.job.title}</div>
+                            <div>{this.state.title}</div>
                           }
 
                         </div>
                         <div className="form-group">
                           <label htmlFor="companyNameInputLabel">Company Name</label>
                           {this.state.editmode?
-                            <input type="text" defaultValue={this.props.job.companyName} onChange={(event)=>this.handleInput(event,"companyName")} className="form-control" id="companyNameInput" placeholder=""/>
+                            <input type="text" defaultValue={this.state.companyName} onChange={(event)=>this.handleInput(event,"companyName")} className="form-control" id="companyNameInput" placeholder=""/>
                             :
-                            <div>{this.props.job.companyName}</div>
+                            <div>{this.state.companyName}</div>
                           }
                         </div>
 
@@ -152,16 +152,16 @@ handleInput(event,type){
                           {this.state.editmode &&
                             <div className="form-group">
                               <label htmlFor="urlInputLabel">Link To Job Listing</label>
-                              <input type="text" className="form-control" id="urlInputLabel" onChange={(event)=>this.handleInput(event,"url")} defaultValue={this.props.job.url} placeholder=""/>
+                              <input type="text" className="form-control" id="urlInputLabel" onChange={(event)=>this.handleInput(event,"url")} defaultValue={this.state.url} placeholder=""/>
                             </div>
                           }
 
                         <div className="form-group">
-                          <label htmlFor="notesInputLabel">Notes</label>
+                          <label htmlFor="noteInputLabel">note</label>
                           {this.state.editmode?
-                            <textarea className="form-control" id="notesInputLabel" defaultValue={this.props.job.notes} onChange={(event)=>this.handleInput(event,"notes")}rows="3"></textarea>
+                            <textarea className="form-control" id="noteInputLabel" defaultValue={this.state.note} onChange={(event)=>this.handleInput(event,"note")}rows="3"></textarea>
                             :
-                            <div>{this.props.job.notes}</div>
+                            <div>{this.state.note}</div>
                           }
                         </div>
                       </form>

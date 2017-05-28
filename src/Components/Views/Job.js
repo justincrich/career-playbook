@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import IconButton from './IconButton';
-import Radium from 'radium';
+import reactCSS from 'reactcss';
 
-const divImgStyle = {
-  width:'50px',
-  height:'50px',
-  border:'1px solid #D8D8DA',
-};
+const styles = reactCSS({
+  'default':{
+    image:{
+      width:'50px',
+      height:'50px',
+      border:'1px solid #D8D8DA',
+    }
+  }
+});
 
 var id= "";
 
@@ -22,14 +26,14 @@ function Job(props){
                 require('./company.jpg') //use alternative image when none avaliable
               :
                 require(props.image)
-            } style={divImgStyle} className="rounded-circle mx-2"/>
+            } style={styles.image} className="rounded-circle mx-2"/>
           <div className="mx-3 d-flex flex-row align-items-center hidden-sm-down">
-            <i className="material-icons mr-2">{props.icon1}</i>
-            {props.text1}
+            <div className="mr-2 text-muted">Job:</div>
+            <div className="h6 mb-0">{props.text1}</div>
           </div>
           <div className="mx-3 d-flex flex-row align-items-center ">
-            <i className="material-icons mr-2">{props.icon2}</i>
-            {props.text2}
+            <div className="mr-2 text-muted">Company:</div>
+            <div className="h6 mb-0">{props.text2}</div>
           </div>
         </div>
     </li>
@@ -43,4 +47,4 @@ function Job(props){
 //Styles
 
 
-export default Radium(Job);
+export default Job;

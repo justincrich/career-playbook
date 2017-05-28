@@ -34,18 +34,18 @@ class JobModal extends Component{
       companyID:(new Date).getTime(),
       companyName:"",
       url:"",
-      notes:"",
+      note:"",
     }
   }
 
 onSave(){
-  // console.log("SAVING IN MODAL",this.state.job)
+  console.log("SAVING IN MODAL",this.state.notes)
   this.props.save({
     title:this.state.title,
     companyID:this.state.companyID,
     companyName:this.state.companyName,
     url:this.state.url,
-    notes:this.state.notes
+    note:this.state.note
   });
   this.props.close()
 }
@@ -62,8 +62,8 @@ handleInput(event,type){
     case "url":
       this.setState({url: event.target.value});
       break;
-    case "notes":
-      this.setState({notes: event.target.value});
+    case "note":
+      this.setState({note: event.target.value});
       break;
     default:
   }
@@ -113,7 +113,7 @@ handleInput(event,type){
                         </div>
                         <div className="form-group">
                           <label htmlFor="notesInputLabel" className="text-muted">Notes</label>
-                            <textarea className="form-control" id="notesInputLabel" onChange={(event)=>this.handleInput(event,"notes")}rows="3"></textarea>
+                            <textarea className="form-control" id="notesInputLabel" onChange={(event)=>this.handleInput(event,"note")}rows="3"></textarea>
                         </div>
                       </form>
                     </div>

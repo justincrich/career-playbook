@@ -6,7 +6,7 @@ var CompanySchema = new Schema({
   gdID:{type:String,default:"NA"},
   name:String,
   website:{type:String,default:""},
-  logo:{type:String,default:"./Media/company.png"},
+  logo:{type:String,default:"/company.jpg"},
   overallRating:{type:String,default:""},
   ratingDescription:{type:String,default:""},
   industry:{type:String,default:""}

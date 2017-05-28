@@ -8,9 +8,10 @@ const loggerMiddleware = createLogger();
 
 //Reducers
 import jobsReducer from '../Reducers/jobs-reducer';
+import reducers from '../Reducers/index';
 
 
 
-const store = createStore(jobsReducer,applyMiddleware(thunkMiddleware,
+const store = createStore(reducers,applyMiddleware(thunkMiddleware,
     loggerMiddleware));
 export default store;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import JobsGroup from '../Views/JobsGroup';
-import {Route} from 'react-router-dom';
+// import {Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../Actions/jobs';
@@ -101,9 +101,9 @@ class JobsContainer extends Component{
 
 const mapStateToProps= state =>(
     {
-      allJobs:state.allJobs,
-      searchResults: state.searchResults,
-      job:state.job,
+      allJobs:state.jobsState.allJobs,
+      searchResults: state.jobsState.searchResults,
+      job:state.jobsState.job,
     }
 );
 

@@ -3,6 +3,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import reactCSS from 'reactcss';
 import defaultIMG from './company.jpg';
 import Company from './Company';
+import CompanyAddModal from '../ModalViews/CompanyAddModal';
 
 //CSS
 import '../../../css/template.css';
@@ -38,29 +39,17 @@ class CompaniesGroup extends Component{
     this.props.getAllCompanies();
   }
 
-  openModal(type){
-    if(type==="create"){
+  openModal(){
+    console.log("OPEN");
       this.setState({
         addModal:true,
       });
-    }else{
-      this.setState({
-        detailsModal:true,
-      });
-    }
-
   }
 
-  closeModal(type){
-    if(type==="create"){
-      this.setState({
-        addModal:false,
-      });
-    }else{
-      this.setState({
-        detailsModal:false,
-      });
-    }
+  closeModal(){
+    this.setState({
+      addModal:false,
+    });
   }
 
   detailsView(id){
@@ -69,7 +58,6 @@ class CompaniesGroup extends Component{
 
   listCompanies(arr){
     var defaultIMG = "company.jpg";
-    console.log("LOADEDDD",arr);
     return arr.map((company,index)=>(
       <Company
         key={company._id}
@@ -79,22 +67,7 @@ class CompaniesGroup extends Component{
         onRemove={()=>console.log()}
       />
     ));
-    // return arr.map((company,index)=>(
-    //     <Job
-    //       key={job._id}
-    //       _id={job._id}
-    //       text1={job.title}
-    //       icon1={this.props.icon1}
-    //       text2={job.companyName}
-    //       icon2={this.props.icon2}
-    //       image={
-    //             job.image
-    //         }
-    //       index={index}
-    //       onClick={(id)=>this.props.selectJob(id)}
-    //       onRemove={this.props.onRemove}
-    //     />
-    //   ));
+
   }
 
   handleInput(event){
@@ -125,6 +98,9 @@ class CompaniesGroup extends Component{
                   console.log("Companies Loading:",this.props.companies.isFetching)
                   :
                   this.listCompanies(this.props.companies.records)
+                }
+                {this.state.addModal &&
+                  <CompanyAddModal close={this.close} modalState={this.state.addModal} save={this.props.createCompany} />
                 }
           </div>
 

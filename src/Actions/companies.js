@@ -29,7 +29,7 @@ export function fetchAllCompanies(){
     //Get job
     var useSSL = 'https:' === document.location.protocol;
     var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES;
-    var init = {method:'GET',mode:'nocors'}
+    var init = {method:'GET',mode:'nocors'};
     var req = new Request(url,init);
 
     return fetch(req)

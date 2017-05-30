@@ -85,12 +85,11 @@ getCompanies(query){
       var urlGD = (useSSL ? 'https://':'http://')+Endpoints.GLASSDOOR+'?t.p='+
       Endpoints.GD_ID+'&t.k='+Endpoints.GD_KEY+"&userip="+ip+"&useragent='"+userAgent+
       "'&format=json&v=1&action=employers&q="+query;
-      var init = {method:'GET',mode:'nocors'};
+      var init = {method:'GET',mode:'cors'};
       var req = new Request(urlGD,init);
       fetch(req)
       .then(response=>response.json())
       .then(json=>{
-        console.log("HERE YOU go",json);
         this.setState({
           companies:json.response.employers.map((company,index)=>(
             {

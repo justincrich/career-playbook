@@ -17,27 +17,22 @@ const styles = reactCSS({
 var id= "";
 
 function GDCompany(props){
-  console.log(props.company.logo);
+  console.log("LOGO:",props.company.logo);
   return(
     <li id={props.company._id} className="list-group-item d-flex flex-row align-items-center">
-      <div className="d-flex flex-row">
-        <IconButton name='clear' onClick={()=>props.onRemove(props.company._id)}/>
-      </div>
         <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id)}>
           <img src={
-              props.company.logo===undefined ?
+              props.company.logo==="" ?
                 require('../../Media/company.jpg') //use alternative image when none avaliable
               :
                 props.company.logo
             } style={styles.image} className="rounded-circle mx-2"/>
-            <div className="mx-3 d-flex flex-row align-items-center hidden-sm-down">
-              <div className="mr-2 text-muted">Company:</div>
+            <div className="mx-3 d-flex flex-row align-items-center flex-nowrap">
               <div className="h6 mb-0">{props.company.name}</div>
             </div>
-            <div className="mx-3 d-flex flex-row align-items-center ">
-              <div className="mr-2 text-muted">Industry:</div>
-              <div className="h6 mb-0">{props.company.industry}</div>
-            </div>
+        </div>
+        <div className="d-flex flex-row">
+          <IconButton name='clear' onClick={()=>props.onRemove(props.company._id)}/>
         </div>
     </li>
   );

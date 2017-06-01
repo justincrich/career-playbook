@@ -1,38 +1,53 @@
 import React, {Component} from 'react';
 import IconButton from '../Views/IconButton';
-import reactCSS from 'reactcss';
+import reactCSS, {hover} from 'reactcss';
 
 //Styling
 import '../../../css/template.css';
-const styles = reactCSS({
-  'default':{
-    image:{
-      width:'50px',
-      height:'50px',
-      border:'1px solid #D8D8DA',
-    }
+import Radium from 'radium'
+const image = {
+  base:{
+    width:'50px',
+    height:'50px',
+    border:'1px solid #D8D8DA',
   }
-});
+};
+const icon ={
+  base:{
+    color:'black',
+  },
+  ':focus': {
+      background:'transparent',
+      boxShadow:"none",
+    },
+    ':hover': {
+        background:'transparent',
+        boxShadow:"none",
+        color:"#E6E6E6",
+      },
+}
 
 var id= "";
 
 function GDCompany(props){
-  console.log("LOGO:",props.company.logo);
   return(
-    <li id={props.company._id} className="list-group-item d-flex flex-row align-items-center">
-        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id)}>
+    <li id={props.company.gdID} className="list-group-item d-flex flex-row align-items-center flex-nowrap">
+        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props.gdID)}>
           <img src={
               props.company.logo==="" ?
                 require('../../Media/company.jpg') //use alternative image when none avaliable
               :
                 props.company.logo
-            } style={styles.image} className="rounded-circle mx-2"/>
+            } style={image.base} className="rounded-circle mx-2"/>
             <div className="mx-3 d-flex flex-row align-items-center flex-nowrap">
               <div className="h6 mb-0">{props.company.name}</div>
             </div>
         </div>
         <div className="d-flex flex-row">
-          <IconButton name='clear' onClick={()=>props.onRemove(props.company._id)}/>
+          <a href="#" onClick={(e)=>{
+            e.preventDefault();
+            props.add(props.company);
+          }} style={icon.base} ><i className="material-icons" style={icon}>add</i></a>
         </div>
     </li>
   );
@@ -45,4 +60,4 @@ function GDCompany(props){
 //Styles
 
 
-export default GDCompany;
+export default Radium(GDCompany);

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import IconButton from './IconButton';
 import reactCSS from 'reactcss';
+import defaultPic from '../../Media/company.jpg';
 
 //Styling
 import '../../../css/template.css';
@@ -17,17 +18,18 @@ const styles = reactCSS({
 var id= "";
 
 function Company(props){
+  console.log("Logo",props.company.logo);
   return(
     <li id={props.company._id} className="list-group-item d-flex flex-row align-items-center">
       <div className="d-flex flex-row">
-        <IconButton name='clear' onClick={()=>props.onRemove(props.company._id)}/>
+        <IconButton name='clear' onClick={()=>props.delete(props.company._id)}/>
       </div>
-        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props._id)}>
+        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props.company)}>
           <img src={
-              props.image===undefined ?
-                require('./company.jpg') //use alternative image when none avaliable
+              props.company.logo==="" ?
+                require('../../Media/company.jpg') //use alternative image when none avaliable
               :
-                require(props.company.logo)
+                props.company.logo
             } style={styles.image} className="rounded-circle mx-2"/>
             <div className="mx-3 d-flex flex-row align-items-center hidden-sm-down">
               <div className="mr-2 text-muted">Company:</div>

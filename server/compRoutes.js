@@ -49,9 +49,6 @@ router.get("/gdid", function(req, res, next){
 // Route to create a company
 router.post("/", function(req,res,next){
   var company = new Company(req.body);
-  if(company.logo === ""){
-    company.logo = "./Media/company.png"; //save default pic if no pic exists NOT WORKING
-  }
   company.save(function(err,company){
     if(err) return next(err);
     res.status(201);

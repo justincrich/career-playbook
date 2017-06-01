@@ -8,9 +8,6 @@ import '../../../css/template.css';
 const styles = reactCSS({
   'default':{
     jmodal:{
-
-
-
     },
     jmodalbackdrop:{
       position: "fixed",
@@ -28,7 +25,7 @@ const styles = reactCSS({
   }
 });
 
-class JobModal extends Component{
+class JobDetailModal extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -189,4 +186,4 @@ handleInput(event,type){
   }
 }
 
-export default JobModal;
+export default JobDetailModal;

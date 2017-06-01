@@ -33,6 +33,7 @@ class CompaniesGroup extends Component{
     this.detailsView.bind(this);
     this.handleInput.bind(this);
     this.listCompanies.bind(this);
+
   }
 
   componentWillMount(){
@@ -56,15 +57,18 @@ class CompaniesGroup extends Component{
 
   }
 
+  delete(company){
+
+  }
+
   listCompanies(arr){
-    var defaultIMG = "company.jpg";
     return arr.map((company,index)=>(
       <Company
-        key={company._id}
+        key={index}
         company={company}
         index={index}
-        onClick={(id)=>this.detailsView(id)}
-        onRemove={()=>console.log()}
+        create={this.createCompany}
+        delete={this.props.deleteCompany}
       />
     ));
 
@@ -99,9 +103,7 @@ class CompaniesGroup extends Component{
                   :
                   this.listCompanies(this.props.companies.records)
                 }
-                {this.state.addModal &&
-                  <CompanyAddModal close={this.close} modalState={this.state.addModal} save={this.props.createCompany} />
-                }
+                <CompanyAddModal close={()=>this.closeModal()} modalState={this.state.addModal} save={this.props.createCompany} allCompanies={this.props.companies} />
           </div>
 
       );

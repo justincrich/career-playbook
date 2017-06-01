@@ -77,7 +77,6 @@ onAdd(company){
 }
 
 handleInput(event){
-  console.log(event.target.value);
   this.setState({query:event.target.value});
   this.getCompanies(event.target.value);
 }
@@ -106,7 +105,7 @@ getCompanies(query){
 
         this.setState({
                   companies:json.data.response.employers.map((company,index)=>{
-                    console.log("GD",gdExist,company.id);
+                    
                     if(gdExist.indexOf(company.id.toString())<0){
                         return  {
                             gdID:company.id,

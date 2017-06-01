@@ -33,7 +33,7 @@ class CompaniesContainer extends Component{
                         getAllCompanies={()=>requestAllCompanies()}
                         requestCompany={(id)=>requestCompany(id)}
                         createCompany={(company)=>createCompany(company)}
-                        deleteCompany={(company)=>deleteCompany(company)}
+                        deleteCompany={deleteCompany}
                         updateCompany={(company)=>updateCompany(company)}
                         searchCompanies={(query)=>searchCompanies(query)}/>
       </div>

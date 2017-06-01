@@ -145,33 +145,35 @@ export function fetchCreateCompany(company){
 
 
 //DELETE COMPANY
-export const requestDeleteCompany=(company)=>{
+export const requestDeleteCompany=(_id)=>{
   return{
     type: ActionTypes.REQUEST_DELETE_COMPANY,
     isFetching:true,
-    _id:company._id
+    _id:_id
   };
 }
 
 export const receiveDeleteCompany=(companiesRemaining)=>{
+  console.log("ACTION REMAINING",companiesRemaining);
   return{
     type:ActionTypes.RECEIVE_DELETE_COMPANY_SUCCESS,
     isFetching:false,
-    jobsRemaining: companiesRemaining,
+    companiesRemaining: companiesRemaining,
     receivedAt:Date.now()
   };
 }
 
 
 //Thunk action handlers
-export function fetchDeleteCompany(company){
+export function fetchDeleteCompany(_id){
   return function(dispatch){
-
+    console.log("FETCH DELETE",_id);
     //Update state to inform app we're processing
-    dispatch(requestDeleteCompany(company));
+    dispatch(requestDeleteCompany(_id));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES.concat(company._id);
+    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES.concat(_id);
+    console.log("URL",url);
     var init = {
       method:'DELETE',
       mode:'nocors',

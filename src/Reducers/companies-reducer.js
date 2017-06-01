@@ -192,14 +192,15 @@ function CompaniesReducer(state=initialState,action){
         }
     }
     case CompaniesActionTypes.RECEIVE_DELETE_COMPANY_SUCCESS:{
-      var recJob={
+      console.log("REMAINING REMAINING",action.companiesRemaining);
+      var recCompany={
         isFetching:action.isFetching,
         reqestID:state.company.requestID,
         lastUpdated:action.receivedAt,
       }
 
       return {
-        ...state,company:recJob,allCompanies:{
+        ...state,company:recCompany,allCompanies:{
           isFetching:false,
           reqestID:-1,
           lastUpdated:action.receivedAt,

@@ -33,6 +33,7 @@ class CompaniesGroup extends Component{
     this.detailsView.bind(this);
     this.handleInput.bind(this);
     this.listCompanies.bind(this);
+    this.delete.bind(this);
 
   }
 
@@ -41,7 +42,6 @@ class CompaniesGroup extends Component{
   }
 
   openModal(){
-    console.log("OPEN");
       this.setState({
         addModal:true,
       });
@@ -58,7 +58,7 @@ class CompaniesGroup extends Component{
   }
 
   delete(company){
-
+    this.props.deleteCompany(company);
   }
 
   listCompanies(arr){
@@ -67,7 +67,7 @@ class CompaniesGroup extends Component{
         key={index}
         company={company}
         index={index}
-        create={this.createCompany}
+        create={this.props.createCompany}
         delete={this.props.deleteCompany}
       />
     ));

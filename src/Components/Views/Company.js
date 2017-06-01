@@ -18,7 +18,6 @@ const styles = reactCSS({
 var id= "";
 
 function Company(props){
-  console.log("Logo",props.company.logo);
   return(
     <li id={props.company._id} className="list-group-item d-flex flex-row align-items-center">
       <div className="d-flex flex-row">

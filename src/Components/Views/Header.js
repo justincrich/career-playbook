@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import reactCSS from 'reactcss';
 
+var styles = reactCSS({});
 
 const Header = () => (
   <nav className="navbar navbar-toggleable-md navbar-light bg-faded">

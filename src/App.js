@@ -14,7 +14,18 @@ import { bindActionCreators } from 'redux';
 import * as JobActions from './Actions/jobs';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
+import reactCSS from 'reactcss';
 
+const styles = reactCSS({
+  'default':{
+    header:{
+      background:'#ced7db' //Background Blue Grey
+    },
+    links:{
+      color:'#455a64'
+    }
+  }
+});
 
 class App extends Component{
 
@@ -23,6 +34,9 @@ class App extends Component{
     this.state ={
     };
   }
+
+
+
 
 
 
@@ -38,16 +52,13 @@ class App extends Component{
           <div className="container App">
 
             <div className="card my-3">
-              <div className="card-header">
+              <div  className="card-header">
                 <ul className="nav nav-tabs card-header-tabs">
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/jobs">Jobs</NavLink>
+                    <NavLink  className="nav-link" to="/jobs">Jobs</NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/companies">Companies</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/network">Network</NavLink>
                   </li>
                 </ul>
               </div>

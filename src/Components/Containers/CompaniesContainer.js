@@ -24,7 +24,6 @@ class CompaniesContainer extends Component{
     const updateCompany = bindActionCreators(Actions.fetchUpdateCompany,dispatch);
     const searchCompanies = bindActionCreators(Actions.searchCompanies,dispatch);
     const sendCompany = ()=>company;
-
     return(
       <div>
         <CompaniesGroup companies={allCompanies}

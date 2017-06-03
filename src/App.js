@@ -15,7 +15,7 @@ import * as JobActions from './Actions/jobs';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
 import reactCSS from 'reactcss';
-
+import '../css/template.css';
 const styles = reactCSS({
   'default':{
     header:{
@@ -23,7 +23,7 @@ const styles = reactCSS({
     },
     links:{
       color:'#455a64'
-    }
+    },
   }
 });
 

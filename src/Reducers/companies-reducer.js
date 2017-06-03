@@ -92,7 +92,8 @@ function CompaniesReducer(state=initialState,action){
         }
     }
     // SEARCH CURRENT LIST OF JOBS
-    case CompaniesActionTypes.SEARCH_COMPANY:{
+    case CompaniesActionTypes.SEARCH_COMPANIES:{
+
       var options={
         shouldSort: true,
         threshold: 0.6,
@@ -107,9 +108,10 @@ function CompaniesReducer(state=initialState,action){
 
       var fuse = new Fuse(state.allCompanies.records,options);
 
-      state.searchResults=fuse.search(action.query);
+      var sr=fuse.search(action.query);
+      console.log("RESULTS",sr);
       return{
-        ...state
+        ...state, searchResults:sr
       };
     }
     // CREATE COMPANY

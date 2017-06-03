@@ -14,7 +14,8 @@ const styles = reactCSS({
   'default':{
     addButton:{
       height:"42px",
-    }
+    },
+    
 
   }
 });
@@ -79,8 +80,8 @@ class JobsGroup extends Component{
             <div className="container ">
               <div className="d-flex flex-row align-center w-100 mb-2">
                   <div className="input-group">
-                    <span className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
-                    <input type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
+                    <span style={styles.searchButton} className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
+                    <input  type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
                   </div>
 
                 <div className="ml-3">

@@ -80,11 +80,21 @@ class CompaniesGroup extends Component{
 
   componentWillUpdate(nextProps, nextState){
     if(this.state.query!==nextState.query){
-      this.props.onSearch(nextState.query);
+      this.props.searchCompanies(nextState.query);
     }
   }
 
   render(){
+    let list = null;
+    if(this.props.companies.isFetching == false){
+      if(this.state.query.length>0){
+        list = this.listCompanies(this.props.searchResults);
+      }else{
+        list = this.listCompanies(this.props.companies.records);
+      }
+    }else{
+      list = <div>Loading</div>;
+    }
       return(
             <div className="container ">
               <div className="d-flex flex-row align-center w-100 mb-2">
@@ -98,11 +108,8 @@ class CompaniesGroup extends Component{
                 </div>
               </div>
 
-                {this.props.companies.isFetching ?
-                  console.log("Companies Loading:",this.props.companies.isFetching)
-                  :
-                  this.listCompanies(this.props.companies.records)
-                }
+                {list}
+
                 <CompanyAddModal close={()=>this.closeModal()} modalState={this.state.addModal} save={this.props.createCompany} allCompanies={this.props.companies} />
           </div>
 

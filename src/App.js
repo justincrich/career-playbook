@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Main from './Components/Pages/Main';
 import Desktop from './Components/Pages/Desktop';
 import Header from './Components/Views/Header';
+import Login from './Components/Views/Login';
+import Register from './Components/Views/Register';
 import {connect} from 'react-redux';
 import {
   BrowserRouter,
@@ -32,10 +34,14 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state ={
+      authenticated:false,
+
     };
   }
 
+  authenticate(){
 
+  }
 
 
 
@@ -45,39 +51,23 @@ class App extends Component{
     // const selectJob = bindActionCreators(JobActions.getJob,dispatch);
     // const createJOB = bindActionCreators(JobActions.createJob,dispatch);
     // const deleteJOB = bindActionCreators(JobActions.deleteJob,dispatch);
+    //()=><Redirect to="/jobs"/>
     return(
       <BrowserRouter>
         <div>
           <Header/>
-          <div className="container App">
-
-            <div className="card my-3">
-              <div  className="card-header">
-                <ul className="nav nav-tabs card-header-tabs">
-                  <li className="nav-item">
-                    <NavLink  className="nav-link" to="/jobs">Jobs</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/companies">Companies</NavLink>
-                  </li>
-                </ul>
-              </div>
-              <div className="card-block">
-
-                  <div>
-                    <Switch>
-                      <Route exact path="/" render={()=><Redirect to="/jobs"/>}/>
-                      <Route path="/jobs" component={JobsContainer}/>
-                      <Route path="/companies" component={CompaniesContainer}/>
-                    </Switch>
-
-                  </div>
-
-
-              </div>
-            </div>
-
-          </div>
+          <Switch>
+            <Route exact path="/" render={
+              this.state.authenticated ?
+              ()=><Redirect to="/jobs"/>
+              :
+              ()=><Login/>
+            }/>
+            <Route path="/jobs" component={JobsContainer}/>
+            <Route path="/companies" component={CompaniesContainer}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+          </Switch>
         </div>
       </BrowserRouter>
 

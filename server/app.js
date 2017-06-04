@@ -2,16 +2,21 @@
 var express = require("express");
 var app = express();
 var jsonParser = require("body-parser").json;
-var compRoutes = require("./compRoutes");
-var jobRoutes = require("./jobRoutes");
+// var compRoutes = require("./compRoutes");
+// var jobRoutes = require("./jobRoutes");
+// var userRoutes = require("./userRoutes");
+var routes = require('./routes');
 var logger = require("morgan");
+//variables for authentication
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 app.use(logger("dev")); //provides status codes for API
 app.use(jsonParser());//sets up the JSON parser
 
 //--------------DATABASE ACTIVATION---------------
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/qa");
+mongoose.connect("mongodb://localhost:27017/careerplaybook");
 var db = mongoose.connection;
 db.on("error",function(err){
   console.error("connection error: ",err);
@@ -24,10 +29,14 @@ db.once("open",function(){
 //--------------END DATABASE----------------------
 
 // -------------ROUTERS---------------------------
-//Company Routes
-app.use("/companies",compRoutes);
 
-app.use("/jobs",jobRoutes);
+app.use("/",routes);
+
+
+
+// app.use("/companies",compRoutes);
+//
+// app.use("/jobs",jobRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req,resp,next){
@@ -47,6 +56,7 @@ app.use(function(req,res,next){
   next();
 
 });
+
 
 //Error handler, always have 4 params ... how express knows its an error
 app.use(function(err,req,res,next){

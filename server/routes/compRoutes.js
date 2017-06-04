@@ -1,11 +1,11 @@
 'use strict';
 
 var express = require("express");
-var router = express.Router();
+var compRoutes = express.Router();
 var Company = require("../data_models/compModel").Company;
 
 //Param handler that gets the company when an ID is provided
-router.param("cID",function(req,res,next,id){
+compRoutes.param("cID",function(req,res,next,id){
   Company.findById(id,function(err,doc){
 
     if(err) return next(err);
@@ -23,8 +23,8 @@ router.param("cID",function(req,res,next,id){
 
 // GET /companies
 // Route to get all companies
-router.get("/", function(req, res, next){
-  Company.find({}).sort({name:1}).exec(function(err,companies){
+compRoutes.get("/", function(req, res, next){
+  Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     res.json(companies)
   });
@@ -33,8 +33,8 @@ router.get("/", function(req, res, next){
 
 // GET /companies/gdID
 // Route to get gdIDs for all companies in storage
-router.get("/gdid", function(req, res, next){
-  Company.find({}).sort({name:1}).exec(function(err,companies){
+compRoutes.get("/gdid", function(req, res, next){
+  Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     var compGDID = {};
     companies.forEach(function(company){
@@ -47,7 +47,7 @@ router.get("/gdid", function(req, res, next){
 
 // POST /company
 // Route to create a company
-router.post("/", function(req,res,next){
+compRoutes.post("/", function(req,res,next){
   var company = new Company(req.body);
   company.save(function(err,company){
     if(err) return next(err);
@@ -58,13 +58,13 @@ router.post("/", function(req,res,next){
 
 // GET /company
 // Route to get ONE company
-router.get("/:cID", function(req,res,next){
+compRoutes.get("/:cID", function(req,res,next){
   res.json(req.company);
 });
 
 // PUT /company
 // Route to update ONE company
-router.put("/:cID", function(req, res, next){
+compRoutes.put("/:cID", function(req, res, next){
   req.company.update(req.body,function(err,result){
     if(err) return next(err);
     res.json(req.body);
@@ -73,10 +73,10 @@ router.put("/:cID", function(req, res, next){
 
 // DELETE /company
 // Route to delete ONE company
-router.delete("/:cID", function(req, res, next){
+compRoutes.delete("/:cID", function(req, res, next){
 	req.company.remove(function(err){
     if(err) return next(err);
-    Company.find({}).sort({name:1}).exec(function(err,companies){
+    Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
       if(err) return next(err);
       res.json(companies)
     });
@@ -85,14 +85,14 @@ router.delete("/:cID", function(req, res, next){
 
 // DELETE /company
 // Route to delete ALL companies
-router.delete("/", function(req, res, next){
+compRoutes.delete("/", function(req, res, next){
 	Company.remove({},function(err){
       if(err) return next(err);
-      Company.find({}).sort({name:1}).exec(function(err,companies){
+      Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
         if(err) return next(err);
         res.json(companies)
       });
   });
 });
 
-module.exports = router;
+module.exports = compRoutes;

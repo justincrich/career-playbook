@@ -3,6 +3,7 @@
 var express = require("express");
 var compRoutes = express.Router();
 var Company = require("../data_models/compModel").Company;
+var mid = require('../middleware');
 
 //Param handler that gets the company when an ID is provided
 compRoutes.param("cID",function(req,res,next,id){
@@ -23,7 +24,7 @@ compRoutes.param("cID",function(req,res,next,id){
 
 // GET /companies
 // Route to get all companies
-compRoutes.get("/", function(req, res, next){
+compRoutes.get("/", mid.requiresLogin, function(req, res, next){
   Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     res.json(companies)
@@ -33,7 +34,7 @@ compRoutes.get("/", function(req, res, next){
 
 // GET /companies/gdID
 // Route to get gdIDs for all companies in storage
-compRoutes.get("/gdid", function(req, res, next){
+compRoutes.get("/gdid", mid.requiresLogin, function(req, res, next){
   Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     var compGDID = {};
@@ -47,7 +48,7 @@ compRoutes.get("/gdid", function(req, res, next){
 
 // POST /company
 // Route to create a company
-compRoutes.post("/", function(req,res,next){
+compRoutes.post("/", mid.requiresLogin, function(req,res,next){
   var company = new Company(req.body);
   company.save(function(err,company){
     if(err) return next(err);
@@ -58,13 +59,13 @@ compRoutes.post("/", function(req,res,next){
 
 // GET /company
 // Route to get ONE company
-compRoutes.get("/:cID", function(req,res,next){
+compRoutes.get("/:cID", mid.requiresLogin, function(req,res,next){
   res.json(req.company);
 });
 
 // PUT /company
 // Route to update ONE company
-compRoutes.put("/:cID", function(req, res, next){
+compRoutes.put("/:cID", mid.requiresLogin, function(req, res, next){
   req.company.update(req.body,function(err,result){
     if(err) return next(err);
     res.json(req.body);
@@ -73,7 +74,7 @@ compRoutes.put("/:cID", function(req, res, next){
 
 // DELETE /company
 // Route to delete ONE company
-compRoutes.delete("/:cID", function(req, res, next){
+compRoutes.delete("/:cID", mid.requiresLogin, function(req, res, next){
 	req.company.remove(function(err){
     if(err) return next(err);
     Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
@@ -85,7 +86,7 @@ compRoutes.delete("/:cID", function(req, res, next){
 
 // DELETE /company
 // Route to delete ALL companies
-compRoutes.delete("/", function(req, res, next){
+compRoutes.delete("/", mid.requiresLogin, function(req, res, next){
 	Company.remove({},function(err){
       if(err) return next(err);
       Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){

@@ -54,7 +54,7 @@ class App extends Component{
     //()=><Redirect to="/jobs"/>
     return(
       <BrowserRouter>
-        <div>
+        <div className="">
           <Header/>
           <Switch>
             <Route exact path="/" render={

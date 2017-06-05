@@ -28,6 +28,22 @@ db.once("open",function(){
 
 //--------------END DATABASE----------------------
 
+//--------------ACTIVATE SESSION----------------------
+app.use(session({
+  secret:'pug love',
+  resave: true,
+  saveUninitialized:true,
+  store:new MongoStore({
+    mongooseConnection:db
+  })
+}));
+
+//make user ID available in templates
+app.use(function(req,res,next){
+  res.locals.currentUser = req.session.userId;
+  next();
+});
+
 // -------------ROUTERS---------------------------
 
 app.use("/",routes);

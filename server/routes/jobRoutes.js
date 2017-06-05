@@ -3,6 +3,7 @@
 var express = require("express");
 var jobRoutes = express.Router();
 var Job = require("../data_models/jobModel").Job;
+var mid = require('../middleware');
 
 //Param handler that gets the job when an ID is provided
 jobRoutes.param("jID",function(req,res,next,id){
@@ -25,7 +26,7 @@ jobRoutes.param("jID",function(req,res,next,id){
 
 // GET /job
 // Route to get all jobs
-jobRoutes.get("/", function(req, res, next){
+jobRoutes.get("/",mid.requiresLogin, function(req, res, next){
   Job.find({uID:req.uID}).sort({title:1}).exec(function(err,jobs){
     if(err) return next(err);
     res.json(jobs)
@@ -35,7 +36,7 @@ jobRoutes.get("/", function(req, res, next){
 
 // POST /job
 // Route to create a job
-jobRoutes.post("/", function(req,res,next){
+jobRoutes.post("/",mid.requiresLogin, function(req,res,next){
   var job = new Job(req.body);
   job.save(function(err,job){
     if(err) return next(err);
@@ -46,13 +47,13 @@ jobRoutes.post("/", function(req,res,next){
 
 // GET /job
 // Route to get ONE job
-jobRoutes.get("/:jID", function(req,res,next){
+jobRoutes.get("/:jID",mid.requiresLogin, function(req,res,next){
   res.json(req.job);
 });
 
 // PUT /job
 // Route to update ONE job
-jobRoutes.put("/:jID", function(req, res, next){
+jobRoutes.put("/:jID",mid.requiresLogin, function(req, res, next){
   req.job.update(req.body,function(err,result){
     if(err) return next(err);
     res.json(req.body);
@@ -61,7 +62,7 @@ jobRoutes.put("/:jID", function(req, res, next){
 
 // DELETE /company
 // Route to delete ONE job
-jobRoutes.delete("/:jID", function(req, res, next){
+jobRoutes.delete("/:jID",mid.requiresLogin, function(req, res, next){
 	req.job.remove(function(err){
     if(err) return next(err);
     Job.find({uID:req.uID}).sort({title:1}).exec(function(err,jobs){

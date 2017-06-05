@@ -3,6 +3,7 @@ const userRoutes = require('express').Router();
 const compRoutes = require('./compRoutes');
 const jobRoutes = require('./jobRoutes');
 var User = require("../data_models/userModel").User;
+var mid = require('../middleware');
 
 //Param handler that gets the user when an ID is provided
 userRoutes.param("uID",function(req,res,next,id){
@@ -32,13 +33,13 @@ userRoutes.get('/',(req,res)=>{
   });
 });
 
-userRoutes.get('/:uID',(req,res)=>{
+userRoutes.get('/:uID',mid.requiresLogin,(req,res,next)=>{
   res.status(200).json(req.user);
 });
 
 // DELETE /company
 // Route to delete ONE job
-userRoutes.delete("/:uID", function(req, res, next){
+userRoutes.delete("/:uID", mid.requiresLogin,function(req, res, next){
   var email = req.user.email;
 	req.user.remove(function(err){
     if(err) return next(err);
@@ -69,28 +70,6 @@ userRoutes.put("/:uID",function(req,res,next){
   });
 });
 
-// POST /users
-userRoutes.post("/", function(req,res,next){
-  if(req.body.email &&
-      req.body.password &&
-      req.body.name){
-        if (req.body.password !== req.body.confirmPassword) {
-        var err = new Error('Passwords do not match.');
-        err.status = 400;
-        return next(err);
-      }
-        var user = new User(req.body);
-        user.save(function(err,user){
-          if(err) return next(err);
-          res.status(201);
-          res.json(user);
-        });
-      }else {
-      var err = new Error('All fields required.');
-      err.status = 400;
-      return next(err);
-    }
 
-});
 
 module.exports = userRoutes;

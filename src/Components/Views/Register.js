@@ -20,7 +20,7 @@ class Register extends Component{
 
   render(){
     return (
-      <div style={styles.card} className="card mt-3">
+      <div className="card jLogin">
         <div className="card-header">
           <h4>Register</h4>
         </div>

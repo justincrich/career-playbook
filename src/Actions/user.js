@@ -6,15 +6,15 @@ import fetch from 'isomorphic-fetch';
 //GET ONE USER
 export const requestUser=(_id)=>{
   return{
-    type: ActionTypes.REQUEST_JOB,
+    type: ActionTypes.REQUEST_USER,
     isFetching:true,
     _id
   };
 }
 
-export const receiveJob=(_id,json)=>{
+export const receiveUser=(_id,json)=>{
   return{
-    type:ActionTypes.RECEIVE_JOB_SUCCESS,
+    type:ActionTypes.RECEIVE_USER_SUCCESS,
     isFetching:false,
     _id,
     job: json,
@@ -24,23 +24,23 @@ export const receiveJob=(_id,json)=>{
 
 
 //Thunk action handlers
-export function fetchJob(_id){
+export function fetchUser(_id){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestJob(_id));
+    dispatch(requestUser(_id));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS.concat(_id);
+    var url = (useSSL ? 'https://':'http://')+Endpoints.USERS.concat(_id);
     var init = {method:'GET', mode:'nocors'}
     var req = new Request(url,init);
 
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-        dispatch(receiveJob(_id,json))
-        // console.log(receiveJob(_id,json))
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+        dispatch(receiveUser(_id,json))
+        // console.log(receiveUser(_id,json))
+      ).catch(error=>console.log("Error in Actions.Users.fetchUser(): ",error));
 
   }
 }
@@ -54,17 +54,17 @@ export function fetchJob(_id){
 
 //CREATE JOB
 
-export const requestCreateJob=(job)=>{
+export const requestCreateUser=(job)=>{
   return{
-    type: ActionTypes.REQUEST_CREATE_JOB,
+    type: ActionTypes.REQUEST_CREATE_USER,
     isFetching:true,
     job:job
   };
 }
 
-export const receiveCreateJob=(job)=>{
+export const receiveCreateUser=(job)=>{
   return{
-    type:ActionTypes.RECEIVE_CREATE_JOB_SUCCESS,
+    type:ActionTypes.RECEIVE_CREATE_USER_SUCCESS,
     isFetching:false,
     job: job,
     receivedAt:Date.now()
@@ -73,11 +73,11 @@ export const receiveCreateJob=(job)=>{
 
 
 //Thunk action handlers
-export function fetchCreateJob(job){
+export function fetchCreateUser(job){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestCreateJob(job));
+    dispatch(requestCreateUser(job));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
     var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS;
@@ -96,8 +96,8 @@ export function fetchCreateJob(job){
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-        dispatch(receiveCreateJob(json))
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+        dispatch(receiveCreateUser(json))
+      ).catch(error=>console.log("Error in Actions.Users.fetchUser(): ",error));
 
   }
 }
@@ -105,17 +105,17 @@ export function fetchCreateJob(job){
 
 
 //DELETE JOB
-export const requestDeleteJob=(_id)=>{
+export const requestDeleteUser=(_id)=>{
   return{
-    type: ActionTypes.REQUEST_DELETE_JOB,
+    type: ActionTypes.REQUEST_DELETE_USER,
     isFetching:true,
     _id:_id
   };
 }
 
-export const receiveDeleteJob=(jobsRemaining)=>{
+export const receiveDeleteUser=(jobsRemaining)=>{
   return{
-    type:ActionTypes.RECEIVE_DELETE_JOB_SUCCESS,
+    type:ActionTypes.RECEIVE_DELETE_USER_SUCCESS,
     isFetching:false,
     jobsRemaining: jobsRemaining,
     receivedAt:Date.now()
@@ -124,11 +124,11 @@ export const receiveDeleteJob=(jobsRemaining)=>{
 
 
 //Thunk action handlers
-export function fetchDeleteJob(_id){
+export function fetchDeleteUser(_id){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestDeleteJob(_id));
+    dispatch(requestDeleteUser(_id));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
     var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS.concat(_id);
@@ -147,24 +147,24 @@ export function fetchDeleteJob(_id){
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-        dispatch(receiveDeleteJob(json))
+        dispatch(receiveDeleteUser(json))
         // console.log("RESPONSE DELETE",json)
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+      ).catch(error=>console.log("Error in Actions.Users.fetchUser(): ",error));
 
   }
 }
 // UPDATE JOB FUNCTION
-export const requestUpdateJob=(job)=>{
+export const requestUpdateUser=(job)=>{
   return{
-    type: ActionTypes.REQUEST_UPDATE_JOB,
+    type: ActionTypes.REQUEST_UPDATE_USER,
     isFetching:true,
     job:job
   };
 }
 
-export const receiveUpdateJob=(job)=>{
+export const receiveUpdateUser=(job)=>{
   return{
-    type:ActionTypes.RECEIVE_UPDATE_JOB_SUCCESS,
+    type:ActionTypes.RECEIVE_UPDATE_USER_SUCCESS,
     isFetching:false,
     job: job,
     receivedAt:Date.now()
@@ -173,11 +173,11 @@ export const receiveUpdateJob=(job)=>{
 
 
 //Thunk action handlers
-export function fetchUpdateJob(job){
+export function fetchUpdateUser(job){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestUpdateJob(job));
+    dispatch(requestUpdateUser(job));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
     var url = (useSSL ? 'https://':'http://')+Endpoints.JOBS.concat(job._id);
@@ -196,17 +196,17 @@ export function fetchUpdateJob(job){
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-        dispatch(receiveUpdateJob(json))
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+        dispatch(receiveUpdateUser(json))
+      ).catch(error=>console.log("Error in Actions.Users.fetchUser(): ",error));
 
   }
 }
 
 
 
-export const searchJob = (query)=>{
+export const searchUser = (query)=>{
   return{
-    type:ActionTypes.SEARCH_JOB,
+    type:ActionTypes.SEARCH_USER,
     query
   };
 }

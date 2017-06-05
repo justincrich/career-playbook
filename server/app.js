@@ -46,7 +46,7 @@ app.use(function(req,res,next){
 
 // -------------ROUTERS---------------------------
 
-app.use("/",routes);
+app.use("/api",routes);
 
 
 

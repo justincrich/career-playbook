@@ -1,7 +1,11 @@
-export const DOMAIN = 'localhost:3030/';
-export const JOBS ='jobs/';
-export const COMPANIES ='companies/';
-export const GDID ='companies/gdid/';
+export const DOMAIN = 'localhost:3030/api/';
+export const USER ='user/';
+export const LOGIN ='auth/login/';
+export const LOGOUT ='auth/logout/';
+export const REGISTER ='auth/register/';
+export const JOBS ='user/jobs/';
+export const COMPANIES ='user/companies/';
+export const GDID ='user/companies/gdid/';
 export const IPADDRESS = 'api.ipify.org/?format=json';
 export const GLASSDOOR = 'api.glassdoor.com/api/api.htm';
 export const GD_ID= "145422";

@@ -26,10 +26,14 @@ userRoutes.param("uID",function(req,res,next,id){
 userRoutes.use('/:uID/companies',compRoutes);
 userRoutes.use('/:uID/jobs',jobRoutes);
 
-userRoutes.get('/',(req,res)=>{
-  User.find({}).sort({email:1}).exec(function(err,users){
+userRoutes.get('/',mid.requiresLogin,(req,res,next)=>{
+  User.find({_id:req.session.userId}).sort({email:1}).exec(function(err,users){
     if(err) return next (err);
-    res.status(200).json(users);
+    res.status(200).json({
+      _id:users[0]._id,
+      email:users[0].email,
+      name:users[0].name
+    });
   });
 });
 
@@ -47,7 +51,7 @@ userRoutes.delete("/:uID", mid.requiresLogin,function(req, res, next){
   });
 });
 
-userRoutes.put("/:uID",function(req,res,next){
+userRoutes.put("/:uID",mid.requiresLogin,function(req,res,next){
   var updates = {};
   if(req.body.password){
     if (req.body.password !== req.body.confirmPassword) {

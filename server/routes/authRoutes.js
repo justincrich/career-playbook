@@ -12,7 +12,7 @@ authRoutes.get('/login',(req,res)=>{
   res.status(200).json({message:'Connected LOGIN'});
 });
 
-// POST /users
+// POST /register
 authRoutes.post("/register", function(req,res,next){
   if(req.body.email &&
       req.body.password &&

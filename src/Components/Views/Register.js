@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import reactCSS from 'reactcss';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../Actions/auth';
 
 const styles = reactCSS({
   'default':{
@@ -19,6 +22,9 @@ class Register extends Component{
   }
 
   render(){
+    const {dispatch,isFetching,email,name,userId,message,auth}=this.props;
+    const fetchLogin = bindActionCreators(Actions.fetchLogin,dispatch);
+    const fetchRegister = bindActionCreators(Actions.fetchRegister,dispatch);
     return (
       <div className="card jLogin">
         <div className="card-header">
@@ -53,5 +59,15 @@ class Register extends Component{
   }
 
 }
+const mapStateToProps= state =>(
+    {
+      isFetching:state.isFetching,
+      email:state.email,
+      name:state.name,
+      userId:state.userId,
+      message:state.message,
+      auth:state.auth
+    }
+);
 
-export default Register;
+export default connect(mapStateToProps)(Register);

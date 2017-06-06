@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Radium from 'radium';
-
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../Actions/auth';
 
 const styles = {
     card:{
@@ -19,6 +21,9 @@ class Login extends Component{
   }
 
   render(){
+    const {dispatch,isFetching,email,name,userId,message,auth}=this.props;
+    const fetchLogin = bindActionCreators(Actions.fetchLogin,dispatch);
+
     return (
 
         <div className="card jLogin">
@@ -47,5 +52,15 @@ class Login extends Component{
   }
 
 }
+const mapStateToProps= state =>(
+    {
+      isFetching:state.isFetching,
+      email:state.email,
+      name:state.name,
+      userId:state.userId,
+      message:state.message,
+      auth:state.auth
+    }
+);
 
-export default Radium(Login);
+export default connect(mapStateToProps)(Radium(Login));

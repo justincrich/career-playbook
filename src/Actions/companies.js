@@ -3,11 +3,12 @@ import * as Endpoints from '../endpoints';
 import fetch from 'isomorphic-fetch';
 
 //GET ALL COMPANIES
-export const requestAllCompanies=()=>{
+export const requestAllCompanies=(_uid)=>{
 
   return{
     type: ActionTypes.REQUEST_ALL_COMPANIES,
-    isFetching:true
+    isFetching:true,
+    userId:_uid
   };
 }
 
@@ -21,14 +22,14 @@ export const receiveAllCompanies=(json)=>{
 }
 
 //Thunk action handlers
-export function fetchAllCompanies(){
+export function fetchAllCompanies(_uid){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestAllCompanies());
+    dispatch(requestAllCompanies(_uid));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.COMPANIES;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
     var init = {method:'GET',mode:'nocors'};
     var req = new Request(url,init);
 
@@ -37,26 +38,27 @@ export function fetchAllCompanies(){
       .then(json=>
 
         dispatch(receiveAllCompanies(json))
-        // console.log(receiveJob(_id,json))
+        // console.log(receiveJob(_cid,json))
       ).catch(error=>console.log("Error in Actions.Companies.fetchAllCompanies(): ",error));
 
   }
 }
 
 //GET ONE COMPANY
-export const requestCompany=(_id)=>{
+export const requestCompany=(_uid,_cid)=>{
   return{
     type: ActionTypes.REQUEST_COMPANY,
     isFetching:true,
-    _id
+    _cid,
+    userId:_uid
   };
 }
 
-export const receiveCompany=(_id,json)=>{
+export const receiveCompany=(_cid,json)=>{
   return{
     type:ActionTypes.RECEIVE_COMPANY_SUCCESS,
     isFetching:false,
-    _id,
+    _cid,
     job: json,
     receivedAt:Date.now()
   };
@@ -64,22 +66,22 @@ export const receiveCompany=(_id,json)=>{
 
 
 //Thunk action handlers
-export function fetchCompany(_id){
+export function fetchCompany(_uid,_cid){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestCompany(_id));
+    dispatch(requestCompany(_uid,_cid));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES.concat(_id);
+    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
     var init = {method:'GET', mode:'nocors'}
     var req = new Request(url,init);
 
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-        dispatch(receiveCompany(_id,json))
-        // console.log(receiveCompany(_id,json))
+        dispatch(receiveCompany(_cid,json))
+        // console.log(receiveCompany(_cid,json))
       ).catch(error=>console.log("Error in Actions.Companys.fetchCompany(): ",error));
 
   }
@@ -94,11 +96,12 @@ export function fetchCompany(_id){
 
 //CREATE COMPANIES
 
-export const requestCreateCompany=(company)=>{
+export const requestCreateCompany=(_uid,company)=>{
   return{
     type: ActionTypes.REQUEST_CREATE_COMPANY,
     isFetching:true,
-    company:company
+    company:company,
+    userId:_uid
   };
 }
 
@@ -113,14 +116,14 @@ export const receiveCreateCompany=(company)=>{
 
 
 //Thunk action handlers
-export function fetchCreateCompany(company){
+export function fetchCreateCompany(_uid,company){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestCreateCompany(company));
+    dispatch(requestCreateCompany(_uid,company));
     //Get company
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES;
+    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
     var init = {
       method:'POST',
       mode:'nocors',
@@ -145,11 +148,12 @@ export function fetchCreateCompany(company){
 
 
 //DELETE COMPANY
-export const requestDeleteCompany=(_id)=>{
+export const requestDeleteCompany=(_uid,_cid)=>{
   return{
     type: ActionTypes.REQUEST_DELETE_COMPANY,
     isFetching:true,
-    _id:_id
+    _cid:_cid,
+    userId:_uid
   };
 }
 
@@ -165,14 +169,14 @@ export const receiveDeleteCompany=(companiesRemaining)=>{
 
 
 //Thunk action handlers
-export function fetchDeleteCompany(_id){
+export function fetchDeleteCompany(_uid,_cid){
   return function(dispatch){
-    console.log("FETCH DELETE",_id);
+    console.log("FETCH DELETE",_cid);
     //Update state to inform app we're processing
-    dispatch(requestDeleteCompany(_id));
+    dispatch(requestDeleteCompany(_uid,_cid));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES.concat(_id);
+    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
     console.log("URL",url);
     var init = {
       method:'DELETE',
@@ -196,11 +200,12 @@ export function fetchDeleteCompany(_id){
   }
 }
 // UPDATE COMPANY FUNCTION
-export const requestUpdateCompany=(company)=>{
+export const requestUpdateCompany=(_uid,company)=>{
   return{
     type: ActionTypes.REQUEST_UPDATE_COMPANY,
     isFetching:true,
-    company:company
+    company:company,
+    userId:_uid
   };
 }
 
@@ -215,14 +220,14 @@ export const receiveUpdateCompany=(company)=>{
 
 
 //Thunk action handlers
-export function fetchUpdateCompany(company){
+export function fetchUpdateCompany(_uid, company){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestUpdateCompany(company));
+    dispatch(requestUpdateCompany(_uid,company));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.COMPANIES.concat(company._id);
+    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(company._cid);
     var init = {
       method:'PUT',
       mode:'nocors',

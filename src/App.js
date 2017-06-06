@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Main from './Components/Pages/Main';
 import Desktop from './Components/Pages/Desktop';
 import Header from './Components/Views/Header';
 import Login from './Components/Views/Login';
@@ -14,6 +13,7 @@ import {
 } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as JobActions from './Actions/jobs';
+import * as AuthActions from './Actions/auth';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
 import reactCSS from 'reactcss';
@@ -47,18 +47,16 @@ class App extends Component{
 
 
   render(){
-    // const {dispatch, jobs, index,_id,job,modalCall}=this.props;
-    // const selectJob = bindActionCreators(JobActions.getJob,dispatch);
-    // const createJOB = bindActionCreators(JobActions.createJob,dispatch);
-    // const deleteJOB = bindActionCreators(JobActions.deleteJob,dispatch);
-    //()=><Redirect to="/jobs"/>
+    const {dispatch, auth}=this.props;
+    const changeAuthStatus = bindActionCreators(AuthActions.changeAuthStatus,dispatch);
+    const fetchLogOut = bindActionCreators(AuthActions.fetchLogOut,dispatch);
     return(
       <BrowserRouter>
         <div className="">
-          <Header/>
+          <Header auth={auth} logout={fetchLogOut} />
           <Switch>
             <Route exact path="/" render={
-              this.state.authenticated ?
+              auth == 1 ?
               ()=><Redirect to="/jobs"/>
               :
               ()=><Login/>
@@ -80,11 +78,9 @@ class App extends Component{
 
 const mapStateToProps= state =>(
   {
-    jobs:state.jobs,
-    index:state.index,
-    _id:state._id,
-    job:state.job,
-    modalCall:state.modalCall
+    isFetching:state.isFetching,
+    message:state.message,
+    auth:state.auth
   }
 );
 

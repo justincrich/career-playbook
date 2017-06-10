@@ -54,7 +54,8 @@ class Register extends Component{
             this.state.password,
             this.state.confirmPassword
           );
-          
+          this.props.toggle();
+
 
         }else{
           this.props.throwError("Passwords don't match, try again.");

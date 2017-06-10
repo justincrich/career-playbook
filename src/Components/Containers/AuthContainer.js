@@ -31,7 +31,7 @@ class AuthContainer extends Component{
       created:false
     };
     this.toggle.bind(this);
-    this.success.bind(this);
+    this.successReg.bind(this);
   }
 
 
@@ -42,11 +42,13 @@ class AuthContainer extends Component{
     }));
   }
 
-  success(){
+  successReg(){
     this.setState(prevState=>({
       created:!prevState.created
     }));
   }
+
+
 
   render(){
 

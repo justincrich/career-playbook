@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import {createLogger} from 'redux-logger';
 
 import thunkMiddleware from 'redux-thunk';
@@ -7,7 +7,6 @@ import thunkMiddleware from 'redux-thunk';
 const loggerMiddleware = createLogger();
 
 //Reducers
-import jobsReducer from '../Reducers/jobs-reducer';
 import reducers from '../Reducers/index';
 
 

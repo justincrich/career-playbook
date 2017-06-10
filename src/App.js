@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
-import Desktop from './Components/Pages/Desktop';
 import Header from './Components/Views/Header';
 import Login from './Components/Views/Login';
 import Register from './Components/Views/Register';
+import Unauthorized from './Components/Views/Unauthorized';
 import {connect} from 'react-redux';
 import {
   BrowserRouter,
   Route,
   Switch,
-  NavLink,
   Redirect
 } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import * as JobActions from './Actions/jobs';
 import * as AuthActions from './Actions/auth';
+import AuthContainer from './Components/Containers/AuthContainer';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
 import reactCSS from 'reactcss';
 import '../css/template.css';
+
 const styles = reactCSS({
   'default':{
     header:{
@@ -39,32 +39,51 @@ class App extends Component{
     };
   }
 
-  authenticate(){
-
-  }
 
 
 
 
   render(){
-    const {dispatch, auth}=this.props;
+    const {dispatch, isFetching,auth,error}=this.props;
     const changeAuthStatus = bindActionCreators(AuthActions.changeAuthStatus,dispatch);
     const fetchLogOut = bindActionCreators(AuthActions.fetchLogOut,dispatch);
     return(
       <BrowserRouter>
         <div className="">
           <Header auth={auth} logout={fetchLogOut} />
+
           <Switch>
             <Route exact path="/" render={
               auth == 1 ?
               ()=><Redirect to="/jobs"/>
               :
-              ()=><Login/>
+              ()=><AuthContainer login={true} register={false}/>
             }/>
-            <Route path="/jobs" component={JobsContainer}/>
-            <Route path="/companies" component={CompaniesContainer}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
+
+            <Route path="/jobs" component={
+              auth==1?
+              JobsContainer
+              :
+              Unauthorized
+            }/>
+            <Route path="/companies" component={
+              auth==1?
+              CompaniesContainer
+              :
+              Unauthorized
+            }/>
+            <Route path="/login" component={
+              auth==1?
+              JobsContainer
+              :
+              Login
+            }/>
+            <Route path="/register" component={
+              auth==1?
+              JobsContainer
+              :
+              Register
+            }/>
           </Switch>
         </div>
       </BrowserRouter>
@@ -78,9 +97,10 @@ class App extends Component{
 
 const mapStateToProps= state =>(
   {
-    isFetching:state.isFetching,
-    message:state.message,
-    auth:state.auth
+    isFetching:state.authState.isFetching,
+    message:state.authState.message,
+    auth:state.authState.auth,
+    error:state.authState.error
   }
 );
 

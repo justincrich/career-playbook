@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import IconButton from '../Views/IconButton';
 import reactCSS, {hover} from 'reactcss';
 
 //Styling

@@ -3,7 +3,6 @@ import reactCSS from 'reactcss';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import axios from 'axios';
 import * as Endpoints from '../../endpoints';
-import fetch from 'isomorphic-fetch';
 import GDCompany from './GDCompany';
 
 //CSS
@@ -105,7 +104,7 @@ getCompanies(query){
 
         this.setState({
                   companies:json.data.response.employers.map((company,index)=>{
-                    
+
                     if(gdExist.indexOf(company.id.toString())<0){
                         return  {
                             gdID:company.id,

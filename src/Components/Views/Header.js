@@ -1,29 +1,35 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import reactCSS from 'reactcss';
+import Radium from 'radium';
 
-const styles = reactCSS({
-  'default':{
-    body:{
-      background:'#607d8b' //Background Blue Grey
-    },
-    textcolor:{
-      color:'#fefefe'
-    },
-    button:{
-      background:'#607d8b',
-      borderColor:'#fefefe',
-      color:'#fefefe'
-    }
+const styles = {
+  header:{
+    background:'#607d8b' //Background Blue Grey
   }
-});
+};
+
+// 'default':{
+//   body:{
+//     background:'#607d8b' //Background Blue Grey
+//   },
+//   textcolor:{
+//     color:'#fefefe'
+//   },
+//   button:{
+//     backgroundColor:'#607d8b',
+//     borderColor:'#fefefe',
+//     color:'#fefefe'
+//   }
+// }
 
 const Header = (props) => (
-  <nav style={styles.body} className="navbar navbar-toggleable-md navbar-light bg-faded">
-    <button className="navbar-toggler navbar-toggler-right"  type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon" ></span>
-    </button>
-    <div style={styles.textcolor} className="navbar-brand">Playbook</div>
+  <nav style={styles.header} className="navbar navbar-toggleable-md navbar-inverse bg-faded">
+    {props.auth == 1 &&
+      <button  className="navbar-toggler navbar-toggler-right"  type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon" ></span>
+      </button>
+    }
+    <div  className="navbar-brand">Playbook</div>
     {props.auth == 1 &&
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav mr-auto mt-2 mt-md-0">
@@ -42,4 +48,3 @@ const Header = (props) => (
 
 
 export default Header;
-{/* <NavLink to="/desktop">Desktop</NavLink> */}

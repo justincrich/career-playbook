@@ -19,3 +19,7 @@ export const RECEIVE_LOGOUT_FAILURE='auth/RECEIVE_LOGOUT_FAILURE';
 
 //toggle auth status (expired token)
 export const CHANGE_AUTH_STATUS ='auth/CHANGE_AUTH_STATUS';
+export const DISMISS_NOTIFICATION ="auth/DISMISS_NOTIFICATION";
+export const DISMISS_SUCCESS_NOTIFICATION = "auth/DISMISS_SUCCESS_NOTIFICATION";
+export const THROW_ERROR ="auth/THROW_ERROR";
+export const THROW_SUCCESS = "auth/THROW_SUCCESS";

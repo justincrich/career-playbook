@@ -5,12 +5,7 @@ var authRoutes = express.Router();
 var mid = require('../middleware');
 var User = require("../data_models/userModel").User;
 
-authRoutes.get('/',(req,res)=>{
-  res.status(200).json({message:'Connected Auth'});
-});
-authRoutes.get('/login',(req,res)=>{
-  res.status(200).json({message:'Connected LOGIN'});
-});
+
 
 // POST /register
 authRoutes.post("/register", function(req,res,next){
@@ -30,9 +25,9 @@ authRoutes.post("/register", function(req,res,next){
           req.session.userId = user._id;
         });
       }else {
-      var err = new Error('All fields required.');
-      err.status = 400;
-      return next(err);
+        var err = new Error('You missed a field ... try again!.');
+        err.status = 400;
+        return next(err);
     }
 
 });

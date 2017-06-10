@@ -12,16 +12,24 @@ export const requestUser=(_id)=>{
   };
 }
 
-export const receiveUser=(_id,json)=>{
+export const receiveUserSuccess=(_id,json)=>{
   return{
     type:ActionTypes.RECEIVE_USER_SUCCESS,
     isFetching:false,
     _id,
     user: json,
+    auth:1,
     receivedAt:Date.now()
   };
 }
-
+export const receiveUserFailure=()=>{
+  return{
+    auth:1,
+    error:1,
+    message:"Please Login Again",
+    receivedAt:Date.now()
+  };
+}
 
 //Thunk action handlers
 export function fetchUser(_id){
@@ -36,7 +44,9 @@ export function fetchUser(_id){
     var req = new Request(url,init);
 
     return fetch(req)
-      .then(response=>response.json())
+      .then(response=>{
+        if(response.status == )
+      })
       .then(json=>
         dispatch(receiveUser(_id,json))
         // console.log(receiveUser(_id,json))

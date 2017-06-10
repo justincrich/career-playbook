@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import reactCSS from 'reactcss';
-import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as Actions from '../../Actions/auth';
 
 const styles = reactCSS({
   'default':{
@@ -16,15 +13,60 @@ class Register extends Component{
   constructor(props){
     super(props);
     this.state={
-
+      name:"",
+      email:"",
+      password:"",
+      confirmPassword:""
     };
+    this.submit.bind(this);
+  }
 
+  handleInput(event,type){
+
+    switch(type){
+      case "email":
+        this.setState({email: event.target.value});
+        break;
+      case "password":
+        this.setState({password: event.target.value});
+        break;
+      case "confirmPassword":
+        this.setState({confirmPassword: event.target.value});
+        break;
+        case "name":
+          this.setState({name: event.target.value});
+        break;
+      default:
+    }
+  }
+
+  submit(){
+    var alphaExp = /^[0-9a-zA-Z]+$/;
+    if(this.state.email.match(alphaExp)
+        && this.state.name.match(alphaExp)
+        && this.state.password.match(alphaExp)
+        && this.state.confirmPassword.match(alphaExp)){
+        if(this.state.password == this.state.confirmPassword){
+          //notify that passwords don't match
+          this.props.register(
+            this.state.email,
+            this.state.name,
+            this.state.password,
+            this.state.confirmPassword
+          );
+          
+
+        }else{
+          this.props.throwError("Passwords don't match, try again.");
+          //Register the user
+
+        }
+    }else{
+      this.props.throwError("All fields must be filled.");
+    }
   }
 
   render(){
-    const {dispatch,isFetching,email,name,userId,message,auth}=this.props;
-    const fetchLogin = bindActionCreators(Actions.fetchLogin,dispatch);
-    const fetchRegister = bindActionCreators(Actions.fetchRegister,dispatch);
     return (
       <div className="card jLogin">
         <div className="card-header">
@@ -33,41 +75,52 @@ class Register extends Component{
         <div className="card-block">
           <form>
             <div className="form-group d-flex flex-column">
-              <label for="inputEmail">Email address</label>
-              <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <label htmlFor="inputEmail">Email address</label>
+              <input type="email"
+                className="form-control"
+                onChange={event=>this.handleInput(event,"email")}
+                id="inputEmail"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"/>
+              <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div className="form-group d-flex flex-column">
-              <label for="inputName">Name</label>
-              <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Enter name"/>
+              <label htmlFor="inputName">Name</label>
+              <input type="text"
+                onChange={event=>this.handleInput(event,"name")}
+                className="form-control"
+                id="inputName"
+                aria-describedby="nameHelp"
+                placeholder="Enter name"/>
             </div>
             <div className="form-group d-flex flex-column">
-              <label for="inputPassword">Password</label>
-              <input type="password" class="form-control" id="inputConfirmPassword" aria-describedby="nameHelp" placeholder="Enter password"/>
+              <label htmlFor="inputPassword">Password</label>
+              <input type="password"
+                onChange={event=>this.handleInput(event,"password")}
+                className="form-control"
+                id="inputConfirmPassword"
+                aria-describedby="nameHelp"
+                placeholder="Enter password"/>
             </div>
             <div className="form-group d-flex flex-column">
-              <label for="inputConfirmPassword">Confirm Password</label>
-              <input type="password" class="form-control" id="inputConfirmPassword" aria-describedby="nameHelp" placeholder="Confirm password"/>
+              <label htmlFor="inputConfirmPassword">Confirm Password</label>
+              <input type="password"
+                onChange={event=>this.handleInput(event,"confirmPassword")}
+                className="form-control"
+                id="inputConfirmPassword"
+                aria-describedby="nameHelp"
+                placeholder="Confirm password"/>
             </div>
           </form>
         </div>
         <div className="card-footer d-flex justify-content-end">
-          <a href="#" className="btn btn-primary ml-auto">Submit</a>
+          <a href="#" className="btn btn-secondary ml-auto" onClick={()=>this.props.toggle()}>Login</a>
+          <a href="#" className="btn btn-primary ml-3" onClick={()=>this.submit()}>Submit</a>
         </div>
       </div>
     );
   }
 
 }
-const mapStateToProps= state =>(
-    {
-      isFetching:state.isFetching,
-      email:state.email,
-      name:state.name,
-      userId:state.userId,
-      message:state.message,
-      auth:state.auth
-    }
-);
 
-export default connect(mapStateToProps)(Register);
+export default Register;

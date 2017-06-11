@@ -1,4 +1,5 @@
 import * as ActionTypes from '../ActionTypes/auth-actiontypes';
+import * as UserActions from './user';
 import * as Endpoints from '../endpoints';
 import fetch from 'isomorphic-fetch';
 
@@ -68,9 +69,10 @@ export function fetchRegister(email,name,password,confirmPassword){
     dispatch(requestRegister(email,name));
     //Get job
     var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.REGISTER;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.REGISTER;
     var init = {
       method:'POST',
+      mode:'same-origin',
       body:JSON.stringify(
         {
           email:email,
@@ -86,7 +88,7 @@ export function fetchRegister(email,name,password,confirmPassword){
 
     };
 
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.REGISTER,init);
 
     return fetch(req)
       .then(response=>{
@@ -118,6 +120,7 @@ export const requestLogin=(email,password)=>{
 
 export const receiveLogin=(resp)=>{
   var auth = parseInt(resp.auth);
+  console.log("AUTH STATUS",resp);
   if(auth==1){
     return{
       type:ActionTypes.RECEIVE_LOGIN_SUCCESS,
@@ -134,7 +137,8 @@ export const receiveLogin=(resp)=>{
       message:resp.message,
       receivedAt:Date.now(),
       auth:auth,
-      error:resp.error
+      error:resp.error,
+      user_id:undefined
     };
   }
 }
@@ -147,11 +151,12 @@ export function fetchLogin(email,password){
     //Update state to inform app we're processing
     dispatch(requestLogin(email,password));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGIN;
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGIN;
     var init = {
       method:'POST',
-      // mode:'cors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify({
         email:email,
         password:password
@@ -163,22 +168,20 @@ export function fetchLogin(email,password){
 
     }
 
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.LOGIN,init);
     return fetch(req)
       .then(response=>{
-        if(response.status == 200){
-          return dispatch(receiveLogin(response.json()));
+        if(response.ok){
+          return response.json().then(json=>{
+            dispatch(receiveLogin(json));
+            dispatch(UserActions.fetchUser());
+          });
         }else if (response.status == 401){
           dispatch(throwError("Invalid Username or Password"));
-          return response;
         }else if (response.status == 400){
             dispatch(throwError("You missed a field ... please try again!"));
-            return response;
-        }else{
-          return response;
         }
-      })
-      .catch(error=>{
+      }).catch(error=>{
 
       });
 
@@ -202,7 +205,8 @@ export const receiveLogout=(json)=>{
     isFetching:false,
     message: json.message,
     auth:parseInt(json.auth),
-    receivedAt:Date.now()
+    receivedAt:Date.now(),
+    user:undefined
   };
 }
 
@@ -213,10 +217,10 @@ export function fetchLogOut(){
     //Update state to inform app we're processing
     dispatch(requestLogout());
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGOUT;
-    var init = {method:'GET', mode:'nocors'}
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGOUT;
+    var init = {method:'GET', mode:'same-origin'}
+    var req = new Request(Endpoints.LOGOUT,init);
 
     return fetch(req)
       .then(response=>response.json())

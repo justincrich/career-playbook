@@ -1,56 +1,69 @@
 import * as ActionTypes from '../ActionTypes/user-actiontypes';
+import * as AuthActions from './auth';
 import * as Endpoints from '../endpoints';
 import fetch from 'isomorphic-fetch';
 
 
 //GET ONE USER
-export const requestUser=(_id)=>{
+export const requestUser=()=>{
   return{
     type: ActionTypes.REQUEST_USER,
-    isFetching:true,
-    _id
+    isFetching:true
   };
 }
 
-export const receiveUserSuccess=(_id,json)=>{
+export const receiveUserSuccess=(user)=>{
   return{
     type:ActionTypes.RECEIVE_USER_SUCCESS,
     isFetching:false,
-    _id,
-    user: json,
+    user: user,
     auth:1,
     receivedAt:Date.now()
   };
 }
-export const receiveUserFailure=()=>{
+export const receiveUserFailure=(message)=>{
   return{
-    auth:1,
+    type:ActionTypes.RECEIVE_USER_FAILURE,
     error:1,
-    message:"Please Login Again",
-    receivedAt:Date.now()
+    receivedAt:Date.now(),
+    message:message,
+    auth:0,
+    isFetching:false,
+    user:undefined
   };
 }
 
+
+
+
 //Thunk action handlers
-export function fetchUser(_id){
+export function fetchUser(){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestUser(_id));
+    dispatch(requestUser());
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USERS.concat(_id);
-    var init = {method:'GET', mode:'nocors'}
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER;
+    var init = {method:'GET',mode:'same-origin',credentials:'include'};
 
+    var req = new Request(Endpoints.USER,init);
     return fetch(req)
       .then(response=>{
-        if(response.status == )
-      })
-      .then(json=>
-        dispatch(receiveUser(_id,json))
-        // console.log(receiveUser(_id,json))
-      ).catch(error=>console.log("Error in Actions.Users.fetchUser(): ",error));
+        console.log("Status in the user response",response.status);
+        if(response.ok){
+          response.json().then(json=>{
+            dispatch(receiveUserSuccess(json));
+          });
+        }
+        if(response.status == 401){
+          //dispatch(AuthActions.receiveLogout({message:"",auth:0}));
+        }
+        if(response.status == 500){
+          var err = new Error('Cannot load user, contact the systems admin.');
+        }
+
+      }).catch(error=>dispatch(receiveUserFailure(error.message)));
 
   }
 }
@@ -82,19 +95,21 @@ export function fetchUpdateUser(user){
     //Update state to inform app we're processing
     dispatch(requestUpdateUser(user));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER.concat(user._id);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER.concat(user._id);
     var init = {
       method:'PUT',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify(user),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
+         Accept: 'application/json',
         'Data-Type':'json'
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER,init);
 
     return fetch(req)
       .then(response=>response.json())

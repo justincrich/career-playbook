@@ -28,10 +28,10 @@ export function fetchAllCompanies(_uid){
     //Update state to inform app we're processing
     dispatch(requestAllCompanies(_uid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
-    var init = {method:'GET',mode:'nocors'};
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
+    var init = {method:'GET',mode:'same-origin',credentials:'same-origin'};
+    var req = new Request(Endpoints.USER+_uid+Endpoints.COMPANIES,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -72,10 +72,10 @@ export function fetchCompany(_uid,_cid){
     //Update state to inform app we're processing
     dispatch(requestCompany(_uid,_cid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
-    var init = {method:'GET', mode:'nocors'}
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
+    var init = {method:'GET', mode:'same-origin',credentials:'same-origin'};
+    var req = new Request(Endpoints.USER+_uid+Endpoints.COMPANIES+_cid,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -122,11 +122,12 @@ export function fetchCreateCompany(_uid,company){
     //Update state to inform app we're processing
     dispatch(requestCreateCompany(_uid,company));
     //Get company
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES;
     var init = {
       method:'POST',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify(company),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
@@ -134,7 +135,7 @@ export function fetchCreateCompany(_uid,company){
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.COMPANIES,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -175,20 +176,20 @@ export function fetchDeleteCompany(_uid,_cid){
     //Update state to inform app we're processing
     dispatch(requestDeleteCompany(_uid,_cid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
-    console.log("URL",url);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(_cid);
+
     var init = {
       method:'DELETE',
-      mode:'nocors',
-      // body:JSON.stringify(job),
+      mode:'same-origin',
+      credentials:'same-origin',
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
         'Data-Type':'json'
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.COMPANIES+_cid,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -226,11 +227,12 @@ export function fetchUpdateCompany(_uid, company){
     //Update state to inform app we're processing
     dispatch(requestUpdateCompany(_uid,company));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(company._cid);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.COMPANIES.concat(company._cid);
     var init = {
       method:'PUT',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify(company),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
@@ -238,7 +240,7 @@ export function fetchUpdateCompany(_uid, company){
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.COMPANIES+company._cid,init);
 
     return fetch(req)
       .then(response=>response.json())

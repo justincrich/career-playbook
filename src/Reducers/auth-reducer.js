@@ -1,5 +1,5 @@
 import * as AuthActionTypes from '../ActionTypes/auth-actiontypes';
-
+import * as UserActionTypes from '../ActionTypes/user-actiontypes';
 const initialState = {
   isFetching:false,
   email:"",
@@ -21,6 +21,34 @@ function AuthReducer(state=initialState,action){
 
   switch(action.type){
     // REQUEST ONE JOB
+    case UserActionTypes.REQUEST_USER:{
+      return{
+        ...state,isFetching:action.isFetching
+      }
+    }
+    case UserActionTypes.REQUEST_USER_SUCCESS:{
+      return{
+        ...state,auth:action.auth,isFetching:action.isFetching
+      }
+    }
+    case UserActionTypes.REQUEST_USER_FAILURE:{
+      return{
+        ...state,auth:action.auth,error:action.error,
+        isFetching:action.isFetching, message:action.message
+      }
+    }
+    case UserActionTypes.RECEIVE_USER_SUCCESS:{
+      return{
+        ...state,isFetching:action.isFetching,
+        auth:action.auth
+      }
+    }
+    case UserActionTypes.RECEIVE_USER_FAILURE:{
+      return{
+        ...state,isFetching:action.isFetching,
+        auth:action.auth
+      }
+    }
     case AuthActionTypes.DISMISS_SUCCESS_NOTIFICATION:{
       return{
         ...state,success:action.success
@@ -99,7 +127,7 @@ function AuthReducer(state=initialState,action){
     case AuthActionTypes.RECEIVE_LOGOUT_SUCCESS:{
       return{
         ...state,isFetching:action.isFetching,message:action.message,
-        auth:1,error:0
+        auth:action.auth,error:action.error
 
       }
     }
@@ -111,8 +139,6 @@ function AuthReducer(state=initialState,action){
     default:
       return state;
   }
-
-  console.log("state",state);
 }
 
 export default AuthReducer;

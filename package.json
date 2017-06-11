@@ -2,6 +2,7 @@
   "name": "job-search",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3030/",
   "dependencies": {
     "axios": "^0.16.1",
     "bcrypt": "^1.0.2",

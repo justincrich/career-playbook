@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Header from './Components/Views/Header';
 import Login from './Components/Views/Login';
+import Test from './Components/Views/Test';
 import Register from './Components/Views/Register';
 import Unauthorized from './Components/Views/Unauthorized';
 import {connect} from 'react-redux';
+import store from './Store/store';
 import {
   BrowserRouter,
   Route,
@@ -12,7 +14,9 @@ import {
 } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as AuthActions from './Actions/auth';
+import * as UserActions from './Actions/user';
 import AuthContainer from './Components/Containers/AuthContainer';
+import UserContainer from './Components/Containers/UserContainer';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
 import reactCSS from 'reactcss';
@@ -39,14 +43,19 @@ class App extends Component{
     };
   }
 
+  componentWillMount(){
+    store.dispatch(UserActions.fetchUser());
+  }
+
 
 
 
 
   render(){
-    const {dispatch, isFetching,auth,error}=this.props;
+    const {dispatch, isFetching,message,auth,error}=this.props;
     const changeAuthStatus = bindActionCreators(AuthActions.changeAuthStatus,dispatch);
     const fetchLogOut = bindActionCreators(AuthActions.fetchLogOut,dispatch);
+    const fetchUser = bindActionCreators(UserActions.fetchUser,dispatch);
     return(
       <BrowserRouter>
         <div className="">

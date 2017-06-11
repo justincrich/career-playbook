@@ -28,10 +28,10 @@ export function fetchAllJobs(_uid){
     //Update state to inform app we're processing
     dispatch(requestAllJobs(_uid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS;
-    var init = {method:'GET', mode:'nocors'}
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS;
+    var init = {method:'GET', mode:'same-origin',credentials:'same-origin'}
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -72,10 +72,10 @@ export function fetchJob(_uid,_jid){
     //Update state to inform app we're processing
     dispatch(requestJob(_uid,_jid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(_jid);
-    var init = {method:'GET', mode:'nocors'}
-    var req = new Request(url,init);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(_jid);
+    var init = {method:'GET', mode:'same-origin',credentials:'same-origin'}
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS+_jid,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -122,11 +122,12 @@ export function fetchCreateJob(_uid,job){
     //Update state to inform app we're processing
     dispatch(requestCreateJob(_uid,job));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS;
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS;
     var init = {
       method:'POST',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify(job),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
@@ -134,7 +135,7 @@ export function fetchCreateJob(_uid,job){
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -174,11 +175,12 @@ export function fetchDeleteJob(_uid,_jid){
     //Update state to inform app we're processing
     dispatch(requestDeleteJob(_uid,_jid));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(_jid);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(_jid);
     var init = {
       method:'DELETE',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       // body:JSON.stringify(job),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
@@ -186,7 +188,7 @@ export function fetchDeleteJob(_uid,_jid){
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS+_jid,init);
 
     return fetch(req)
       .then(response=>response.json())
@@ -224,11 +226,12 @@ export function fetchUpdateJob(_uid,job){
     //Update state to inform app we're processing
     dispatch(requestUpdateJob(_uid,job));
     //Get job
-    var useSSL = 'https:' === document.location.protocol;
-    var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(job._id);
+    // var useSSL = 'https:' === document.location.protocol;
+    // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.USER+_uid+"/"+Endpoints.JOBS.concat(job._id);
     var init = {
       method:'PUT',
-      mode:'nocors',
+      mode:'same-origin',
+      credentials:'same-origin',
       body:JSON.stringify(job),
       headers: new Headers({
         'Content-Type':'application/json; charset=utf-8',
@@ -236,7 +239,7 @@ export function fetchUpdateJob(_uid,job){
       })
 
     }
-    var req = new Request(url,init);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS+job._jid,init);
 
     return fetch(req)
       .then(response=>response.json())

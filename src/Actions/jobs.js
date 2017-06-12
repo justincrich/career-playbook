@@ -135,13 +135,17 @@ export function fetchCreateJob(_uid,job){
       })
 
     }
+    console.log("URL",Endpoints.USER+_uid+Endpoints.JOBS);
     var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS,init);
 
     return fetch(req)
-      .then(response=>response.json())
-      .then(json=>
-        dispatch(receiveCreateJob(json))
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
+      .then(response=>{
+        if(response.ok){
+          response.json().then(json=>{
+            dispatch(receiveCreateJob(json));
+          });
+        }
+      }).catch(error=>console.log("Error in Actions.Jobs.fetchJob(): ",error));
 
   }
 }

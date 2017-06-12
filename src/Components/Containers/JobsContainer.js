@@ -23,29 +23,24 @@ class JobsContainer extends Component{
     this.selectJob.bind(this);
     this.saveUpdate.bind(this);
     this.closeModal.bind(this);
-    this.addJob.bind(this);
 
   }
 
+  componentWillMount(){
+    var state = store.getState();
+    var user = state.userState.user;
+    store.dispatch(Actions.fetchAllJobs(user._id));
+  }
 
+  selectJob(id,jobFunc,user){
 
-  selectJob(id,jobFunc,job){
-
-    jobFunc(id);
+    jobFunc(user._id,id);
     this.setState(prevState => ({
       viewdetails: !prevState.viewdetails
     }));
     //this.props.OpenModal(id);
   }
 
-  removeJob(){
-    //this.state.history.push(`jobs/${teacherTopic}/${teacherName}`);
-    //console.log(this.state.history);
-  }
-
-  addJob(){
-
-  }
 
   closeModal(){
 
@@ -54,12 +49,12 @@ class JobsContainer extends Component{
     });
   }
 
-  saveUpdate(job, updateJob){
+  saveUpdate(job, updateJob,uid){
 
     this.setState({
       viewdetails:false
     });
-    updateJob(job);
+    updateJob(uid,job);
   }
 
   search(query, searchJob){
@@ -84,16 +79,28 @@ class JobsContainer extends Component{
       <div>
         <div className="">
           <JobsGroup jobs={allJobs.records} icon1="business_center" icon2="business"
-            selectJob={(id)=>{this.selectJob(id, requestJob.bind(this),job)}}
-            onRemove={deleteJOB}
-            addJob={createJOB}
+            selectJob={(id)=>{
+              this.selectJob(id, requestJob.bind(this),user);
+            }}
+            onRemove={(_jid)=>deleteJOB(user._id,_jid)}
+            addJob={(job)=>{
+              job.uID=user._id;
+              createJOB(user._id,job);
+            }}
             onSearch={searchJOB}
             searchresults={searchResults}
+            updateJob={(job)=>{
+              job.uID = user._id;
+              updateJOB(user._id,job);
+            }}
           />
 
         </div>
          <JobDetailModal job={job.item} viewdetails={this.state.viewdetails}
-           save={(job)=>{this.saveUpdate(job,updateJOB.bind(this))}} close={()=>this.closeModal()}/>
+           save={(job)=>{
+             job.uID = user._id;
+             this.saveUpdate(job,updateJOB.bind(this),user._id);
+           }} close={()=>this.closeModal()}/>
 
       </div>
 

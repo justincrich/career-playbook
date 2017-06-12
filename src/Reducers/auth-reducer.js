@@ -9,7 +9,6 @@ const initialState = {
   userId:"",
   receivedAt:Date.now(),
   message:"",
-  auth:0,
   error:0,
   success:false
 };
@@ -28,25 +27,24 @@ function AuthReducer(state=initialState,action){
     }
     case UserActionTypes.REQUEST_USER_SUCCESS:{
       return{
-        ...state,auth:action.auth,isFetching:action.isFetching
+        ...state,isFetching:action.isFetching
       }
     }
     case UserActionTypes.REQUEST_USER_FAILURE:{
       return{
-        ...state,auth:action.auth,error:action.error,
+        ...state,error:action.error,
         isFetching:action.isFetching, message:action.message
       }
     }
     case UserActionTypes.RECEIVE_USER_SUCCESS:{
       return{
-        ...state,isFetching:action.isFetching,
-        auth:action.auth
+        ...state,isFetching:action.isFetching
       }
     }
     case UserActionTypes.RECEIVE_USER_FAILURE:{
       return{
         ...state,isFetching:action.isFetching,
-        auth:action.auth
+        error:action.error,message:action.message
       }
     }
     case AuthActionTypes.DISMISS_SUCCESS_NOTIFICATION:{
@@ -79,21 +77,10 @@ function AuthReducer(state=initialState,action){
     case AuthActionTypes.RECEIVE_REGISTER_SUCCESS:{
         return {
           ...state,isFetching:action.isFetching,
-          message:action.message,userId:action.userId,
+          message:action.message,
           receivedAt:action.receivedAt,
-          auth:action.auth,
           error:action.error,
           success:action.success
-        }
-    }
-    case AuthActionTypes.RECEIVE_REGISTER_FAILURE:{
-        return {
-          ...state,isFetching:action.isFetching,
-          message:action.message,
-          userId:-1,
-          receivedAt:action.receivedAt,
-          error:action.error,
-          auth:action.success
         }
     }
     case AuthActionTypes.REQUEST_LOGIN:{
@@ -104,19 +91,8 @@ function AuthReducer(state=initialState,action){
     }
     case AuthActionTypes.RECEIVE_LOGIN_SUCCESS:{
       return{
-        ...state,isFetching:action.isFetching,
-        userId:action.userId,message:action.message,
-        receivedAt:action.receivedAt, auth:action.auth,
-        error:0
-      }
-    }
-    case AuthActionTypes.RECEIVE_LOGIN_FAILURE:{
-      console.log("error",action.error);
-      return{
-        ...state,isFetching:action.isFetching,
-        userId:-1,message:action.message,
-        receivedAt:action.receivedAt,
-        auth:action.auth, error:action.error
+        ...state,isFetching:action.isFetching, message:action.message,
+        receivedAt:action.receivedAt, error:0
       }
     }
     case AuthActionTypes.RECEIVE_LOGOUT:{
@@ -127,13 +103,7 @@ function AuthReducer(state=initialState,action){
     case AuthActionTypes.RECEIVE_LOGOUT_SUCCESS:{
       return{
         ...state,isFetching:action.isFetching,message:action.message,
-        auth:action.auth,error:action.error
 
-      }
-    }
-    case AuthActionTypes.CHANGE_AUTH_STATUS:{
-      return{
-        ...state,auth:action.auth
       }
     }
     default:

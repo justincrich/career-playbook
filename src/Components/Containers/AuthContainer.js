@@ -26,8 +26,8 @@ class AuthContainer extends Component{
       password:"",
       auth:0,
       fetching:false,
-      register:props.register,
-      login:props.login,
+      register:false,
+      login:true,
       created:false
     };
     this.toggle.bind(this);

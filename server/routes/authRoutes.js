@@ -45,7 +45,7 @@ authRoutes.post('/login', function(req, res, next) {
         //console.log("doing login");
         req.session.userId = user._id;
         res.status(200).json({
-          user_id:user._id,
+          user:user,
           message:'Authenticated',
           auth:"1"
 

@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import IconButton from './IconButton';
 import reactCSS from 'reactcss';
-import defaultPic from '../../Media/company.jpg';
 
 //Styling
 import '../../../css/template.css';
@@ -15,7 +14,6 @@ const styles = reactCSS({
   }
 });
 
-var id= "";
 
 function Company(props){
   return(

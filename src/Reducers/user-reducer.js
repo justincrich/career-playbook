@@ -17,6 +17,12 @@ function UserReducer(state=initialState,action){
   switch(action.type){
     // REQUEST ONE JOB
     case AuthActionTypes.RECEIVE_LOGOUT_SUCCESS:{
+      return{
+        ...state, isFetching:action.isFetching,
+        user:action.user
+      }
+    }
+    case AuthActionTypes.RECEIVE_LOGIN_SUCCESS:{
         return {
           ...state,isFetching:action.isFetching,
           user:action.user
@@ -27,7 +33,7 @@ function UserReducer(state=initialState,action){
           ...state,isFetching:action.isFetching
         }
     }
-    case AuthActionTypes.RECEIVE_USER_SUCCESS:{
+    case UserActionTypes.RECEIVE_USER_SUCCESS:{
         return {
           ...state,isFetching:action.isFetching,
           user:action.user

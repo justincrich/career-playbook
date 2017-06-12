@@ -17,17 +17,14 @@ export const receiveUserSuccess=(user)=>{
     type:ActionTypes.RECEIVE_USER_SUCCESS,
     isFetching:false,
     user: user,
-    auth:1,
     receivedAt:Date.now()
   };
 }
-export const receiveUserFailure=(message)=>{
+export const receiveUserFailure=()=>{
   return{
     type:ActionTypes.RECEIVE_USER_FAILURE,
-    error:1,
     receivedAt:Date.now(),
-    message:message,
-    auth:0,
+    message:"Please Log In Again",
     isFetching:false,
     user:undefined
   };
@@ -50,14 +47,15 @@ export function fetchUser(){
     var req = new Request(Endpoints.USER,init);
     return fetch(req)
       .then(response=>{
-        console.log("Status in the user response",response.status);
         if(response.ok){
           response.json().then(json=>{
+            // console.log("USER RESP SUCC:",json);
             dispatch(receiveUserSuccess(json));
           });
         }
         if(response.status == 401){
-          //dispatch(AuthActions.receiveLogout({message:"",auth:0}));
+          console.log("USER RESP FAILURE:",response.status);
+          dispatch(receiveUserFailure());
         }
         if(response.status == 500){
           var err = new Error('Cannot load user, contact the systems admin.');

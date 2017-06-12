@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import JobsGroup from '../Views/JobsGroup';
 // import {Route} from 'react-router-dom';
+import store from '../../Store/store';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../Actions/jobs';
@@ -18,13 +19,15 @@ class JobsContainer extends Component{
       selected:0,
       viewdetails:false
     }
-    this.props.dispatch(Actions.fetchAllJobs());
+
     this.selectJob.bind(this);
     this.saveUpdate.bind(this);
     this.closeModal.bind(this);
     this.addJob.bind(this);
 
   }
+
+
 
   selectJob(id,jobFunc,job){
 
@@ -65,7 +68,7 @@ class JobsContainer extends Component{
 
   render(){
     // Redux Setup
-    const {dispatch, allJobs, searchResults,job}=this.props;
+    const {dispatch, allJobs, searchResults,job,user}=this.props;
     const requestJob = bindActionCreators(Actions.fetchJob,dispatch);
     const requestAllJobs = bindActionCreators(Actions.requestAllJobs,dispatch);
     const createJOB = bindActionCreators(Actions.fetchCreateJob,dispatch);
@@ -104,6 +107,7 @@ const mapStateToProps= state =>(
       allJobs:state.jobsState.allJobs,
       searchResults: state.jobsState.searchResults,
       job:state.jobsState.job,
+      user:state.userState.user
     }
 );
 

@@ -1,5 +1,4 @@
 import * as JobsActionTypes from '../ActionTypes/jobs-actiontypes';
-import { combineReducers } from 'redux';
 import Fuse from 'fuse.js';
 
 const initialState = {

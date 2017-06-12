@@ -15,7 +15,7 @@ const styles = reactCSS({
     addButton:{
       height:"42px",
     },
-    
+
 
   }
 });
@@ -46,7 +46,6 @@ class JobsGroup extends Component{
 
   listJobs(arr){
     var defaultIMG = "company.jpg";
-    console.log(arr);
     return arr.map((job,index)=>(
         <Job
           key={job._id}

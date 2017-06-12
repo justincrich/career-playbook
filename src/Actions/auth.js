@@ -32,8 +32,7 @@ export const throwError=(errMessage)=>{
   return{
     type: ActionTypes.THROW_ERROR,
     error:1,
-    message:errMessage,
-    auth:0
+    message:errMessage
   };
 }
 
@@ -53,10 +52,9 @@ export const receiveRegister=(resp)=>{
       type:ActionTypes.RECEIVE_REGISTER_SUCCESS,
       isFetching:false,
       message: resp.message,
-      userId:resp.user_id,
       receivedAt:Date.now(),
-      auth:0,
-      error:0
+      error:0,
+      success:true
     };
 
 }
@@ -110,7 +108,7 @@ export function fetchRegister(email,name,password,confirmPassword){
 }
 
 //Login
-export const requestLogin=(email,password)=>{
+export const requestLogin=(email)=>{
   return{
     type: ActionTypes.REQUEST_LOGIN,
     isFetching:true,
@@ -119,28 +117,13 @@ export const requestLogin=(email,password)=>{
 }
 
 export const receiveLogin=(resp)=>{
-  var auth = parseInt(resp.auth);
-  console.log("AUTH STATUS",resp);
-  if(auth==1){
-    return{
-      type:ActionTypes.RECEIVE_LOGIN_SUCCESS,
-      isFetching:false,
-      message: resp.message,
-      userId:resp.user_id,
-      receivedAt:Date.now(),
-      auth:auth
-    };
-  }else if (auth==0){
-    return{
-      type:ActionTypes.RECEIVE_LOGIN_FAILURE,
-      isFetching:false,
-      message:resp.message,
-      receivedAt:Date.now(),
-      auth:auth,
-      error:resp.error,
-      user_id:undefined
-    };
-  }
+  return{
+    type:ActionTypes.RECEIVE_LOGIN_SUCCESS,
+    isFetching:false,
+    message: resp.message,
+    user:resp.user,
+    receivedAt:Date.now()
+  };
 }
 
 
@@ -149,7 +132,7 @@ export function fetchLogin(email,password){
   return function(dispatch){
 
     //Update state to inform app we're processing
-    dispatch(requestLogin(email,password));
+    dispatch(requestLogin(email));
     //Get job
     // var useSSL = 'https:' === document.location.protocol;
     // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGIN;
@@ -174,7 +157,6 @@ export function fetchLogin(email,password){
         if(response.ok){
           return response.json().then(json=>{
             dispatch(receiveLogin(json));
-            dispatch(UserActions.fetchUser());
           });
         }else if (response.status == 401){
           dispatch(throwError("Invalid Username or Password"));
@@ -204,7 +186,6 @@ export const receiveLogout=(json)=>{
     type:ActionTypes.RECEIVE_LOGOUT_SUCCESS,
     isFetching:false,
     message: json.message,
-    auth:parseInt(json.auth),
     receivedAt:Date.now(),
     user:undefined
   };
@@ -219,16 +200,22 @@ export function fetchLogOut(){
     //Get job
     // var useSSL = 'https:' === document.location.protocol;
     // var url = (useSSL ? 'https://':'http://')+Endpoints.DOMAIN+Endpoints.LOGOUT;
-    var init = {method:'GET', mode:'same-origin'}
+    var init = {method:'GET', mode:'same-origin',credentials:'include'}
     var req = new Request(Endpoints.LOGOUT,init);
 
     return fetch(req)
-      .then(response=>response.json())
-      .then(json=>
+      .then(response=>{
+        if(response.ok){
+          response.json().then(json=>{
+            dispatch(receiveLogout(json));
+          });
+        }
+      })
+      // .then(json=>
         // console.log("response",json)
-        dispatch(receiveLogout(json))
+        // dispatch(receiveLogout(json))
         // console.log(receiveJob(_jid,json))
-      ).catch(error=>console.log("Error in Actions.Jobs.fetchAllJobs(): ",error));
+      .catch(error=>console.log("Error in Actions.Jobs.fetchAllJobs(): ",error));
 
   }
 }

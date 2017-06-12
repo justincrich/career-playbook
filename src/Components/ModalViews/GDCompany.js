@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import reactCSS, {hover} from 'reactcss';
+import React from 'react';
+
 
 //Styling
 import '../../../css/template.css';
@@ -26,7 +26,6 @@ const icon ={
       },
 }
 
-var id= "";
 
 function GDCompany(props){
   return(

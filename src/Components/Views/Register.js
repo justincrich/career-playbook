@@ -41,11 +41,13 @@ class Register extends Component{
   }
 
   submit(){
-    var alphaExp = /^[0-9a-zA-Z]+$/;
-    if(this.state.email.match(alphaExp)
-        && this.state.name.match(alphaExp)
-        && this.state.password.match(alphaExp)
-        && this.state.confirmPassword.match(alphaExp)){
+    var alphaExp = /^[a-zA-Z0-9\t\n ./<>?;:"'`!@#$%^&*()\[\]{}_+=|\\-]+$/;
+    var emailExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(this.state.name,alphaExp.test(this.state.name));
+    if(emailExp.test(this.state.email)
+        && alphaExp.test(this.state.name)
+        && alphaExp.test(this.state.password)
+        && alphaExp.test(this.state.confirmPassword)){
         if(this.state.password == this.state.confirmPassword){
           //notify that passwords don't match
           this.props.register(

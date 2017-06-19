@@ -1,3 +1,46 @@
+/*------------NAVBAR-------------------*/
+.navBody{
+  background: #607d8b;
+  padding: 0px 16px;
+  height: 62px;
+}
+
+.navBrand{
+  padding:16px;
+}
+
+.navOptions{
+  height: 100%;
+}
+
+.navLogout{
+  color:#FFF;
+  height: 100%;
+}
+
+.navLi{
+  height: 100%;
+  padding:0 0;
+}
+
+
+.navLi:hover{
+  background:#485e68;
+}
+
+.navLi .active{
+  background:#485e68;
+}
+
+.navLinkText{
+  color:#FFF !important;
+  cursor: pointer;
+}
+
+.
+
+/*------------MODAL--------------------*/
+
 .jModal{
   position: fixed;
   width: 90%;

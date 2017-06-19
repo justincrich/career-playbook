@@ -38,6 +38,7 @@ export const throwError=(errMessage)=>{
 
 //Regester
 export const requestRegister=(email,name)=>{
+
   return{
     type: ActionTypes.REQUEST_REGISTER,
     isFetching:true,
@@ -62,6 +63,7 @@ export const receiveRegister=(resp)=>{
 
 //Thunk action handlers
 export function fetchRegister(email,name,password,confirmPassword){
+  console.log(email,name,password,confirmPassword);
   return function(dispatch){
     //Update state to inform app we're processing
     dispatch(requestRegister(email,name));

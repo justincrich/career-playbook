@@ -1,60 +1,68 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Radium from 'radium';
-
+import '../../../css/template.css';
 const styles = {
-  header:{
-    background:'#607d8b' //Background Blue Grey
+  hBody:{
+    background:'#607d8b', //Background Blue Grey
+    padding:"0 16px",
+    height:"62px"
+  },
+  hBrand:{
+    padding:"16px"
+  },
+  hOptions:{
+    height:"100%"
+  },
+  hLogout:{
+    color:"#FFF",
+    height:"100%",
+    ":hover":{
+      background:"#485e68"
+    }
+  },
+  hNavLi:{
+    height:"100%",
+    ":hover":{
+      background:"#485e68"
+    }
+  },
+  hLinkText:{
+    color:"#FFF"
   }
+
+
+
 };
 
-// 'default':{
-//   body:{
-//     background:'#607d8b' //Background Blue Grey
-//   },
-//   textcolor:{
-//     color:'#fefefe'
-//   },
-//   button:{
-//     backgroundColor:'#607d8b',
-//     borderColor:'#fefefe',
-//     color:'#fefefe'
-//   }
-// }
+
 
 const Header = (props) => (
-  <nav style={styles.header} className="navbar navbar-toggleable-md navbar-inverse bg-faded">
-    {props.user != undefined &&
-      <button  className="navbar-toggler navbar-toggler-right"
-        type="button"
-
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon" ></span>
-      </button>
-    }
-    <div  className="navbar-brand">Playbook</div>
-    {props.user != undefined &&
-        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul className="navbar-nav mr-auto mt-2 mt-md-0">
-            <li  className="nav-item">
-              <NavLink  className="nav-link" to="/jobs"><div style={styles.textcolor}>Jobs</div></NavLink>
+  <nav  className="navBody navbar navbar-toggleable-md navbar-inverse bg-faded d-flex">
+    <div className="navBrand navbar-brand">Playbook</div>
+    {props.user  &&
+        <div className="navOptions collapse navbar-collapse h-100 " id="navbarNav">
+          <ul className="navbar-nav mr-auto h-100 ">
+            <li className="navLi nav-item d-flex align-items-center">
+              <NavLink className="nav-link h-100 py-auto d-flex" to="/jobs"><div className="align-self-center navLinkText ">Jobs</div></NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/companies"><div style={styles.textcolor}>Companies</div></NavLink>
+            <li className="navLi nav-item h-100 d-flex align-items-center">
+              <NavLink  className="nav-link h-100 d-flex" to="/companies"><div className="navLinkText align-self-center">Companies</div></NavLink>
             </li>
           </ul>
-          <button style={styles.button}
-            className="btn btn-secondary my-2 my-sm-0"
-            onClick={()=>props.logout()}
-            type="submit">Logout</button>
+          <div className="navLi h-100 d-flex align-items-center  px-2">
+            <a className="navLinkText">Logout</a>
+          </div>
       </div>
+    }
+    {props.user &&
+
+      <button  className="navbar-toggler navbar-toggler-right align-self-center"  type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon" ></span>
+      </button>
     }
   </nav>
 );
 
 
-export default Header;
+export default Radium(Header);

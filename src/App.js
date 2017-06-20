@@ -37,12 +37,15 @@ class App extends Component{
     this.state ={
 
     };
+    this.isAuthed;
     props.dispatch(UserActions.fetchUser());
   }
 
 
 
-
+  isAuthed(){
+    console.log("AUTH");
+  }
 
 
 
@@ -53,44 +56,38 @@ class App extends Component{
     const fetchUser = bindActionCreators(UserActions.fetchUser,dispatch);
     return(
 
+
+            // <BrowserRouter>
+            //   <div>
+            //     <Header user={user} logout={fetchLogOut} />
+            //         <Switch>
+            //            <Route exact path="/" render={()=><Redirect to="/jobs"/>}/>
+            //            <Route path="/jobs" component={JobsContainer}/>
+            //            <Route path="/companies" component={CompaniesContainer}/>
+            //          </Switch>
+            //   </div>
+            // </BrowserRouter>
           <BrowserRouter>
             <div>
               <Header user={user} logout={fetchLogOut} />
-              <Switch>
-                 <Route exact path="/" render={
-                   user == undefined ?
-                   ()=><Redirect to="/jobs"/>
-                   :
-                   ()=><AuthContainer/>
-                 }/>
-
-                 <Route path="/jobs" component={
-                   user!=undefined?
-                   JobsContainer
-                   :
-                   AuthContainer
-                 }/>
-                 <Route path="/companies" component={
-                   user!=undefined?
-                   CompaniesContainer
-                   :
-                   AuthContainer
-                 }/>
-                 <Route path="/login" component={
-                   user!=undefined?
-                   JobsContainer
-                   :
-                   AuthContainer
-                 }/>
-                 <Route path="/register" component={
-                   user!=undefined?
-                   JobsContainer
-                   :
-                   AuthContainer
-                 }/>
-               </Switch>
+            {isFetching
+              ? <div></div>
+              :
+                  (user == undefined
+                    ?
+                    <AuthContainer/>
+                    :
+                    <Switch>
+                       <Route exact path="/" render={<Redirect to="/jobs"/>}/>
+                       <Route path="/jobs" component={JobsContainer}/>
+                       <Route path="/companies" component={CompaniesContainer}/>
+                     </Switch>
+                  )
+            }
             </div>
           </BrowserRouter>
+
+
 
 
 

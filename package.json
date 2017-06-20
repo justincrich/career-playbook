@@ -29,12 +29,17 @@
     "sass": "^0.5.0"
   },
   "devDependencies": {
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.0.2",
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar src/Styles/SCSS -o src/Styles/CSS",
+    "watch-css": "npm run build-css && node-sass-chokidar src/Styles/SCSS -o src/Styles/CSS --watch --recursive"
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Radium from 'radium';
-import '../../../css/template.css';
 const styles = {
   hBody:{
     background:'#607d8b', //Background Blue Grey
@@ -40,27 +39,29 @@ const styles = {
 const Header = (props) => (
   <nav  className="navBody navbar navbar-toggleable-md navbar-inverse bg-faded d-flex">
     <div className="navBrand navbar-brand">Playbook</div>
-    {props.user  &&
         <div className="navOptions collapse navbar-collapse h-100 " id="navbarNav">
-          <ul className="navbar-nav mr-auto h-100 ">
-            <li className="navLi nav-item d-flex align-items-center">
-              <NavLink className="nav-link h-100 py-auto d-flex" to="/jobs"><div className="align-self-center navLinkText ">Jobs</div></NavLink>
-            </li>
-            <li className="navLi nav-item h-100 d-flex align-items-center">
-              <NavLink  className="nav-link h-100 d-flex" to="/companies"><div className="navLinkText align-self-center">Companies</div></NavLink>
-            </li>
-          </ul>
-          <div className="navLi h-100 d-flex align-items-center  px-2">
-            <a className="navLinkText">Logout</a>
-          </div>
+          {props.user != undefined &&
+            <div className="navActions">
+              <ul className="navbar-nav mr-auto h-100 ">
+                <li className="navLi nav-item d-flex align-items-center">
+                  <NavLink className="nav-link h-100 py-auto d-flex" to="/jobs"><div className="align-self-center navLinkText ">Jobs</div></NavLink>
+                </li>
+                <li className="navLi nav-item h-100 d-flex align-items-center">
+                  <NavLink  className="nav-link h-100 d-flex" to="/companies"><div className="navLinkText align-self-center">Companies</div></NavLink>
+                </li>
+              </ul>
+              <div onClick={()=>props.logout()} className="navLi h-100 d-flex align-items-center  px-2">
+                <a className="navLinkText">Logout</a>
+              </div>
+            </div>
+          }
+
       </div>
-    }
-    {props.user &&
+
 
       <button  className="navbar-toggler navbar-toggler-right align-self-center"  type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" ></span>
       </button>
-    }
   </nav>
 );
 

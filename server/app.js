@@ -39,7 +39,7 @@ function generateOrFindUser(accessToken, refreshToken, profile, done){
 passport.use(new FacebookStrategy({
   clientID: process.env.REACT_APP_FB_ID,
   clientSecret: process.env.REACT_APP_FB_SECRET,
-  callbackURL: "http://localhost:3030/api/auth/facebook/return",
+  callbackURL: "http://localhost:8080/api/auth/facebook/return",
   profileFields: ['id', 'displayName', 'photos', 'email']
 },
   generateOrFindUser)
@@ -133,7 +133,7 @@ app.use(function(err,req,res,next){
 
 
 // port to serve app on
-var port = process.env.PORT || 3030;
+var port = process.env.PORT || 8080;
 
 app.listen(port, function(){
   console.log("I'm listening on port ",port);

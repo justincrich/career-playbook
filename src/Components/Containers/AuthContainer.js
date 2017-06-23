@@ -60,12 +60,13 @@ class AuthContainer extends Component{
     const dismissSuccess = bindActionCreators(Actions.dismissSuccess,dispatch);
     const throwSuccess = bindActionCreators(Actions.throwSuccess,dispatch);
     const throwError = bindActionCreators(Actions.throwError,dispatch);
+    const fetchLoginFB = bindActionCreators(Actions.fetchLoginFB,dispatch);
     return(
       <div>
         <SuccessNotification message={message} visible={success} dismiss={dismissSuccess}/>
         <ErrNotification message={message} visible={error} dismiss={dismissError}/>
         {this.state.login &&
-          <Login toggle={this.toggle.bind(this)} error={email} login={fetchLogin}/>
+          <Login toggle={this.toggle.bind(this)} error={email} login={fetchLogin} loginFB={fetchLoginFB}/>
         }
         {this.state.register &&
           <Register toggle={this.toggle.bind(this)} register={fetchRegister}

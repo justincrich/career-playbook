@@ -90,13 +90,13 @@ authRoutes.get('/facebook/return',
 
 
     // Successful authentication, redirect home.
-    res.redirect('/api');
+    res.redirect('http://localhost:3000');
   });
 
 //GET /auth/logout
-authRoutes.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
+// authRoutes.get('/logout/facebook', function(req, res){
+//   req.logout();
+//   res.redirect('/');
+// });
 
 module.exports = authRoutes;

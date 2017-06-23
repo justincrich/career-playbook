@@ -42,7 +42,7 @@ class Login extends Component{
             <h4>Login</h4>
           </div>
           <div className="card-block">
-            <form>
+            {/* <form>
               <div className="form-group d-flex flex-column">
                 <label htmlFor="inputEmail">Email address</label>
                 <input
@@ -63,12 +63,13 @@ class Login extends Component{
                   onChange={event=>this.handleInput(event,"password")}
                 />
               </div>
-            </form>
+            </form> */}
+            <a href="#" className="btn btn-secondary" onClick={()=>this.props.loginFB()}>Facebook</a>
           </div>
-          <div className="card-footer d-flex justify-content-end">
+          {/* <div className="card-footer d-flex justify-content-end">
             <a href="#" className="btn btn-secondary mr-3" onClick={()=>this.props.toggle()}>Register</a>
             <a href="#" className="btn btn-primary" onClick={()=>this.props.login(this.state.email,this.state.password)}>Login</a>
-          </div>
+          </div> */}
         </div>
 
     );

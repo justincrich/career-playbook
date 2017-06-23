@@ -1,8 +1,6 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import Header from './Components/Views/Header';
-import Login from './Components/Views/Login';
-import Register from './Components/Views/Register';
-import Unauthorized from './Components/Views/Unauthorized';
 import {connect} from 'react-redux';
 import {
   BrowserRouter,
@@ -19,16 +17,6 @@ import CompaniesContainer from './Components/Containers/CompaniesContainer';
 import reactCSS from 'reactcss';
 import '../css/template.css';
 
-const styles = reactCSS({
-  'default':{
-    header:{
-      background:'#ced7db' //Background Blue Grey
-    },
-    links:{
-      color:'#455a64'
-    },
-  }
-});
 
 class App extends Component{
 
@@ -67,25 +55,25 @@ class App extends Component{
             //          </Switch>
             //   </div>
             // </BrowserRouter>
-          <BrowserRouter>
-            <div>
-              <Header user={user} logout={fetchLogOut} />
-            {isFetching
-              ? <div></div>
-              :
-                  (user == undefined
-                    ?
-                    <AuthContainer/>
-                    :
-                    <Switch>
-                       <Route exact path="/" render={<Redirect to="/jobs"/>}/>
-                       <Route path="/jobs" component={JobsContainer}/>
-                       <Route path="/companies" component={CompaniesContainer}/>
-                     </Switch>
-                  )
-            }
-            </div>
-          </BrowserRouter>
+            <BrowserRouter>
+              <div>
+                <Header user={user} logout={fetchLogOut} />
+              {isFetching
+                ? <div></div>
+                :
+                    (user == undefined
+                      ?
+                      <AuthContainer/>
+                      :
+                      <Switch>
+                         <Route exact path="/" render={<Redirect to="/jobs"/>}/>
+                         <Route path="/jobs" component={JobsContainer}/>
+                         <Route path="/companies" component={CompaniesContainer}/>
+                       </Switch>
+                    )
+              }
+              </div>
+            </BrowserRouter>
 
 
 

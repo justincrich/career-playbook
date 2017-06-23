@@ -228,3 +228,41 @@ export function changeAuthStatus(status){
     auth:status
   };
 }
+
+// FACEBOOK LOGIN
+export function fetchLoginFB(){
+  return function(dispatch){
+    dispatch(requestLogin("FB"));
+
+    var init = {
+      method:'GET',
+      mode:'same-origin',
+      credentials:'same-origin',
+      headers: new Headers({
+        'Content-Type':'application/json; charset=utf-8',
+        'Data-Type':'json'
+      })
+
+    }
+    console.log("make request");
+    var req = new Request(Endpoints.LOGINFB,init);
+    return fetch(req)
+      .then(response=>{
+        console.log("response ok",response.ok);
+        if(response.ok){
+
+          return response.json().then(json=>{
+            console.log(json);
+            dispatch(receiveLogin(json));
+          });
+        }else if (response.status == 401){
+          dispatch(throwError("Invalid Username or Password"));
+        }else if (response.status == 400){
+            dispatch(throwError("You missed a field ... please try again!"));
+        }
+      }).catch(error=>{
+
+      });
+
+
+  }}

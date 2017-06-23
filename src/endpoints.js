@@ -10,3 +10,7 @@ export const IPADDRESS = 'api.ipify.org/?format=json';
 export const GLASSDOOR = 'api.glassdoor.com/api/api.htm';
 export const GD_ID= "145422";
 export const GD_KEY = "e0vj19EdTFo";
+
+// Facebook Endpoints
+export const LOGINFB ='/api/auth/login/facebook';
+export const LOGOUTFB ='/api/auth/logout/facebook';

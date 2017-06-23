@@ -12,7 +12,11 @@ var logger = require("morgan");
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var User = require("./data_models/userModel").User;
-app.use(logger("dev")); //provides status codes for API
+app.use(logger("dev",{
+  skip:(req,res)=>{
+    return req.url == '/json'
+  }
+}));
 app.use(jsonParser());//sets up the JSON parser
 
 //--------------ENABLE PASSPORT---------------

@@ -10,6 +10,8 @@ function loggedOut(req,res,next){
 function requiresLogin(req,res,next){
   if(req.session && req.session.userId){
     return next();
+  }else if (req.user.id){
+    return next();
   }else{
     var err = new Error('Not Authenticated. Please Login.');
     err.status=401;

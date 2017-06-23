@@ -6,22 +6,22 @@ var User = require("../data_models/userModel").User;
 var mid = require('../middleware');
 
 //Param handler that gets the user when an ID is provided
-userRoutes.param("uID",function(req,res,next,id){
-  User.findById(id,function(err,doc){
-
-    if(err) return next(err);
-    if(!doc){
-      console.log("no doc");
-      //Return a 404 not found error if there's no document
-      err=new Error("This user does not exist.");
-      err.status=404;
-      return next(err);
-    }
-    req.user=doc;
-    req.uID =id;
-    return next();
-  });
-});
+// userRoutes.param("uID",function(req,res,next,id){
+//   User.findById(id,function(err,doc){
+//
+//     if(err) return next(err);
+//     if(!doc){
+//       console.log("no doc");
+//       //Return a 404 not found error if there's no document
+//       err=new Error("This user does not exist.");
+//       err.status=404;
+//       return next(err);
+//     }
+//     req.user=doc;
+//     req.uID =id;
+//     return next();
+//   });
+// });
 
 userRoutes.use('/:uID/companies',compRoutes);
 userRoutes.use('/:uID/jobs',jobRoutes);

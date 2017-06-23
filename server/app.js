@@ -1,18 +1,59 @@
 'use strict';
+require('dotenv').config();
+var cookieParser = require('cookie-parser');
 var express = require("express");
 var app = express();
 var jsonParser = require("body-parser").json;
-// var compRoutes = require("./compRoutes");
-// var jobRoutes = require("./jobRoutes");
-// var userRoutes = require("./userRoutes");
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 var routes = require('./routes');
 var logger = require("morgan");
 //variables for authentication
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-
+var User = require("./data_models/userModel").User;
 app.use(logger("dev")); //provides status codes for API
 app.use(jsonParser());//sets up the JSON parser
+
+//--------------ENABLE PASSPORT---------------
+function generateOrFindUser(accessToken, refreshToken, profile, done){
+  if(profile.emails[0]) {
+    User.findOneAndUpdate(
+      { email: profile.emails[0].value },
+      {
+        name: profile.displayName || profile.username,
+        email: profile.emails[0].value,
+        photo: profile.photos[0].value
+      },
+      {
+        upsert: true
+      },
+    done
+  );
+  } else {
+    var noEmailError = new Error("Your email privacy settings prevent you from signing into Bookworm.");
+    done(noEmailError, null);
+  }
+}
+
+passport.use(new FacebookStrategy({
+  clientID: process.env.REACT_APP_FB_ID,
+  clientSecret: process.env.REACT_APP_FB_SECRET,
+  callbackURL: "http://localhost:3030/api/auth/facebook/return",
+  profileFields: ['id', 'displayName', 'photos', 'email']
+},
+  generateOrFindUser)
+);
+
+passport.serializeUser(function(user, done){
+	done(null, user.id);
+});
+
+passport.deserializeUser(function(userId, done){
+	User.findById(userId, function(err,user){
+    done(err,user);
+  });
+});
 
 //--------------DATABASE ACTIVATION---------------
 var mongoose = require("mongoose");
@@ -37,12 +78,18 @@ app.use(session({
     mongooseConnection:db
   })
 }));
+app.use(cookieParser());
+//Initialize Passport.js
+app.use(passport.initialize());
+
+//Restore session
+app.use(passport.session());
 
 //make user ID available in templates
-app.use(function(req,res,next){
-  res.locals.currentUser = req.session.userId;
-  next();
-});
+// app.use(function(req,res,next){
+//   res.locals.currentUser = req.session.userId;
+//   next();
+// });
 
 // -------------ROUTERS---------------------------
 

@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require("express");
+var passport = require('passport');
 var authRoutes = express.Router();
 var mid = require('../middleware');
 var User = require("../data_models/userModel").User;
@@ -75,6 +76,27 @@ authRoutes.get('/logout', function(req, res, next) {
       }
     });
   }
+});
+
+//GET /auth/login/facebook
+authRoutes.get('/login/facebook',
+  passport.authenticate('facebook', {scope: ["email"]}));
+
+//GET /auth/facebook/return
+authRoutes.get('/facebook/return',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+
+
+
+    // Successful authentication, redirect home.
+    res.redirect('/api');
+  });
+
+//GET /auth/logout
+authRoutes.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = authRoutes;

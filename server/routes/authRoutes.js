@@ -63,19 +63,11 @@ authRoutes.post('/login', function(req, res, next) {
 
 // GET /logout
 authRoutes.get('/logout', function(req, res, next) {
-  if (req.session) {
-    // delete session object
-    req.session.destroy(function(err) {
-      if(err) {
-        return next(err);
-      } else {
-        res.status(200).json({
-          message:'Logged Out',
-          auth:"0"
-        });
-      }
+    req.logout();
+    res.status(200).json({
+      message:'Logged Out',
+      auth:"0"
     });
-  }
 });
 
 //GET /auth/login/facebook

@@ -41,7 +41,7 @@ const Header = (props) => (
     <div className="navBrand navbar-brand">Playbook</div>
         <div className="navOptions collapse navbar-collapse h-100 " id="navbarNav">
           {props.user != undefined &&
-            <div className="navActions">
+            <div className="navActions d-flex flex-row w-100">
               <ul className="navbar-nav mr-auto h-100 ">
                 <li className="navLi nav-item d-flex align-items-center">
                   <NavLink className="nav-link h-100 py-auto d-flex" to="/jobs"><div className="align-self-center navLinkText ">Jobs</div></NavLink>
@@ -50,7 +50,7 @@ const Header = (props) => (
                   <NavLink  className="nav-link h-100 d-flex" to="/companies"><div className="navLinkText align-self-center">Companies</div></NavLink>
                 </li>
               </ul>
-              <div onClick={()=>props.logout()} className="navLi h-100 d-flex align-items-center  px-2">
+              <div onClick={()=>props.logout()} className="navLi h-100 d-flex align-items-center px-2">
                 <a className="navLinkText">Logout</a>
               </div>
             </div>

@@ -45,11 +45,12 @@ export function fetchUser(){
     var init = {method:'GET',mode:'same-origin',credentials:'include'};
 
     var req = new Request(Endpoints.USER,init);
+    console.log(Endpoints.USER);
     return fetch(req)
       .then(response=>{
         if(response.ok){
           response.json().then(json=>{
-            // console.log("USER RESP SUCC:",json);
+            console.log("USER RESP SUCC:",json);
             dispatch(receiveUserSuccess(json));
           });
         }

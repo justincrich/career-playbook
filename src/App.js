@@ -66,7 +66,7 @@ class App extends Component{
                       <AuthContainer/>
                       :
                       <Switch>
-                         <Route exact path="/" render={<Redirect to="/jobs"/>}/>
+                         <Route exact path="/" render={()=><Redirect to="/jobs"/>}/>
                          <Route path="/jobs" component={JobsContainer}/>
                          <Route path="/companies" component={CompaniesContainer}/>
                        </Switch>

@@ -2,7 +2,7 @@
   "name": "job-search",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080/",
+  "proxy": "http://localhost:3030/",
   "dependencies": {
     "axios": "^0.16.2",
     "bcrypt": "^1.0.2",
@@ -16,6 +16,8 @@
     "material-design-icons": "^3.0.1",
     "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "radium": "^0.19.1",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",

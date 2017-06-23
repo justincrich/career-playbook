@@ -64,7 +64,7 @@ class Login extends Component{
                 />
               </div>
             </form> */}
-            <a href="#" className="btn btn-secondary" onClick={()=>this.props.loginFB()}>Facebook</a>
+            <a href="#" className="btn btn-secondary" href="http://localhost:3030/api/auth/login/facebook">Facebook</a>
           </div>
           {/* <div className="card-footer d-flex justify-content-end">
             <a href="#" className="btn btn-secondary mr-3" onClick={()=>this.props.toggle()}>Register</a>

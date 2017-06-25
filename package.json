@@ -19,6 +19,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "radium": "^0.19.1",
+    "radium-normalize": "^2.0.5",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",

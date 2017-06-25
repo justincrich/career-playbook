@@ -9,8 +9,15 @@ import JobDetailModal from '../ModalViews/JobDetailModal';
 import JobModalView from '../ModalViews/JobModalView';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-//CSS
+// STYLING
 import '../../../css/template.css';
+import Radium from 'radium';
+import * as Template from '../../Styles/template';
+const styles = {
+  body:{
+    marginTop:"80px"
+  }
+}
 class JobsContainer extends Component{
   constructor(props){
     super(props);
@@ -76,8 +83,8 @@ class JobsContainer extends Component{
 
     return(
 
-      <div>
-        <div className="">
+      <div style={styles.body}>
+        <div >
           <JobsGroup jobs={allJobs.records} icon1="business_center" icon2="business"
             selectJob={(id)=>{
               this.selectJob(id, requestJob.bind(this),user);

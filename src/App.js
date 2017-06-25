@@ -14,8 +14,8 @@ import * as UserActions from './Actions/user';
 import AuthContainer from './Components/Containers/AuthContainer';
 import JobsContainer from './Components/Containers/JobsContainer';
 import CompaniesContainer from './Components/Containers/CompaniesContainer';
-import reactCSS from 'reactcss';
-import '../css/template.css';
+import Radium from 'radium';
+
 
 
 class App extends Component{
@@ -23,7 +23,11 @@ class App extends Component{
   constructor(props){
     super(props);
     this.state ={
-
+      styles:{
+        body:{
+          height:'100%'
+        }
+      }
     };
     this.isAuthed;
     props.dispatch(UserActions.fetchUser());
@@ -56,7 +60,9 @@ class App extends Component{
             //   </div>
             // </BrowserRouter>
             <BrowserRouter>
-              <div>
+              <div style={this.state.styles.body}>
+
+
                 <Header user={user} logout={fetchLogOut} />
               {isFetching
                 ? <div></div>
@@ -94,5 +100,5 @@ const mapStateToProps= state =>(
   }
 );
 
-
-export default connect(mapStateToProps)(App);
+App =  connect(mapStateToProps)(App);
+export default Radium(App);

@@ -5,25 +5,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 //CSS
 import '../../../css/template.css';
 //Styling
-const styles = reactCSS({
-  'default':{
-    jmodal:{
-    },
-    jmodalbackdrop:{
-      position: "fixed",
-      top:"0px",
-      left:"0px",
-      width:"100%",
-      height:"100%",
-      background:"rgba(0,0,0,0.4)",
-      zIndex:"990"
-    },
-    modalHeaderFooter:{
-      background:"white"
-    },
 
-  }
-});
 
 class JobModal extends Component{
   constructor(props){
@@ -35,6 +17,24 @@ class JobModal extends Component{
       companyName:"",
       url:"",
       note:"",
+      styles:{
+        jmodal:{
+          zIndex:1000
+        },
+        jmodalbackdrop:{
+          position: "fixed",
+          top:"0px",
+          left:"0px",
+          width:"100%",
+          height:"100%",
+          background:"rgba(0,0,0,0.4)",
+          zIndex:"990"
+        },
+        modalHeaderFooter:{
+          background:"white"
+        },
+
+      }
     }
   }
 
@@ -79,7 +79,7 @@ handleInput(event,type){
           transitionLeaveTimeout={500}
           >
         {this.props.modalState &&
-          <div style={styles.jmodalbackdrop} onClick={()=>this.props.close()} />
+          <div style={this.state.styles.jmodalbackdrop} onClick={()=>this.props.close()} />
 
         }
       </CSSTransitionGroup>
@@ -90,8 +90,8 @@ handleInput(event,type){
           transitionLeaveTimeout={500}
           >
             {this.props.modalState &&
-                <div key={key} className="card jModal" >
-                  <div className="card-header " style={styles.modalHeaderFooter}>
+                <div key={key} style={this.state.styles.jmodal} className="card jModal" >
+                  <div className="card-header " style={this.state.styles.modalHeaderFooter}>
                     <h5>Add Job</h5>
                   </div>
                   <div className="card-block">
@@ -117,7 +117,7 @@ handleInput(event,type){
                       </form>
                     </div>
                   </div>
-                  <div className="card-footer d-flex justify-content-end" style={styles.modalHeaderFooter}>
+                  <div className="card-footer d-flex justify-content-end" style={this.state.styles.modalHeaderFooter}>
                       <button type="button" className="btn btn-primary mr-3" onClick={()=>this.onSave()}>Save</button>
                     <button type="button" className="btn btn-secondary" onClick={()=>this.props.close()}>Cancel</button>
                   </div>

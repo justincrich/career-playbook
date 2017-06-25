@@ -12,6 +12,13 @@ import store from '../../Store/store';
 //CSS
 import '../../../css/template.css';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import Radium from 'radium';
+import * as Template from '../../Styles/template';
+const styles = {
+  body:{
+    marginTop:"80px"
+  }
+}
 
 class CompaniesContainer extends Component{
   constructor(props){
@@ -33,7 +40,7 @@ class CompaniesContainer extends Component{
     const searchCompanies = bindActionCreators(Actions.searchCompanies,dispatch);
     const sendCompany = ()=>company;
     return(
-      <div>
+      <div style={styles.body}>
         <CompaniesGroup companies={allCompanies}
                         searchResults={searchResults}
                         currentCompany={company}

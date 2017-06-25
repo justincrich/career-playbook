@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Radium from 'radium';
+import * as Template from '../../Styles/template';
 
 const styles = {
     card:{
@@ -13,7 +14,22 @@ class Login extends Component{
     super(props);
     this.state={
       email:"",
-      password:""
+      password:"",
+      styles:{
+        body:{
+          display:"flex",
+          justifyContent:"center",
+          flexDirection:"row"
+        },
+        socialButtons:{
+          margin:"0 5px"
+        },
+        facebook:{
+          background:'#3b5998',
+          color: Template.colors.primaryTextColorLight
+        }
+
+      }
     };
     this.handleInput.bind(this);
 
@@ -37,39 +53,43 @@ class Login extends Component{
   render(){
     return (
 
-        <div className="card jLogin">
-          <div className="card-header">
-            <h4>Login</h4>
+        <div className="d-flex align-items-center justify-content-center h-100">
+          <div className="card jLogin">
+            <div className="card-header">
+              <h4>Login</h4>
+            </div>
+            <div style={this.state.styles.body} className="card-block ">
+              {/* <form>
+                <div className="form-group d-flex flex-column">
+                  <label htmlFor="inputEmail">Email address</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="inputEmail"
+                    onChange={event=>this.handleInput(event,"email")}
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"/>
+                </div>
+                <div className="form-group d-flex flex-column">
+                  <label htmlFor="inputPassword">Password</label>
+                  <input type="password"
+                    className="form-control"
+                    id="inputConfirmPassword"
+                    aria-describedby="nameHelp"
+                    placeholder="Enter password"
+                    onChange={event=>this.handleInput(event,"password")}
+                  />
+                </div>
+              </form> */}
+              <a href="#" style={{...this.state.styles.socialButtons,
+              ...this.state.styles.facebook}} className="btn btn-secondary btnFacebook" href="http://localhost:3030/api/auth/login/facebook">Facebook</a>
+              <a href="#"  className="btn btn-secondary btnGithub" href="http://localhost:3030/api/auth/login/facebook">Github</a>
+            </div>
+            {/* <div className="card-footer d-flex justify-content-end">
+              <a href="#" className="btn btn-secondary mr-3" onClick={()=>this.props.toggle()}>Register</a>
+              <a href="#" className="btn btn-primary" onClick={()=>this.props.login(this.state.email,this.state.password)}>Login</a>
+            </div> */}
           </div>
-          <div className="card-block">
-            {/* <form>
-              <div className="form-group d-flex flex-column">
-                <label htmlFor="inputEmail">Email address</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="inputEmail"
-                  onChange={event=>this.handleInput(event,"email")}
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"/>
-              </div>
-              <div className="form-group d-flex flex-column">
-                <label htmlFor="inputPassword">Password</label>
-                <input type="password"
-                  className="form-control"
-                  id="inputConfirmPassword"
-                  aria-describedby="nameHelp"
-                  placeholder="Enter password"
-                  onChange={event=>this.handleInput(event,"password")}
-                />
-              </div>
-            </form> */}
-            <a href="#" className="btn btn-secondary" href="http://localhost:3030/api/auth/login/facebook">Facebook</a>
-          </div>
-          {/* <div className="card-footer d-flex justify-content-end">
-            <a href="#" className="btn btn-secondary mr-3" onClick={()=>this.props.toggle()}>Register</a>
-            <a href="#" className="btn btn-primary" onClick={()=>this.props.login(this.state.email,this.state.password)}>Login</a>
-          </div> */}
         </div>
 
     );

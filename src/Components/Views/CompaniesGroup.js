@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import reactCSS from 'reactcss';
+import Radium from 'radium';
 import defaultIMG from './company.jpg';
 import Company from './Company';
 import CompanyAddModal from '../ModalViews/CompanyAddModal';
+import * as Template from '../../Styles/template';
 
 //CSS
 import '../../../css/template.css';
 
 // More CSS Stuffs
-const styles = reactCSS({
-  'default':{
-    addButton:{
-      height:"42px",
-    }
+const styles = {
+    'default':{
+      addButton:{
+        height:"42px",
+      }
 
-  }
-});
+    },
+    'body':{
+
+    }
+}
+
 
 class CompaniesGroup extends Component{
   constructor(props){
@@ -96,7 +101,7 @@ class CompaniesGroup extends Component{
       list = <div>Loading</div>;
     }
       return(
-            <div className="container ">
+            <div style={styles.body} className="container ">
               <div className="d-flex flex-row align-center w-100 mb-2">
                   <div className="input-group">
                     <span className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
@@ -121,4 +126,4 @@ class CompaniesGroup extends Component{
 
 
 
-export default CompaniesGroup;
+export default Radium(CompaniesGroup);

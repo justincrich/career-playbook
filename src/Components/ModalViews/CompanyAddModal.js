@@ -1,36 +1,14 @@
 import React, {Component} from 'react';
-import reactCSS from 'reactcss';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import axios from 'axios';
 import * as Endpoints from '../../endpoints';
 import GDCompany from './GDCompany';
+import Radium from 'radium';
 
 //CSS
 import '../../../css/template.css';
 //Styling
-const styles = reactCSS({
-  'default':{
-    jmodal:{
-    },
-    joverflow:{
-      height:"300px",
-      overflow:"scroll",
-    },
-    jmodalbackdrop:{
-      position: "fixed",
-      top:"0px",
-      left:"0px",
-      width:"100%",
-      height:"100%",
-      background:"rgba(0,0,0,0.4)",
-      zIndex:"990"
-    },
-    modalHeaderFooter:{
-      background:"white"
-    },
 
-  }
-});
 
 class CompanyAddModal extends Component{
   constructor(props){
@@ -45,7 +23,29 @@ class CompanyAddModal extends Component{
       industry:"",
       gdLoading:false,
       companies:[],
-      query:""
+      query:"",
+      styles:{
+        jmodal:{
+          zIndex:1000
+        },
+        joverflow:{
+          height:"300px",
+          overflow:"scroll",
+        },
+        jmodalbackdrop:{
+          position: "fixed",
+          top:"0px",
+          left:"0px",
+          width:"100%",
+          height:"100%",
+          background:"rgba(0,0,0,0.4)",
+          zIndex:"990"
+        },
+        modalHeaderFooter:{
+          background:"white"
+        },
+
+      }
     }
     this.getCompanies.bind(this);
     this.listCompanies.bind(this);
@@ -149,7 +149,7 @@ listCompanies(){
           transitionLeaveTimeout={500}
           >
         {this.props.modalState &&
-          <div style={styles.jmodalbackdrop} onClick={()=>this.props.close()} />
+          <div style={this.state.styles.jmodalbackdrop} onClick={()=>this.props.close()} />
 
         }
       </CSSTransitionGroup>
@@ -160,8 +160,8 @@ listCompanies(){
           transitionLeaveTimeout={500}
           >
             {this.props.modalState &&
-                <div key={key} className="card jModal" >
-                  <div className="card-header " style={styles.modalHeaderFooter}>
+                <div key={key} style={this.state.styles.jmodal} className="card jModal" >
+                  <div className="card-header " style={this.state.styles.modalHeaderFooter}>
                     <h5>Add Company</h5>
                   </div>
                   <div className="card-block">
@@ -170,7 +170,7 @@ listCompanies(){
                         <span className="input-group-addon" id="company-search" ><i className="material-icons">search</i></span>
                         <input type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
                       </div>
-                      <div style={styles.joverflow}>
+                      <div style={this.state.styles.joverflow}>
                         <ul className="list-group">
                           {
                             this.state.companies.length > 0 &&
@@ -186,7 +186,7 @@ listCompanies(){
                       </div>
                     </div>
                   </div>
-                  <div className="card-footer d-flex" style={styles.modalHeaderFooter}>
+                  <div className="card-footer d-flex" style={this.state.styles.modalHeaderFooter}>
                     <a href='https://www.glassdoor.com/index.htm'>powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
                     <button type="button" className="btn btn-secondary ml-auto" onClick={()=>this.props.close()}>Cancel</button>
                   </div>
@@ -200,4 +200,4 @@ listCompanies(){
   }
 }
 
-export default CompanyAddModal;
+export default Radium(CompanyAddModal);

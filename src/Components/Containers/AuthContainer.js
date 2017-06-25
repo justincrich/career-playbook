@@ -14,9 +14,6 @@ import { bindActionCreators } from 'redux';
 import ErrNotification from '../Notifications/ErrNotification';
 import SuccessNotification from '../Notifications/SuccessNotification';
 
-//CSS
-// import '../../../css/template.css';
-// import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class AuthContainer extends Component{
   constructor(props){
@@ -61,7 +58,7 @@ class AuthContainer extends Component{
     const throwSuccess = bindActionCreators(Actions.throwSuccess,dispatch);
     const throwError = bindActionCreators(Actions.throwError,dispatch);
     return(
-      <div>
+      <div className="h-100">
         <SuccessNotification message={message} visible={success} dismiss={dismissSuccess}/>
         <ErrNotification message={message} visible={error} dismiss={dismissError}/>
         {this.state.login &&

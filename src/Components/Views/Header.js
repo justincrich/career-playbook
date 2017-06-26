@@ -24,6 +24,28 @@ class Header extends Component {
             background:Template.colors.primaryColorDark
           }
         },
+        image:{
+          container:{
+            padding: 'auto 3px',
+            display:'flex',
+            alignItems:'center',
+            height:'100%'
+          },
+          imageCover:{
+            cursor:"pointer",
+            borderRadius:'100%',
+            overflow:'hidden',
+            border:"3px solid "+Template.colors.primaryColor,
+            ":hover":{
+              border:"3px solid "+Template.colors.primaryColorDark,
+
+            }
+          },
+          asset:{
+            width:'45px',
+            height:'45px',
+          }
+        },
         smLogout:{
           cursor:"pointer",
           color: Template.colors.primaryTextColorLight,
@@ -146,8 +168,13 @@ class Header extends Component {
                         <NavLink  className="nav-link h-100 d-flex" to="/companies"><div className="navLinkText align-self-center">Companies</div></NavLink>
                       </li>
                     </ul>
-                    <div key={3} style={this.state.styles.hLineItem} onClick={()=>this.props.logout()} className="h-100 d-flex align-items-center px-2">
+                    {/* <div key={3} style={this.state.styles.hLineItem} onClick={()=>this.props.logout()} className="h-100 d-flex align-items-center px-2">
                       <a className="navLinkText">Logout</a>
+                    </div> */}
+                    <div key={4} style={this.state.styles.image.container} >
+                      <div key={4} style={this.state.styles.image.imageCover} className="profileImage">
+                        <img style={this.state.styles.image.asset} src={this.props.user.photo}></img>
+                      </div>
                     </div>
                   </div>
                 }

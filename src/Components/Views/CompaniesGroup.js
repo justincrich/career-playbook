@@ -9,18 +9,6 @@ import * as Template from '../../Styles/template';
 //CSS
 import '../../../css/template.css';
 
-// More CSS Stuffs
-const styles = {
-    'default':{
-      addButton:{
-        height:"42px",
-      }
-
-    },
-    'body':{
-
-    }
-}
 
 
 class CompaniesGroup extends Component{
@@ -31,7 +19,24 @@ class CompaniesGroup extends Component{
       detailsModal:false,
       query:"",
       loadingAll:false,
-      loadingOne:false
+      loadingOne:false,
+      styles:{
+        body:{
+          marginTop:'92px',
+          position:'relative',
+          zIndex:0,
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center',
+          height:'100%'
+        },
+        addButton:{
+          height:"42px",
+        },
+        cardContainer:{
+          marginTop:"92px"
+        }
+      }
     };
     this.closeModal.bind(this);
     this.openModal.bind(this);
@@ -101,22 +106,25 @@ class CompaniesGroup extends Component{
       list = <div>Loading</div>;
     }
       return(
-            <div style={styles.body} className="container ">
-              <div className="d-flex flex-row align-center w-100 mb-2">
-                  <div className="input-group">
-                    <span className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
-                    <input type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
-                  </div>
-
-                <div className="ml-3">
-                  <button type="button" style={styles.addButton} className="btn btn-secondary py-2" onClick={()=>this.openModal()}><i className="material-icons">add</i></button>
+        <div className="companiesBody">
+          <CompanyAddModal close={()=>this.closeModal()} user={this.props.user} modalState={this.state.addModal} save={this.props.createCompany} allCompanies={this.props.companies} />
+          <div style={this.state.styles.cardContainer} className="cardContainer container">
+            <div  className="card">
+              <div className="card-header d-flex flex-row align-center w-100 mb-2">
+                <h5 className="align-self-center">Companies</h5>
+                <div className="ml-auto">
+                  <button type="button" style={this.state.styles.addButton} className="btn btn-secondary py-2" onClick={()=>this.openModal()}><i className="material-icons">add</i></button>
                 </div>
               </div>
+              <div className="card-block">
 
                 {list}
-
-                <CompanyAddModal close={()=>this.closeModal()} modalState={this.state.addModal} save={this.props.createCompany} allCompanies={this.props.companies} />
+              </div>
+            </div>
           </div>
+        </div>
+
+
 
       );
   }

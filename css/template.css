@@ -41,14 +41,7 @@
 
 /*------------MODAL--------------------*/
 
-.jModal{
-  position: fixed;
-  width: 90%;
-  top: 5%;
-  left: 5%;
-  right: 5%;
-  z-index: 1000;
-}
+
 
 .jLogin{
 
@@ -59,13 +52,7 @@
 }
 
 
-@media only screen and (min-width: 768px) {
-    .jModal{
-      width: 50%;
-      left: 25%;
-      right: 25%;
-    }
-}
+
 
 
 

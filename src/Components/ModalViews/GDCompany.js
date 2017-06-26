@@ -29,13 +29,13 @@ const icon ={
 
 function GDCompany(props){
   return(
-    <li id={props.company.gdID} className="list-group-item d-flex flex-row align-items-center flex-nowrap">
-        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props.gdID)}>
+    <li id={props.company.id} className="list-group-item d-flex flex-row align-items-center flex-nowrap">
+        <div className="d-flex flex-row showDetails" data-toggle="modal" data-target="#myModal" style={{flexGrow:'1',}} onClick={()=>props.onClick(props.company.id)}>
           <img src={
-              props.company.logo==="" ?
+              props.company.squareLogo==="" ?
                 require('../../Media/company.jpg') //use alternative image when none avaliable
               :
-                props.company.logo
+                props.company.squareLogo
             } style={image.base} className="rounded-circle mx-2"/>
             <div className="mx-3 d-flex flex-row align-items-center flex-nowrap">
               <div className="h6 mb-0">{props.company.name}</div>

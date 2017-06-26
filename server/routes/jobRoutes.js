@@ -27,7 +27,7 @@ jobRoutes.param("jID",function(req,res,next,id){
 // GET /job
 // Route to get all jobs
 jobRoutes.get("/",mid.requiresLogin, function(req, res, next){
-  Job.find({uID:req.uID}).sort({title:1}).exec(function(err,jobs){
+  Job.find({uID:req.user.id}).sort({title:1}).exec(function(err,jobs){
     if(err) return next(err);
     res.json(jobs)
   });
@@ -65,7 +65,7 @@ jobRoutes.put("/:jID",mid.requiresLogin, function(req, res, next){
 jobRoutes.delete("/:jID",mid.requiresLogin, function(req, res, next){
 	req.job.remove(function(err){
     if(err) return next(err);
-    Job.find({uID:req.uID}).sort({title:1}).exec(function(err,jobs){
+    Job.find({uID:req.user.id}).sort({title:1}).exec(function(err,jobs){
       if(err) return next(err);
       res.json(jobs)
     });
@@ -77,7 +77,7 @@ jobRoutes.delete("/:jID",mid.requiresLogin, function(req, res, next){
 // jobRoutes.delete("/", function(req, res, next){
 // 	Job.remove({},function(err){
 //       if(err) return next(err);
-//       Job.find({uID:req.uID}).sort({name:1}).exec(function(err,jobs){
+//       Job.find({uID:req.user.id}).sort({name:1}).exec(function(err,jobs){
 //         if(err) return next(err);
 //         res.json(jobs)
 //       });

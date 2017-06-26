@@ -25,7 +25,7 @@ compRoutes.param("cID",function(req,res,next,id){
 // GET /companies
 // Route to get all companies
 compRoutes.get("/", mid.requiresLogin, function(req, res, next){
-  Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
+  Company.find({uID:req.user.id}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     res.json(companies)
   });
@@ -34,8 +34,8 @@ compRoutes.get("/", mid.requiresLogin, function(req, res, next){
 
 // GET /companies/gdID
 // Route to get gdIDs for all companies in storage
-compRoutes.get("/gdid", mid.requiresLogin, function(req, res, next){
-  Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
+compRoutes.get("/gdid", function(req, res, next){
+  Company.find({uID:req.user.id}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     var compGDID = {};
     companies.forEach(function(company){
@@ -77,7 +77,7 @@ compRoutes.put("/:cID", mid.requiresLogin, function(req, res, next){
 compRoutes.delete("/:cID", mid.requiresLogin, function(req, res, next){
 	req.company.remove(function(err){
     if(err) return next(err);
-    Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
+    Company.find({uID:req.user.id}).sort({name:1}).exec(function(err,companies){
       if(err) return next(err);
       res.json(companies)
     });
@@ -89,7 +89,7 @@ compRoutes.delete("/:cID", mid.requiresLogin, function(req, res, next){
 compRoutes.delete("/", mid.requiresLogin, function(req, res, next){
 	Company.remove({},function(err){
       if(err) return next(err);
-      Company.find({uID:req.uID}).sort({name:1}).exec(function(err,companies){
+      Company.find({uID:req.user.id}).sort({name:1}).exec(function(err,companies){
         if(err) return next(err);
         res.json(companies)
       });

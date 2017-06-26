@@ -14,6 +14,7 @@ class CompanyAddModal extends Component{
   constructor(props){
     super(props);
     this.state={
+      user:this.props.user,
       gdID:-1,
       name:"",
       logo:"",
@@ -25,12 +26,23 @@ class CompanyAddModal extends Component{
       companies:[],
       query:"",
       styles:{
-        jmodal:{
-          zIndex:1000
-        },
         joverflow:{
           height:"300px",
           overflow:"scroll",
+        },
+        jmodal:{
+          zIndex:1000,
+          position:'absolute',
+          width: '90%',
+          top:"72px",
+          left:'5%',
+          right:'5%',
+          "@media (min-width:768px)": {
+            width:'50%',
+            left:'25%',
+            right:'25%',
+            top:"72px"
+          },
         },
         jmodalbackdrop:{
           position: "fixed",
@@ -43,10 +55,9 @@ class CompanyAddModal extends Component{
         },
         modalHeaderFooter:{
           background:"white"
-        },
-
-      }
+        }
     }
+  }
     this.getCompanies.bind(this);
     this.listCompanies.bind(this);
     this.handleInput.bind(this);
@@ -90,7 +101,7 @@ getCompanies(query){
     gdLoading:true
   });
   var urlCheck = (useSSL ? 'https://':'http://') + Endpoints.GDID;
-  axios.get(urlCheck).then(response=>{
+  axios.get("/api/user/"+this.props.user._id+Endpoints.GDID).then(response=>{
     //get the current GD IDs
     gdExist = Object.keys(response.data);
     var url = (useSSL ? 'https://':'http://')+Endpoints.IPADDRESS;
@@ -100,23 +111,13 @@ getCompanies(query){
       var urlGD = (useSSL ? 'https://':'http://')+Endpoints.GLASSDOOR+'?t.p='+
       Endpoints.GD_ID+'&t.k='+Endpoints.GD_KEY+"&userip="+ip+"&useragent='"+userAgent+
       "'&format=json&v=1&action=employers&q="+query;
+      console.log("gd url", urlGD);
       axios.get(urlGD).then(json=>{
-
         this.setState({
-                  companies:json.data.response.employers.map((company,index)=>{
-
-                    if(gdExist.indexOf(company.id.toString())<0){
-                        return  {
-                            gdID:company.id,
-                            name:company.name,
-                            logo:company.squareLogo,
-                            website:company.website,
-                            overallRating:company.overallRating,
-                            ratingDescription:company.ratingDescription,
-                            industry:company.industry
-                          };
+                  companies:json.data.response.employers.filter((company)=>{
+                        return gdExist.indexOf(company.id.toString())<0;
                       }
-                    }),
+                    ),
                   gdLoading:false
       });
     });
@@ -126,13 +127,22 @@ getCompanies(query){
 }
 
 listCompanies(){
-
   return this.state.companies.map((company,index)=>(
     <GDCompany
-      key={company.gdID}
+      key={company.id}
       company={company}
       index={index}
-      add={(company)=>this.onAdd(company)}
+      add={(company)=>this.onAdd(
+        {
+            gdID:company.id,
+            name:company.name,
+            logo:company.squareLogo,
+            website:company.website,
+            overallRating:company.overallRating,
+            ratingDescription:company.ratingDescription,
+            industry:company.industry
+          }
+      )}
     />
   ));
 }

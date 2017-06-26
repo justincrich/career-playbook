@@ -36,8 +36,8 @@ export function fetchAllCompanies(_uid){
     return fetch(req)
       .then(response=>response.json())
       .then(json=>
-
-        dispatch(receiveAllCompanies(json))
+        {console.log("all",json);
+        dispatch(receiveAllCompanies(json))}
         // console.log(receiveJob(_cid,json))
       ).catch(error=>console.log("Error in Actions.Companies.fetchAllCompanies(): ",error));
 

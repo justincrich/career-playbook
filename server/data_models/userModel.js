@@ -19,7 +19,12 @@ var UserSchema = new Schema({
     type: String,
     required: true,
     trim: true
-  }
+  },
+  photo: {
+  type: String,
+  required: true,
+  trim: true
+}
 });
 
 UserSchema.statics.authenticate = function(email,password,callback){

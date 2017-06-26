@@ -14,11 +14,7 @@ import '../../../css/template.css';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Radium from 'radium';
 import * as Template from '../../Styles/template';
-const styles = {
-  body:{
-    marginTop:"80px"
-  }
-}
+
 
 class CompaniesContainer extends Component{
   constructor(props){
@@ -40,8 +36,9 @@ class CompaniesContainer extends Component{
     const searchCompanies = bindActionCreators(Actions.searchCompanies,dispatch);
     const sendCompany = ()=>company;
     return(
-      <div style={styles.body}>
+
         <CompaniesGroup companies={allCompanies}
+                        user={user}
                         searchResults={searchResults}
                         currentCompany={company}
                         getAllCompanies={()=>requestAllCompanies(user._id)}
@@ -56,7 +53,7 @@ class CompaniesContainer extends Component{
                           updateCompany(user._id,company);
                         }}
                         searchCompanies={(query)=>searchCompanies(query)}/>
-      </div>
+
     );
   }
 }

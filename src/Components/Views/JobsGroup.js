@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Job from './Job';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import IconButton from './IconButton';
-import JobCreateModal from '../ModalViews/JobAddModal';
+import JobAddModal from '../ModalViews/JobAddModal';
 import reactCSS from 'reactcss';
 import defaultIMG from './company.jpg';
 
@@ -25,7 +25,20 @@ class JobsGroup extends Component{
     super(props);
     this.state={
       addModal:false,
-      query:""
+      query:"",
+      styles:{
+        body:{
+          position:'relative',
+        },
+        cardContainer:{
+          marginTop:'92px',
+          zIndex:1,
+        },
+        headerTitle:{
+          height:"auto",
+          marginBottom:'0'
+        }
+      }
     };
     this.closeModal.bind(this);
     this.handleInput.bind(this);
@@ -76,24 +89,24 @@ class JobsGroup extends Component{
 
   render(){
       return(
-            <div className="container ">
-              <div className="d-flex flex-row align-center w-100 mb-2">
-                  <div className="input-group">
-                    <span style={styles.searchButton} className="input-group-addon" id="job-search" onClick={()=>this.search()} ><i className="material-icons">search</i></span>
-                    <input  type="search" onChange={(event)=>this.handleInput(event)} className="form-control" placeholder="Search" aria-describedby="sizing-addon2"/>
-                  </div>
-
-                <div className="ml-3">
+        <div style={this.state.styles.body} className="jobBody">
+        <JobAddModal  save={this.props.addJob} modalState={this.state.addModal} close={()=>this.closeModal()}/>
+          <div style={this.state.styles.cardContainer} className="container">
+            <div  className="card">
+              <div className="card-header d-flex flex-row align-center w-100 mb-2">
+                <h5 className="align-self-center">Jobs</h5>
+                <div className="ml-auto">
                   <button type="button" style={styles.addButton} className="btn btn-secondary py-2" onClick={()=>this.openModal()}><i className="material-icons">add</i></button>
                 </div>
               </div>
-                {this.state.query.length === 0 ?
-                  this.listJobs(this.props.jobs)
-                  :
-                  this.listJobs(this.props.searchresults)
-                }
-                <JobCreateModal  save={this.props.addJob} modalState={this.state.addModal} close={()=>this.closeModal()}/>
-          </div>
+              <div className="card-block">
+                {this.listJobs(this.props.jobs)}
+              </div>
+            </div>
+
+        </div>
+
+        </div>
 
       );
   }

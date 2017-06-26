@@ -14,7 +14,8 @@ userRoutes.get('/',mid.requiresLogin,(req,res,next)=>{
     res.status(200).json({
       _id:users[0]._id,
       email:users[0].email,
-      name:users[0].name
+      name:users[0].name,
+      photo:users[0].photo
     });
   });
 });

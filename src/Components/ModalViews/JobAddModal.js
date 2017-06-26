@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import reactCSS from 'reactcss';
+import Radium from 'radium';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 //CSS
@@ -7,7 +7,7 @@ import '../../../css/template.css';
 //Styling
 
 
-class JobModal extends Component{
+class JobAddModal extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -19,7 +19,18 @@ class JobModal extends Component{
       note:"",
       styles:{
         jmodal:{
-          zIndex:1000
+          zIndex:'1000',
+          position:'fixed',
+          width: '90%',
+          top:"5%",
+          left:'5%',
+          right:'5%',
+          "@media (min-width:768px)": {
+            width:'50%',
+            left:'25%',
+            right:'25%',
+            top:"85px"
+          },
         },
         jmodalbackdrop:{
           position: "fixed",
@@ -33,7 +44,11 @@ class JobModal extends Component{
         modalHeaderFooter:{
           background:"white"
         },
-
+        jobModalHolder:{
+            position:'fixed',
+            zIndex:'1000',
+            height:'100%'
+        }
       }
     }
   }
@@ -72,7 +87,7 @@ handleInput(event,type){
 
     var key = 1;
     return(
-      <div>
+      <div style={this.state.styles.jobModalHolder} className="jobModalHolder">
         <CSSTransitionGroup
           transitionName="modalBackground"
           transitionEnterTimeout={500}
@@ -90,7 +105,7 @@ handleInput(event,type){
           transitionLeaveTimeout={500}
           >
             {this.props.modalState &&
-                <div key={key} style={this.state.styles.jmodal} className="card jModal" >
+                <div key={key} style={this.state.styles.jmodal} className="card" >
                   <div className="card-header " style={this.state.styles.modalHeaderFooter}>
                     <h5>Add Job</h5>
                   </div>
@@ -126,9 +141,8 @@ handleInput(event,type){
 
         </CSSTransitionGroup>
         </div>
-
     );
   }
 }
 
-export default JobModal;
+export default Radium(JobAddModal);

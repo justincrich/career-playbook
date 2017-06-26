@@ -60,10 +60,10 @@ class App extends Component{
             //   </div>
             // </BrowserRouter>
             <BrowserRouter>
-              <div style={this.state.styles.body}>
+              <div style={this.state.styles.body} className="appContainer">
 
 
-                <Header user={user} logout={fetchLogOut} />
+                <Header user={user} logout={fetchLogOut} user={user}/>
               {isFetching
                 ? <div></div>
                 :

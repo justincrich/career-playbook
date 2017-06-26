@@ -16,6 +16,13 @@ class Login extends Component{
       email:"",
       password:"",
       styles:{
+        container:{
+          position:'fixed',
+          width:'100%',
+          display:'flex',
+          justifyContent:"center",
+          alignItems:"center"
+        },
         body:{
           display:"flex",
           justifyContent:"center",
@@ -27,6 +34,9 @@ class Login extends Component{
         facebook:{
           background:'#3b5998',
           color: Template.colors.primaryTextColorLight
+        },
+        card:{
+          width:'300px'
         }
 
       }
@@ -53,8 +63,8 @@ class Login extends Component{
   render(){
     return (
 
-        <div className="d-flex align-items-center justify-content-center h-100">
-          <div className="card jLogin">
+        <div style={this.state.styles.container} className=" d-flex align-items-center justify-content-center h-100">
+          <div style={this.state.styles.card} className="card">
             <div className="card-header">
               <h4>Login</h4>
             </div>

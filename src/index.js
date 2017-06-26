@@ -9,7 +9,7 @@ import './Styles/CSS/App.css';
 
 
 ReactDOM.render(
-  <StyleRoot className="h-100">
+  <StyleRoot>
     <Provider store={store}>
       <App/>
     </Provider>

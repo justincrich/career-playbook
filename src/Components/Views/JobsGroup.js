@@ -60,22 +60,24 @@ class JobsGroup extends Component{
 
   listJobs(arr){
     var defaultIMG = "company.jpg";
-    return arr.map((job,index)=>(
-        <Job
-          key={job._id}
-          _id={job._id}
-          text1={job.title}
-          icon1={this.props.icon1}
-          text2={job.companyName}
-          icon2={this.props.icon2}
-          image={
-                job.image
-            }
-          index={index}
-          onClick={(id)=>this.props.selectJob(id)}
-          onRemove={this.props.onRemove}
-        />
-      ));
+    if(arr[0] != undefined){
+      return arr.map((job,index)=>(
+          <Job
+            key={job._id}
+            _id={job._id}
+            text1={job.title}
+            icon1={this.props.icon1}
+            text2={job.companyName}
+            icon2={this.props.icon2}
+            image={
+                  job.image
+              }
+            index={index}
+            onClick={(id)=>this.props.selectJob(id)}
+            onRemove={this.props.onRemove}
+          />
+        ));
+    }
   }
 
   handleInput(event){

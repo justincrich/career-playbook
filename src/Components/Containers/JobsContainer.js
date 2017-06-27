@@ -99,7 +99,7 @@ class JobsContainer extends Component{
           />
 
         </div>
-         <JobDetailModal job={job.item} viewdetails={this.state.viewdetails}
+         <JobDetailModal job={job.item} isFetching={job.isFetching} viewdetails={this.state.viewdetails}
            save={(job)=>{
              job.uID = user._id;
              this.saveUpdate(job,updateJOB.bind(this),user._id);

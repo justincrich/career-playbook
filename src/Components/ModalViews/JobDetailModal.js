@@ -77,15 +77,17 @@ class JobDetailModal extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({
-      value:'VALUE',
-      _id:nextProps.job._id,
-      title:nextProps.job.title,
-      companyID:nextProps.job.companyID,
-      companyName:nextProps.job.companyName,
-      url:nextProps.job.url,
-      note:nextProps.job.note,
-    });
+    if(nextProps.job){
+      this.setState({
+        value:'VALUE',
+        _id:nextProps.job._id,
+        title:nextProps.job.title,
+        companyID:nextProps.job.companyID,
+        companyName:nextProps.job.companyName,
+        url:nextProps.job.url,
+        note:nextProps.job.note,
+      });
+    }
 
   }
 
@@ -152,7 +154,7 @@ handleInput(event,type){
           transitionLeaveTimeout={500}
 
           >
-            {this.props.viewdetails & !this.props.job.isFetching &&
+            {this.props.viewdetails & !this.props.isFetching &&
                 <div style={this.state.styles.modal} key={key} className="card jModal" >
                   <div className="card-header " style={this.state.styles.modalHeaderFooter}>
                     <h5>Job</h5>

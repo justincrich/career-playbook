@@ -93,7 +93,6 @@ class Login extends Component{
               </form> */}
               <a href="#" style={{...this.state.styles.socialButtons,
               ...this.state.styles.facebook}} className="btn btn-secondary btnFacebook" href="http://localhost:3030/api/auth/login/facebook">Facebook</a>
-              <a href="#"  className="btn btn-secondary btnGithub" href="http://localhost:3030/api/auth/login/facebook">Github</a>
             </div>
             {/* <div className="card-footer d-flex justify-content-end">
               <a href="#" className="btn btn-secondary mr-3" onClick={()=>this.props.toggle()}>Register</a>

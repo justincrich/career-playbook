@@ -34,7 +34,7 @@ compRoutes.get("/", mid.requiresLogin, function(req, res, next){
 
 // GET /companies/gdID
 // Route to get gdIDs for all companies in storage
-compRoutes.get("/gdid", function(req, res, next){
+compRoutes.get("/gdid",mid.requiresLogin, function(req, res, next){
   Company.find({uID:req.user.id}).sort({name:1}).exec(function(err,companies){
     if(err) return next(err);
     var compGDID = {};

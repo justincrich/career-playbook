@@ -36,7 +36,7 @@ class JobsContainer extends Component{
   }
 
   selectJob(id,jobFunc,user){
-
+    console.log("JOB SELECTED");
     jobFunc(user._id,id);
     this.setState(prevState => ({
       viewdetails: !prevState.viewdetails

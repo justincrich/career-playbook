@@ -32,6 +32,7 @@ class CompaniesGroup extends Component{
         },
         addButton:{
           height:"42px",
+          cursor:'pointer'
         },
         cardContainer:{
           marginTop:"92px"

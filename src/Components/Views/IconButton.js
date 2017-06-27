@@ -6,6 +6,7 @@ const divStyle = {
   background:'transparent',
   padding:'0 0 0 0',
   display:'inline-block',
+  cursor:'pointer',
   ':focus': {
       background:'transparent',
       boxShadow:"none",

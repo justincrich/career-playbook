@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import Radium from 'radium';
 import * as Template from '../../Styles/template';
-
+import Popover from './Popover/Popover';
 class Header extends Component {
   constructor(props){
     super(props);
@@ -29,11 +29,18 @@ class Header extends Component {
             padding: 'auto 3px',
             display:'flex',
             alignItems:'center',
-            height:'100%'
+            justifyContent:'center',
+            height:'100%',
+
+            position:'relative',
+            flexDirection:'column',
+
           },
           imageCover:{
             cursor:"pointer",
             borderRadius:'100%',
+            width:'55px',
+            height:'55px',
             overflow:'hidden',
             border:"3px solid "+Template.colors.primaryColor,
             ":hover":{
@@ -41,16 +48,15 @@ class Header extends Component {
 
             }
           },
-
-
-
-
-
           asset:{
-            width:'45px',
-            height:'45px',
+
           }
         },
+        actionContainer:{
+          height:"100%",
+          width:'125px'
+        }
+        ,
         smLogout:{
           cursor:"pointer",
           color: Template.colors.primaryTextColorLight,
@@ -72,7 +78,6 @@ class Header extends Component {
           zIndex:"1000",
           display:"flex",
           flexDirection:"column",
-          overflow:'hidden',
 
         },
         hamburger:{
@@ -100,6 +105,8 @@ class Header extends Component {
         smLI:{
           padding:"8px 16px",
           width:"100%",
+          display:'flex',
+          flexDirection: 'row',
           ":hover":{
             background:Template.colors.primaryColorDark
           }
@@ -108,11 +115,14 @@ class Header extends Component {
           textDecoration:'none',
           color:Template.colors.primaryTextColorLight
         },
-        smText:{}
+        smText:{},
+
       },
-      menuClosed:true
+      menuClosed:true,
+      accountMenuActive:false
     }
     this.openMenu.bind(this);
+    this.openAccountMenu.bind(this);
   }
 
 
@@ -122,7 +132,6 @@ class Header extends Component {
       menuClosed:!prevState.menuClosed
     }));
     if(this.state.menuClosed){
-      console.log("OPEN");
       this.setState(prevState=>({
         styles:{
           ...prevState.styles,
@@ -134,7 +143,6 @@ class Header extends Component {
         }
       }));
     }else{
-      console.log("closed");
       this.setState(prevState=>({
         styles:{
           ...prevState.styles,
@@ -148,6 +156,15 @@ class Header extends Component {
       }));
     }
   }
+
+
+  openAccountMenu(){
+    this.setState(prevState=>({
+      accountMenuActive:!prevState.accountMenuActive
+    }));
+  }
+
+
 
 
 
@@ -176,10 +193,17 @@ class Header extends Component {
                     {/* <div key={3} style={this.state.styles.hLineItem} onClick={()=>this.props.logout()} className="h-100 d-flex align-items-center px-2">
                       <a className="navLinkText">Logout</a>
                     </div> */}
-                    <div key={4} style={this.state.styles.image.container} >
-                      <div key={4} style={this.state.styles.image.imageCover} className="profileImage">
-                        <img style={this.state.styles.image.asset} src={this.props.user.photo}></img>
+                    <div style={this.state.styles.actionContainer} className="actionContainer">
+                      <div key={4} style={this.state.styles.image.container} >
+                        <div key={4} style={this.state.styles.image.imageCover} className="profileImage" onClick={()=>this.openAccountMenu()}>
+                          <img style={this.state.styles.image.asset} src={this.props.user.photo}></img>
+                        </div>
                       </div>
+                      {this.state.accountMenuActive &&
+
+                        <Popover logout={this.props.logout} toggle={()=>this.openAccountMenu()}/>
+
+                      }
                     </div>
                   </div>
                 }
@@ -195,11 +219,15 @@ class Header extends Component {
                 <NavLink  style={this.state.styles.smLink} className=" " to="/companies"><div style={this.state.styles.smText} className="smNavLinkTex">Companies</div></NavLink>
               </li>
               <li key="c"  style={this.state.styles.smLI} className="smallNavLI">
+                <a style={this.state.styles.smLogout} onClick={()=>this.props.logout()} >Profile</a>
+              </li>
+              <li key="d"  style={this.state.styles.smLI} className="smallNavLI">
                 <a style={this.state.styles.smLogout} onClick={()=>this.props.logout()} >Logout</a>
               </li>
             </ul>
           </div>
         }
+
       </nav>
     );
   }

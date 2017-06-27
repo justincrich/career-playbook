@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import IconButton from './IconButton';
 import reactCSS from 'reactcss';
+import Radium from 'radium';
 
 const styles = reactCSS({
   'default':{
@@ -41,4 +42,4 @@ function Job(props){
 //Styles
 
 
-export default Job;
+export default Radium(Job);

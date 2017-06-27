@@ -1,29 +1,32 @@
 import React, {Component} from 'react';
-import reactCSS from 'reactcss';
+import Radium from 'radium';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 //CSS
 import '../../../css/template.css';
 //Styling
-const styles = reactCSS({
-  'default':{
-    jmodal:{
-    },
-    jmodalbackdrop:{
-      position: "fixed",
-      top:"0px",
-      left:"0px",
-      width:"100%",
-      height:"100%",
-      background:"rgba(0,0,0,0.4)",
-      zIndex:"990"
-    },
-    modalHeaderFooter:{
-      background:"white"
-    },
-
-  }
-});
+// const styles = reactCSS({
+//   'default':{
+//     jmodal:{
+//     },
+//     jmodalbackdrop:{
+//       position: "fixed",
+//       top:"0px",
+//       left:"0px",
+//       width:"100%",
+//       height:"100%",
+//       background:"rgba(0,0,0,0.4)",
+//       zIndex:"990"
+//     },
+//     modalHeaderFooter:{
+//       background:"white"
+//     },
+//     button:{
+//       cursor:'pointer'
+//     }
+//
+//   }
+// });
 
 class JobDetailModal extends Component{
   constructor(props){
@@ -37,6 +40,37 @@ class JobDetailModal extends Component{
       companyName:"",
       url:"",
       note:"",
+      styles:{
+        backdrop:{
+          position: "fixed",
+          top:"0px",
+          left:"0px",
+          width:"100%",
+          height:"100%",
+          background:"rgba(0,0,0,0.4)",
+          zIndex:"990"
+        },
+        modal:{
+          zIndex:1000,
+          position:'absolute',
+          width: '90%',
+          top:"72px",
+          left:'5%',
+          right:'5%',
+          "@media (min-width:768px)": {
+            width:'50%',
+            left:'25%',
+            right:'25%',
+            top:"72px"
+          },
+        },
+        modalHeaderFooter:{
+          background:"white"
+        },
+        button:{
+          cursor:'pointer'
+        }
+      }
 
     }
     this.onEdit.bind(this);
@@ -107,7 +141,7 @@ handleInput(event,type){
 
           >
         {this.props.viewdetails &&
-          <div style={styles.jmodalbackdrop} onClick={()=>this.props.close()} />
+          <div style={this.state.styles.backdrop} onClick={()=>this.props.close()} />
 
         }
       </CSSTransitionGroup>
@@ -119,8 +153,8 @@ handleInput(event,type){
 
           >
             {this.props.viewdetails & !this.props.job.isFetching &&
-                <div key={key} className="card jModal" >
-                  <div className="card-header " style={styles.modalHeaderFooter}>
+                <div style={this.state.styles.modal} key={key} className="card jModal" >
+                  <div className="card-header " style={this.state.styles.modalHeaderFooter}>
                     <h5>Job</h5>
                   </div>
                   <div className="card-block">
@@ -164,16 +198,16 @@ handleInput(event,type){
                       </form>
                     </div>
                   </div>
-                  <div className="card-footer d-flex justify-content-end" style={styles.modalHeaderFooter}>
+                  <div className="card-footer d-flex justify-content-end" style={this.state.styles.modalHeaderFooter}>
                     {this.state.editmode?
-                      <button type="button" className="btn btn-primary mr-3" onClick={()=>this.onSave()}>Save</button>
+                      <button style={this.state.styles.button} type="button" className="btn btn-primary mr-3" onClick={()=>this.onSave()}>Save</button>
                     :
-                    <button type="button" className="btn btn-secondary mr-3"  onClick={()=>this.onEdit()}>Edit</button>
+                    <button style={this.state.styles.button}  type="button" className="btn btn-secondary mr-3"  onClick={()=>this.onEdit()}>Edit</button>
                     }
                     {this.state.editmode?
-                    <button type="button" className="btn btn-secondary" onClick={()=>this.onEdit()}>Cancel</button>
+                    <button style={this.state.styles.button}  type="button" className="btn btn-secondary" onClick={()=>this.onEdit()}>Cancel</button>
                     :
-                    <button type="button" className="btn btn-secondary" onClick={()=>this.props.close()}>Close</button>
+                    <button style={this.state.styles.button}  type="button" className="btn btn-secondary" onClick={()=>this.props.close()}>Close</button>
                     }
                   </div>
                 </div>
@@ -186,4 +220,4 @@ handleInput(event,type){
   }
 }
 
-export default JobDetailModal;
+export default Radium(JobDetailModal);

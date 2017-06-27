@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
-
+import Radium from 'radium';
 
 class JobModalView extends Component{
   constructor(props){
     super(props);
-
+    this.state={
+      styles:{
+        button:{
+          cursor:'pointer'
+        }
+      }
+    }
   }
 
 

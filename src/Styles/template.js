@@ -7,7 +7,8 @@ export const colors = {
   primaryTextColor:"#212121",
   secondaryTextColor:"#757575",
   primaryTextColorLight:"#FFF",
-  dividerColor:"#BDBDBD"
+  dividerColor:"#BDBDBD",
+  primaryTextColorFaded:'#707d8f'
 }
 
 export const fonts = {

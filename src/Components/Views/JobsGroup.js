@@ -14,6 +14,7 @@ const styles = reactCSS({
   'default':{
     addButton:{
       height:"42px",
+      cursor:'pointer',
     },
 
 

@@ -243,7 +243,8 @@ export function fetchUpdateJob(_uid,job){
       })
 
     }
-    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS+job._jid,init);
+    console.log(job);
+    var req = new Request(Endpoints.USER+_uid+Endpoints.JOBS+job._id,init);
 
     return fetch(req)
       .then(response=>response.json())

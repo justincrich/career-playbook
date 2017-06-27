@@ -209,7 +209,7 @@ handleInput(event,type){
                           }
                             id="urlInputLabel" onChange={(event)=>this.handleInput(event,"url")} placeholder=""/>
                             {!this.state.urlValid &&
-                              <div className="form-control-feedback">Please provide a link to the job</div>
+                              <div className="form-control-feedback">Please provide a link to the job listing</div>
                             }
                         </div>
                         <div className="form-group">

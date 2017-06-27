@@ -4,34 +4,14 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 //CSS
 import '../../../css/template.css';
-//Styling
-// const styles = reactCSS({
-//   'default':{
-//     jmodal:{
-//     },
-//     jmodalbackdrop:{
-//       position: "fixed",
-//       top:"0px",
-//       left:"0px",
-//       width:"100%",
-//       height:"100%",
-//       background:"rgba(0,0,0,0.4)",
-//       zIndex:"990"
-//     },
-//     modalHeaderFooter:{
-//       background:"white"
-//     },
-//     button:{
-//       cursor:'pointer'
-//     }
-//
-//   }
-// });
 
 class JobDetailModal extends Component{
   constructor(props){
     super(props);
     this.state={
+      titleValid:true,
+      companyValid: true,
+      urlValid: true,
       editmode:false,
       value:'',
       _id:-1,
@@ -74,6 +54,7 @@ class JobDetailModal extends Component{
 
     }
     this.onEdit.bind(this);
+    this.validate.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -98,18 +79,55 @@ onEdit(){
 }
 
 onSave(){
-  this.setState({
-    editmode:false
-  });
-  // console.log("SAVING IN MODAL",this.state.job)
-  this.props.save({
-    _id:this.state._id,
-    title:this.state.title,
-    companyID:this.state.companyID,
-    companyName:this.state.companyName,
-    url:this.state.url,
-    note:this.state.note
-  });
+  if(this.validate()){
+    this.setState({
+      editmode:false
+    });
+    // console.log("SAVING IN MODAL",this.state.job)
+    this.props.save({
+      _id:this.state._id,
+      title:this.state.title,
+      companyID:this.state.companyID,
+      companyName:this.state.companyName,
+      url:this.state.url,
+      note:this.state.note
+    });
+  }
+}
+
+validate(){
+  var valid = true;
+  if(!this.state.title || this.state.title.length === 0){
+    this.setState({
+      titleValid:false
+    });
+    valid = false;
+  }else{
+    this.setState({
+      titleValid:true
+    });
+  }
+  if(!this.state.companyName || this.state.companyName.length === 0){
+    this.setState({
+      companyValid:false
+    });
+    valid = false;
+  }else{
+    this.setState({
+      companyValid:true
+    });
+  }
+  if(!this.state.url || this.state.url.length === 0){
+    this.setState({
+      urlValid:false
+    });
+    valid = false;
+  }else{
+    this.setState({
+      urlValid:true
+    });
+  }
+  return valid;
 }
 
 handleInput(event,type){
@@ -134,6 +152,10 @@ handleInput(event,type){
   render(){
 
     var key = 1;
+    var normal = 'form-group';
+    var normalInput = 'form-control';
+    var danger = 'form-group has-danger';
+    var dangerInput = 'form-control form-control-danger';
     return(
       <div>
         <CSSTransitionGroup
@@ -162,20 +184,57 @@ handleInput(event,type){
                   <div className="card-block">
                     <div>
                       <form>
-                        <div className="form-group">
+                        <div className={
+                          this.state.titleValid ?
+                          normal
+                          :
+                          danger
+                        }>
                           <label htmlFor="jobTitleInputLabel">Job Title</label>
                           {this.state.editmode?
-                            <input type="text" className="form-control"
-                              defaultValue={this.state.title} id="jobTitleInput" placeholder="" onChange={(event)=>this.handleInput(event,"title")}/>
+                            <div>
+                              <input type="text" className={
+                                this.state.titleValid ?
+                                normalInput
+                                :
+                                dangerInput
+                              }
+                                defaultValue={this.state.title} id="jobTitleInput" placeholder="" onChange={(event)=>this.handleInput(event,"title")}/>
+                                {!this.state.titleValid &&
+                                  <div className="form-control-feedback">Please provide a job title.</div>
+                                }
+                            </div>
+
+
+
                             :
                             <div>{this.state.title}</div>
                           }
 
                         </div>
-                        <div className="form-group">
+                        <div className={
+                          this.state.companyValid ?
+                          normal
+                          :
+                          danger
+                        }>
                           <label htmlFor="companyNameInputLabel">Company Name</label>
                           {this.state.editmode?
-                            <input type="text" defaultValue={this.state.companyName} onChange={(event)=>this.handleInput(event,"companyName")} className="form-control" id="companyNameInput" placeholder=""/>
+                            <div>
+                              <input type="text" defaultValue={this.state.companyName}
+                                onChange={(event)=>this.handleInput(event,"companyName")}
+                                className={
+                                  this.state.companyValid ?
+                                  normalInput
+                                  :
+                                  dangerInput
+                                }
+                                id="companyNameInput"
+                                placeholder=""/>
+                                {!this.state.companyValid &&
+                                  <div className="form-control-feedback">Please provide the company name.</div>
+                                }
+                            </div>
                             :
                             <div>{this.state.companyName}</div>
                           }
@@ -183,9 +242,26 @@ handleInput(event,type){
 
 
                           {this.state.editmode &&
-                            <div className="form-group">
+                            <div className={
+                              this.state.urlValid ?
+                              normal
+                              :
+                              danger
+                            }>
                               <label htmlFor="urlInputLabel">Link To Job Listing</label>
-                              <input type="text" className="form-control" id="urlInputLabel" onChange={(event)=>this.handleInput(event,"url")} defaultValue={this.state.url} placeholder=""/>
+                              <input type="text"
+                                className={
+                                  this.state.urlValid ?
+                                  normalInput
+                                  :
+                                  dangerInput
+                                }
+                                id="urlInputLabel"
+                                onChange={(event)=>this.handleInput(event,"url")}
+                                defaultValue={this.state.url} placeholder=""/>
+                              {!this.state.urlValid &&
+                                <div className="form-control-feedback">Please provide a link to the job listing</div>
+                              }
                             </div>
                           }
 
